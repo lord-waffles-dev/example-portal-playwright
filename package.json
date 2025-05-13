@@ -1,0 +1,71 @@
+{
+  "name": "cucumber-playwright",
+  "version": "1.0.0",
+  "description": "Starter project to write and debug cucumber-js features with Playwright",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "cucumber": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js",
+    "api": "DEBUG=pw:api npm run cucumber",
+    "build": "rimraf build && npm run lint && tsc && npm run cucumber-check",
+    "cucumber-check": "npm run cucumber features/**/*.feature --dry-run --require src/support/custom-world.ts --require src/steps/**/*.ts --require src/support/common-hooks.ts --require-module ts-node/register --format-options \"{\\\"snippetInterface\\\": \\\"async-await\\\"}\" --format summary --format progress --format progress-bar  --publish-quiet",
+    "debug": "PWDEBUG=1 DEBUG=pw:api npm run cucumber ",
+    "video": "PWVIDEO=1 npm run cucumber ",
+    "format": "prettier --write \"**/*.{ts,tsx,css,html}\" ",
+    "lint": "eslint",
+    "only": "npm run cucumber -- --tags @only",
+    "report": "open reports/report.html",
+    "snippets": "npm run cucumber  features/**/*.feature --dry-run --format snippets",
+    "steps-usage": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js features/**/*.feature --dry-run",
+    "all": "npm run cucumber features/**/*.feature",
+    "test": "npm run cucumber ",
+    "test:parallel": "npm run cucumber  --parallel=2",
+    "docker": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:latest /bin/bash"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tallyb/cucumber7-playwright.git"
+  },
+  "author": "Maxwell Leslie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tallyb/cucumber-playwright/issues"
+  },
+  "homepage": "https://github.com/tallyb/cucumber-playwright#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "11.2.0",
+    "@cucumber/html-formatter": "21.10.0",
+    "@cucumber/messages": "27.2.0",
+    "@cucumber/pretty-formatter": "1.0.1",
+    "@playwright/test": "1.51.1",
+    "@stylistic/eslint-plugin": "4.2.0",
+    "@types/fs-extra": "11.0.4",
+    "@types/node": "22.14.0",
+    "@types/pixelmatch": "5.2.6",
+    "@types/pngjs": "6.0.5",
+    "@typescript-eslint/eslint-plugin": "8.29.0",
+    "@typescript-eslint/parser": "8.29.0",
+    "allure-cucumberjs": "3.2.1",
+    "cucumber-html-reporter": "7.2.0",
+    "eslint": "9.24.0",
+    "eslint-config-prettier": "10.1.1",
+    "eslint-plugin-playwright": "2.2.0",
+    "eslint-plugin-prettier": "5.2.6",
+    "fs-extra": "11.3.0",
+    "multiple-cucumber-html-reporter": "3.9.2",
+    "open": "10.1.0",
+    "pixelmatch": "7.1.0",
+    "pngjs": "7.0.0",
+    "prettier": "3.5.3",
+    "rimraf": "6.0.1",
+    "ts-node": "10.9.2",
+    "tsx": "4.19.3",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.29.0"
+  },
+  "dependencies": {
+  }
+}
