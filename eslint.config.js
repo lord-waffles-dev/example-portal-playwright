@@ -38,7 +38,8 @@ export default tseslint.config(
       '@stylistic': stylistic
     },
     rules: {
-      ...customizedESLint.rules
+      ...customizedESLint.rules,
+      '@typescript-eslint/no-explicit-any': 'warn'
     }
   },
   {
