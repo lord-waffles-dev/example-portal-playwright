@@ -5,37 +5,51 @@ import { Page } from '@playwright/test';
  * This class demonstrates how to handle reusable components.
  */
 export class HeaderComponent {
-  // Selectors for header elements
-  private readonly headerSelector = 'header';
-  private readonly logoSelector = 'header >> .logo';
-  private readonly navigationSelector = 'header >> nav';
-  private readonly searchButtonSelector = 'header >> button[aria-label="Search"]';
-  private readonly searchInputSelector = 'header >> input[aria-label="Search"]';
-  // private readonly userMenuSelector = 'header >> .user-menu';
-  private readonly userMenuButtonSelector = 'header >> .user-menu-button';
-  private readonly userMenuDropdownSelector = 'header >> .user-menu-dropdown';
-  private readonly loginButtonSelector = 'header >> .login-button';
-  private readonly logoutButtonSelector = 'header >> .logout-button';
+  private readonly selectors: {
+    header: string;
+    logo: string;
+    navigation: string;
+    searchButton: string;
+    searchInput: string;
+    userMenuButton: string;
+    userMenuDropdown: string;
+    loginButton: string;
+    logoutButton: string;
+  };
 
   /**
    * Constructor for the HeaderComponent class.
    * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
    */
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page, customSelectors = {}) {
+    this.selectors = {
+      header: 'header',
+      logo: 'header >> .logo',
+      navigation: 'header >> nav',
+      searchButton: 'header >> button[aria-label="Search"]',
+      searchInput: 'header >> input[aria-label="Search"]',
+      userMenuButton: 'header >> .user-menu-button',
+      userMenuDropdown: 'header >> .user-menu-dropdown',
+      loginButton: 'header >> .login-button',
+      logoutButton: 'header >> .logout-button',
+      ...customSelectors
+    };
+  }
 
   /**
    * Check if the header is visible.
    * @returns True if the header is visible, false otherwise
    */
   async isVisible(): Promise<boolean> {
-    return await this.page.locator(this.headerSelector).isVisible();
+    return await this.page.locator(this.selectors.header).isVisible();
   }
 
   /**
    * Click on the logo.
    */
   async clickLogo(): Promise<void> {
-    await this.page.locator(this.logoSelector).click();
+    await this.page.locator(this.selectors.logo).click();
   }
 
   /**
@@ -43,7 +57,7 @@ export class HeaderComponent {
    * @param linkText - The text of the navigation link
    */
   async clickNavigationLink(linkText: string): Promise<void> {
-    await this.page.locator(`${this.navigationSelector} >> text="${linkText}"`).click();
+    await this.page.locator(`${this.selectors.navigation} >> text="${linkText}"`).click();
   }
 
   /**
@@ -51,8 +65,8 @@ export class HeaderComponent {
    * @param searchTerm - The term to search for
    */
   async search(searchTerm: string): Promise<void> {
-    await this.page.locator(this.searchButtonSelector).click();
-    await this.page.locator(this.searchInputSelector).fill(searchTerm);
+    await this.page.locator(this.selectors.searchButton).click();
+    await this.page.locator(this.selectors.searchInput).fill(searchTerm);
     await this.page.keyboard.press('Enter');
   }
 
@@ -60,17 +74,17 @@ export class HeaderComponent {
    * Open the user menu.
    */
   async openUserMenu(): Promise<void> {
-    await this.page.locator(this.userMenuButtonSelector).click();
-    await this.page.locator(this.userMenuDropdownSelector).waitFor({ state: 'visible' });
+    await this.page.locator(this.selectors.userMenuButton).click();
+    await this.page.locator(this.selectors.userMenuDropdown).waitFor({ state: 'visible' });
   }
 
   /**
    * Close the user menu.
    */
   async closeUserMenu(): Promise<void> {
-    if (await this.page.locator(this.userMenuDropdownSelector).isVisible()) {
-      await this.page.locator(this.userMenuButtonSelector).click();
-      await this.page.locator(this.userMenuDropdownSelector).waitFor({ state: 'hidden' });
+    if (await this.page.locator(this.selectors.userMenuDropdown).isVisible()) {
+      await this.page.locator(this.selectors.userMenuButton).click();
+      await this.page.locator(this.selectors.userMenuDropdown).waitFor({ state: 'hidden' });
     }
   }
 
@@ -78,11 +92,11 @@ export class HeaderComponent {
    * Login.
    */
   async login(): Promise<void> {
-    if (await this.page.locator(this.loginButtonSelector).isVisible()) {
-      await this.page.locator(this.loginButtonSelector).click();
+    if (await this.page.locator(this.selectors.loginButton).isVisible()) {
+      await this.page.locator(this.selectors.loginButton).click();
     } else {
       await this.openUserMenu();
-      await this.page.locator(this.loginButtonSelector).click();
+      await this.page.locator(this.selectors.loginButton).click();
     }
   }
 
@@ -90,11 +104,11 @@ export class HeaderComponent {
    * Logout.
    */
   async logout(): Promise<void> {
-    if (await this.page.locator(this.logoutButtonSelector).isVisible()) {
-      await this.page.locator(this.logoutButtonSelector).click();
+    if (await this.page.locator(this.selectors.logoutButton).isVisible()) {
+      await this.page.locator(this.selectors.logoutButton).click();
     } else {
       await this.openUserMenu();
-      await this.page.locator(this.logoutButtonSelector).click();
+      await this.page.locator(this.selectors.logoutButton).click();
     }
   }
 
@@ -103,6 +117,6 @@ export class HeaderComponent {
    * @returns The current username
    */
   async getCurrentUserName(): Promise<string> {
-    return await this.page.locator(this.userMenuButtonSelector).textContent() ?? '';
+    return await this.page.locator(this.selectors.userMenuButton).textContent() ?? '';
   }
 }

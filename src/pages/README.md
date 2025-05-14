@@ -49,22 +49,33 @@ The `PageFactory` class helps with creating and managing page objects. It follow
 ```typescript
 import { Page } from '@playwright/test';
 import { PlaywrightPage } from '../ui/PlaywrightPage';
+import { FormPage } from '../ui/FormPage';
+import { HomePage } from '../ui/HomePage';
 
 export class PageFactory {
-  private static pages: Map<string, any> = new Map();
+  private static pages = new Map<string, any>();
 
-  static getPage<T>(pageType: new (page: Page) => T, page: Page): T {
+  static getPage<T>(pageType: new (page: Page, customSelectors?: object) => T, page: Page, customSelectors = {}): T {
     const pageTypeName = pageType.name;
-    
-    if (!this.pages.has(pageTypeName)) {
-      this.pages.set(pageTypeName, new pageType(page));
+    const key = `${pageTypeName}-${JSON.stringify(customSelectors)}`;
+
+    if (!this.pages.has(key)) {
+      this.pages.set(key, new pageType(page, customSelectors));
     }
-    
-    return this.pages.get(pageTypeName) as T;
+
+    return this.pages.get(key) as T;
   }
 
-  static getPlaywrightPage(page: Page): PlaywrightPage {
-    return this.getPage(PlaywrightPage, page);
+  static getPlaywrightPage(page: Page, customSelectors = {}): PlaywrightPage {
+    return this.getPage(PlaywrightPage, page, customSelectors);
+  }
+
+  static getFormPage(page: Page, customSelectors = {}): FormPage {
+    return this.getPage(FormPage, page, customSelectors);
+  }
+
+  static getHomePage(page: Page, customSelectors = {}): HomePage {
+    return this.getPage(HomePage, page, customSelectors);
   }
 
   static clearPages(): void {
@@ -83,24 +94,60 @@ import { BasePage } from '../common/BasePage';
 import { config } from '../../support/config';
 
 export class PlaywrightPage extends BasePage {
-  // Selectors for elements on the page
-  private readonly navbarSelector = 'nav';
-  private readonly logoSelector = 'nav >> a >> text="Playwright"';
-  private readonly themeToggleSelector = 'nav >> button[title*="dark and light mode"]';
-  private readonly htmlSelector = 'html';
+  private readonly selectors: {
+    logo: string;
+    themeToggle: string;
+    html: string;
+    searchButton: string;
+    searchInput: string;
+  };
 
-  constructor(page: Page) {
+  constructor(page: Page, customSelectors = {}) {
     super(page);
+    this.selectors = {
+      // logo: 'nav >> a >> text="Playwright"',
+      // themeToggle: 'nav >> button[title*="dark and light mode"]',
+      // html: 'html',
+      // searchButton: 'button[aria-label="Search"]',
+      // searchInput: 'input[aria-label="Search"]',
+      ...customSelectors
+    };
   }
 
   async navigateToPlaywrightDocs(): Promise<void> {
     await this.navigateTo(config.BASE_URL);
-    await this.waitForElement(this.logoSelector);
+    await this.waitForElement(this.selectors.logo);
   }
 
   // ... other methods
 }
 ```
+
+## Selector Management
+
+The page objects in this project use a selector management approach that allows for easy customization of selectors without modifying the page object classes themselves. Each page object has a `selectors` object that contains all the selectors used by the page object. The `selectors` object is initialized in the constructor with default values, and can be overridden by passing a `customSelectors` object to the constructor.
+
+### Using Custom Selectors
+
+You can customize selectors when getting a page object from the `PageFactory`:
+
+```typescript
+// Using default selectors
+const playwrightPage = PageFactory.getPlaywrightPage(page);
+
+// Using custom selectors
+const customSelectors = {
+  logo: 'custom-logo-selector',
+  themeToggle: 'custom-theme-toggle-selector'
+};
+const playwrightPageWithCustomSelectors = PageFactory.getPlaywrightPage(page, customSelectors);
+```
+
+This approach has several benefits:
+1. **Centralized Selectors**: All selectors are defined in one place, making them easier to manage.
+2. **Customizable Selectors**: Selectors can be customized without modifying the page object classes.
+3. **Type Safety**: The selector object is typed, providing better IDE support and catching errors at compile time.
+4. **Caching**: The `PageFactory` caches page objects with different custom selectors, improving performance.
 
 ## Using Page Objects in Step Definitions
 
@@ -131,6 +178,28 @@ Then('We see {string} mode', async function (this: ICustomWorld, mode: string) {
   expect(isCorrectMode).toBeTruthy();
 });
 ```
+
+### Using Custom Selectors in Step Definitions
+
+You can also use custom selectors in step definitions:
+
+```typescript
+import { ICustomWorld } from '../../support/custom-world';
+import { Given } from '@cucumber/cucumber';
+import { PageFactory } from '../../pages/common/PageFactory';
+
+Given('Go to the playwright website with custom selectors', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const customSelectors = {
+    logo: 'custom-logo-selector',
+    themeToggle: 'custom-theme-toggle-selector'
+  };
+  const playwrightPage = PageFactory.getPlaywrightPage(page, customSelectors);
+  await playwrightPage.navigateToPlaywrightDocs();
+});
+```
+
+This is particularly useful when testing different versions of a page or when dealing with localization where selectors might change based on the language.
 
 ## Best Practices
 

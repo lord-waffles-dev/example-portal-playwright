@@ -11,23 +11,34 @@ export class HomePage extends BasePage {
   // Components
   private readonly header: HeaderComponent;
 
-  // Selectors for home page elements
-  private readonly mainContentSelector = 'main';
-  private readonly heroSectionSelector = '.hero-section';
-  private readonly featuredContentSelector = '.featured-content';
-  private readonly ctaButtonSelector = '.cta-button';
-  // private readonly newsletterFormSelector = '.newsletter-form';
-  private readonly newsletterEmailInputSelector = '.newsletter-form input[type="email"]';
-  private readonly newsletterSubmitButtonSelector = '.newsletter-form button[type="submit"]';
-  private readonly newsletterSuccessMessageSelector = '.newsletter-success-message';
+  private readonly selectors: {
+    mainContent: string;
+    heroSection: string;
+    featuredContent: string;
+    ctaButton: string;
+    newsletterEmailInput: string;
+    newsletterSubmitButton: string;
+    newsletterSuccessMessage: string;
+  };
 
   /**
    * Constructor for the HomePage class.
    * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
    */
-  constructor(page: Page) {
+  constructor(page: Page, customSelectors = {}) {
     super(page);
     this.header = new HeaderComponent(page);
+    this.selectors = {
+      mainContent: 'main',
+      heroSection: '.hero-section',
+      featuredContent: '.featured-content',
+      ctaButton: '.cta-button',
+      newsletterEmailInput: '.newsletter-form input[type="email"]',
+      newsletterSubmitButton: '.newsletter-form button[type="submit"]',
+      newsletterSuccessMessage: '.newsletter-success-message',
+      ...customSelectors
+    };
   }
 
   /**
@@ -44,7 +55,7 @@ export class HomePage extends BasePage {
    */
   async navigateToHomePage(url: string): Promise<void> {
     await this.navigateTo(url);
-    await this.waitForElement(this.mainContentSelector);
+    await this.waitForElement(this.selectors.mainContent);
   }
 
   /**
@@ -52,7 +63,7 @@ export class HomePage extends BasePage {
    * @returns True if the hero section is visible, false otherwise
    */
   async isHeroSectionVisible(): Promise<boolean> {
-    return await this.isVisible(this.heroSectionSelector);
+    return await this.isVisible(this.selectors.heroSection);
   }
 
   /**
@@ -60,14 +71,14 @@ export class HomePage extends BasePage {
    * @returns True if the featured content is visible, false otherwise
    */
   async isFeaturedContentVisible(): Promise<boolean> {
-    return await this.isVisible(this.featuredContentSelector);
+    return await this.isVisible(this.selectors.featuredContent);
   }
 
   /**
    * Click on the CTA button.
    */
   async clickCtaButton(): Promise<void> {
-    await this.click(this.ctaButtonSelector);
+    await this.click(this.selectors.ctaButton);
   }
 
   /**
@@ -75,9 +86,9 @@ export class HomePage extends BasePage {
    * @param email - The email to subscribe with
    */
   async subscribeToNewsletter(email: string): Promise<void> {
-    await this.fill(this.newsletterEmailInputSelector, email);
-    await this.click(this.newsletterSubmitButtonSelector);
-    await this.waitForElement(this.newsletterSuccessMessageSelector);
+    await this.fill(this.selectors.newsletterEmailInput, email);
+    await this.click(this.selectors.newsletterSubmitButton);
+    await this.waitForElement(this.selectors.newsletterSuccessMessage);
   }
 
   /**
@@ -85,7 +96,7 @@ export class HomePage extends BasePage {
    * @returns The newsletter success message
    */
   async getNewsletterSuccessMessage(): Promise<string> {
-    return await this.getText(this.newsletterSuccessMessageSelector);
+    return await this.getText(this.selectors.newsletterSuccessMessage);
   }
 
   /**

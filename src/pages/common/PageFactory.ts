@@ -15,43 +15,48 @@ export class PageFactory {
    * If the page object doesn't exist, it will be created.
    * @param pageType - The type of page object to get
    * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
    * @returns The page object
    */
-  static getPage<T>(pageType: new (page: Page) => T, page: Page): T {
+  static getPage<T>(pageType: new (page: Page, customSelectors?: object) => T, page: Page, customSelectors = {}): T {
     const pageTypeName = pageType.name;
+    const key = `${pageTypeName}-${JSON.stringify(customSelectors)}`;
 
-    if (!this.pages.has(pageTypeName)) {
-      this.pages.set(pageTypeName, new pageType(page));
+    if (!this.pages.has(key)) {
+      this.pages.set(key, new pageType(page, customSelectors));
     }
 
-    return this.pages.get(pageTypeName) as T;
+    return this.pages.get(key) as T;
   }
 
   /**
    * Get the PlaywrightPage object.
    * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
    * @returns The PlaywrightPage object
    */
-  static getPlaywrightPage(page: Page): PlaywrightPage {
-    return this.getPage(PlaywrightPage, page);
+  static getPlaywrightPage(page: Page, customSelectors = {}): PlaywrightPage {
+    return this.getPage(PlaywrightPage, page, customSelectors);
   }
 
   /**
    * Get the FormPage object.
    * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
    * @returns The FormPage object
    */
-  static getFormPage(page: Page): FormPage {
-    return this.getPage(FormPage, page);
+  static getFormPage(page: Page, customSelectors = {}): FormPage {
+    return this.getPage(FormPage, page, customSelectors);
   }
 
   /**
    * Get the HomePage object.
    * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
    * @returns The HomePage object
    */
-  static getHomePage(page: Page): HomePage {
-    return this.getPage(HomePage, page);
+  static getHomePage(page: Page, customSelectors = {}): HomePage {
+    return this.getPage(HomePage, page, customSelectors);
   }
 
   /**

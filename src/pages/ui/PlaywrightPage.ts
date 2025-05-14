@@ -7,18 +7,29 @@ import { config } from '../../support/config';
  * This class extends BasePage and provides specific functionality for the Playwright website.
  */
 export class PlaywrightPage extends BasePage {
-  // Selectors for elements on the page
-  // private readonly navbarSelector = 'nav';
-  private readonly logoSelector = 'nav >> a >> text="Playwright"';
-  private readonly themeToggleSelector = 'nav >> button[title*="dark and light mode"]';
-  private readonly htmlSelector = 'html';
+  private readonly selectors: {
+    logo: string;
+    themeToggle: string;
+    html: string;
+    searchButton: string;
+    searchInput: string;
+  };
 
   /**
    * Constructor for the PlaywrightPage class.
    * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
    */
-  constructor(page: Page) {
+  constructor(page: Page, customSelectors = {}) {
     super(page);
+    this.selectors = {
+      logo: 'nav >> a >> text="Playwright"',
+      themeToggle: 'nav >> button[title*="dark and light mode"]',
+      html: 'html',
+      searchButton: 'button[aria-label="Search"]',
+      searchInput: 'input[aria-label="Search"]',
+      ...customSelectors
+    };
   }
 
   /**
@@ -26,7 +37,7 @@ export class PlaywrightPage extends BasePage {
    */
   async navigateToPlaywrightDocs(): Promise<void> {
     await this.navigateTo(config.BASE_URL);
-    await this.waitForElement(this.logoSelector);
+    await this.waitForElement(this.selectors.logo);
   }
 
   /**
@@ -34,7 +45,7 @@ export class PlaywrightPage extends BasePage {
    * @returns The current theme ('light' or 'dark')
    */
   async getCurrentTheme(): Promise<string> {
-    return (await this.getAttribute(this.htmlSelector, 'data-theme')) ?? '';
+    return (await this.getAttribute(this.selectors.html, 'data-theme')) ?? '';
   }
 
   /**
@@ -45,10 +56,10 @@ export class PlaywrightPage extends BasePage {
     const currentTheme = await this.getCurrentTheme();
     // Only click the toggle if the current theme is different from the desired theme
     if (currentTheme !== mode) {
-      await this.click(this.themeToggleSelector);
+      await this.click(this.selectors.themeToggle);
     }
     // Wait for the theme to change
-    await this.page.locator(`${this.htmlSelector}[data-theme=${mode}]`).waitFor();
+    await this.page.locator(`${this.selectors.html}[data-theme=${mode}]`).waitFor();
   }
 
   /**
@@ -67,10 +78,8 @@ export class PlaywrightPage extends BasePage {
    */
   async searchDocumentation(searchTerm: string): Promise<void> {
     // Example of additional functionality that could be added
-    const searchButtonSelector = 'button[aria-label="Search"]';
-    const searchInputSelector = 'input[aria-label="Search"]';
-    await this.click(searchButtonSelector);
-    await this.fill(searchInputSelector, searchTerm);
+    await this.click(this.selectors.searchButton);
+    await this.fill(this.selectors.searchInput, searchTerm);
     // Additional steps would be added here to handle search results
   }
 

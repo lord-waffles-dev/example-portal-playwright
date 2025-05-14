@@ -14,6 +14,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,css,html}\" ",
     "lint": "eslint",
     "only": "npm run cucumber -- --tags @only",
+    "ui": "npm run cucumber -- --tags @ui",
     "report": "open reports/report.html",
     "snippets": "npm run cucumber  features/**/*.feature --dry-run --format snippets",
     "steps-usage": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js features/**/*.feature --dry-run",

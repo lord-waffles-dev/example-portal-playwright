@@ -7,22 +7,35 @@ import { BasePage } from '../common/BasePage';
  * This is a more complex example page object that demonstrates how to handle forms.
  */
 export class FormPage extends BasePage {
-  // Selectors for form elements
-  private readonly formSelector = 'form';
-  private readonly nameInputSelector = 'input[name="name"]';
-  private readonly emailInputSelector = 'input[name="email"]';
-  private readonly passwordInputSelector = 'input[name="password"]';
-  private readonly confirmPasswordInputSelector = 'input[name="confirmPassword"]';
-  private readonly submitButtonSelector = 'button[type="submit"]';
-  private readonly errorMessageSelector = '.error-message';
-  private readonly successMessageSelector = '.success-message';
+  private readonly selectors: {
+    form: string;
+    nameInput: string;
+    emailInput: string;
+    passwordInput: string;
+    confirmPasswordInput: string;
+    submitButton: string;
+    errorMessage: string;
+    successMessage: string;
+  };
 
   /**
    * Constructor for the FormPage class.
    * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
    */
-  constructor(page: Page) {
+  constructor(page: Page, customSelectors = {}) {
     super(page);
+    this.selectors = {
+      form: 'form',
+      nameInput: 'input[name="name"]',
+      emailInput: 'input[name="email"]',
+      passwordInput: 'input[name="password"]',
+      confirmPasswordInput: 'input[name="confirmPassword"]',
+      submitButton: 'button[type="submit"]',
+      errorMessage: '.error-message',
+      successMessage: '.success-message',
+      ...customSelectors
+    };
   }
 
   /**
@@ -31,7 +44,7 @@ export class FormPage extends BasePage {
    */
   async navigateToFormPage(url: string): Promise<void> {
     await this.navigateTo(url);
-    await this.waitForElement(this.formSelector);
+    await this.waitForElement(this.selectors.form);
   }
 
   /**
@@ -42,17 +55,17 @@ export class FormPage extends BasePage {
    * @param confirmPassword - The confirm password to fill in
    */
   async fillForm(name: string, email: string, password: string, confirmPassword: string): Promise<void> {
-    await this.fill(this.nameInputSelector, name);
-    await this.fill(this.emailInputSelector, email);
-    await this.fill(this.passwordInputSelector, password);
-    await this.fill(this.confirmPasswordInputSelector, confirmPassword);
+    await this.fill(this.selectors.nameInput, name);
+    await this.fill(this.selectors.emailInput, email);
+    await this.fill(this.selectors.passwordInput, password);
+    await this.fill(this.selectors.confirmPasswordInput, confirmPassword);
   }
 
   /**
    * Submit the form.
    */
   async submitForm(): Promise<void> {
-    await this.click(this.submitButtonSelector);
+    await this.click(this.selectors.submitButton);
   }
 
   /**
@@ -72,7 +85,7 @@ export class FormPage extends BasePage {
    * @returns The error message
    */
   async getErrorMessage(): Promise<string> {
-    return await this.getText(this.errorMessageSelector);
+    return await this.getText(this.selectors.errorMessage);
   }
 
   /**
@@ -80,7 +93,7 @@ export class FormPage extends BasePage {
    * @returns The success message
    */
   async getSuccessMessage(): Promise<string> {
-    return await this.getText(this.successMessageSelector);
+    return await this.getText(this.selectors.successMessage);
   }
 
   /**
@@ -88,7 +101,7 @@ export class FormPage extends BasePage {
    * @returns True if the form submission was successful, false otherwise
    */
   async isFormSubmissionSuccessful(): Promise<boolean> {
-    return await this.isVisible(this.successMessageSelector);
+    return await this.isVisible(this.selectors.successMessage);
   }
 
   /**
@@ -96,7 +109,7 @@ export class FormPage extends BasePage {
    * @returns True if the form submission failed, false otherwise
    */
   async isFormSubmissionFailed(): Promise<boolean> {
-    return await this.isVisible(this.errorMessageSelector);
+    return await this.isVisible(this.selectors.errorMessage);
   }
 
   /**
@@ -105,8 +118,8 @@ export class FormPage extends BasePage {
    */
   async waitForFormSubmission(timeout?: number): Promise<void> {
     await Promise.race([
-      this.waitForElement(this.successMessageSelector, timeout),
-      this.waitForElement(this.errorMessageSelector, timeout)
+      this.waitForElement(this.selectors.successMessage, timeout),
+      this.waitForElement(this.selectors.errorMessage, timeout)
     ]);
   }
 }
