@@ -52,7 +52,7 @@ export class FormPage extends BasePage {
    * @param name - The name to fill in
    * @param email - The email to fill in
    * @param password - The password to fill in
-   * @param confirmPassword - The confirm password to fill in
+   * @param confirmPassword - The confirmation password to fill in
    */
   async fillForm(name: string, email: string, password: string, confirmPassword: string): Promise<void> {
     await this.fill(this.selectors.nameInput, name);
@@ -73,7 +73,7 @@ export class FormPage extends BasePage {
    * @param name - The name to fill in
    * @param email - The email to fill in
    * @param password - The password to fill in
-   * @param confirmPassword - The confirm password to fill in
+   * @param confirmPassword - The confirmation password to fill in
    */
   async fillAndSubmitForm(name: string, email: string, password: string, confirmPassword: string): Promise<void> {
     await this.fillForm(name, email, password, confirmPassword);
