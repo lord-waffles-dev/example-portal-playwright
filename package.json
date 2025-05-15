@@ -16,7 +16,7 @@
     "only": "npm run cucumber -- --tags @only",
     "ui": "npm run cucumber -- --tags @ui",
     "report": "open reports/report.html",
-    "snippets": "npm run cucumber  features/**/*.feature --dry-run --format snippets",
+    "snippets": "npm run cucumber features/**/*.feature --dry-run --format snippets",
     "steps-usage": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js features/**/*.feature --dry-run",
     "all": "npm run cucumber features/**/*.feature",
     "test": "npm run cucumber ",
@@ -32,10 +32,7 @@
   },
   "author": "Maxwell Leslie",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tallyb/cucumber-playwright/issues"
-  },
-  "homepage": "https://github.com/tallyb/cucumber-playwright#readme",
+
   "devDependencies": {
     "@cucumber/cucumber": "11.2.0",
     "@cucumber/html-formatter": "21.10.0",
