@@ -27,18 +27,78 @@ The `BasePage` class provides common functionality for all page objects. It incl
 ```typescript
 import { Page } from '@playwright/test';
 
+/**
+ * BasePage class that provides common functionality for all page objects.
+ * This class should be extended by all page objects.
+ */
 export class BasePage {
+  /**
+   * Constructor for the BasePage class.
+   * @param page - The Playwright Page object
+   */
   constructor(protected readonly page: Page) {}
 
+  /**
+   * Navigate to a specific URL.
+   * @param url - The URL to navigate to
+   */
   async navigateTo(url: string): Promise<void> {
     await this.page.goto(url);
   }
 
+  /**
+   * Wait for an element to be visible.
+   * @param selector - The selector for the element
+   * @param timeout - Optional timeout in milliseconds
+   */
   async waitForElement(selector: string, timeout?: number): Promise<void> {
     await this.page.locator(selector).waitFor({ state: 'visible', timeout });
   }
 
-  // ... other methods
+  /**
+   * Click on an element.
+   * @param selector - The selector for the element
+   */
+  async click(selector: string): Promise<void> {
+    await this.page.locator(selector).click();
+  }
+
+  /**
+   * Fill a form field.
+   * @param selector - The selector for the form field
+   * @param value - The value to fill in
+   */
+  async fill(selector: string, value: string): Promise<void> {
+    await this.page.locator(selector).fill(value);
+  }
+
+  /**
+   * Get text from an element.
+   * @param selector - The selector for the element
+   * @returns The text content of the element
+   */
+  async getText(selector: string): Promise<string> {
+    return await this.page.locator(selector).textContent() ?? '';
+  }
+
+  /**
+   * Check if an element is visible.
+   * @param selector - The selector for the element
+   * @returns True if the element is visible, false otherwise
+   */
+  async isVisible(selector: string): Promise<boolean> {
+    return await this.page.locator(selector).isVisible();
+  }
+
+  /**
+   * Get an attribute value from an element.
+   * @param selector - The selector for the element
+   * @param attributeName - The name of the attribute
+   * @returns The value of the attribute
+   */
+  async getAttribute(selector: string, attributeName: string): Promise<string | null> {
+    return await this.page.locator(selector).getAttribute(attributeName);
+  }
 }
 ```
 
@@ -93,6 +153,10 @@ import { Page } from '@playwright/test';
 import { BasePage } from '../common/BasePage';
 import { config } from '../../support/config';
 
+/**
+ * PlaywrightPage class that represents the Playwright documentation website.
+ * This class extends BasePage and provides specific functionality for the Playwright website.
+ */
 export class PlaywrightPage extends BasePage {
   private readonly selectors: {
     logo: string;
@@ -102,6 +166,11 @@ export class PlaywrightPage extends BasePage {
     searchInput: string;
   };
 
+  /**
+   * Constructor for the PlaywrightPage class.
+   * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
+   */
   constructor(page: Page, customSelectors = {}) {
     super(page);
     this.selectors = {
@@ -114,12 +183,67 @@ export class PlaywrightPage extends BasePage {
     };
   }
 
+  /**
+   * Navigate to the Playwright documentation website.
+   */
   async navigateToPlaywrightDocs(): Promise<void> {
     await this.navigateTo(config.BASE_URL);
     await this.waitForElement(this.selectors.logo);
   }
 
-  // ... other methods
+  /**
+   * Get the current theme.
+   * @returns The current theme ('light' or 'dark')
+   */
+  async getCurrentTheme(): Promise<string> {
+    return (await this.getAttribute(this.selectors.html, 'data-theme')) ?? '';
+  }
+
+  /**
+   * Change the theme to the specified mode.
+   * @param mode - The theme mode ('light' or 'dark')
+   */
+  async changeTheme(mode: string): Promise<void> {
+    const currentTheme = await this.getCurrentTheme();
+    // Only click the toggle if the current theme is different from the desired theme
+    if (currentTheme !== mode) {
+      await this.click(this.selectors.themeToggle);
+    }
+    // Wait for the theme to change
+    await this.page.locator(`${this.selectors.html}[data-theme=${mode}]`).waitFor();
+  }
+
+  /**
+   * Check if the current theme matches the specified mode.
+   * @param mode - The theme mode to check ('light' or 'dark')
+   * @returns True if the current theme matches the specified mode, false otherwise
+   */
+  async isThemeMode(mode: string): Promise<boolean> {
+    const currentTheme = await this.getCurrentTheme();
+    return currentTheme === mode;
+  }
+
+  /**
+   * Search for documentation.
+   * @param searchTerm - The term to search for
+   */
+  async searchDocumentation(searchTerm: string): Promise<void> {
+    // Example of additional functionality that could be added
+    await this.click(this.selectors.searchButton);
+    await this.fill(this.selectors.searchInput, searchTerm);
+    // Additional steps would be added here to handle search results
+  }
+
+  /**
+   * Navigate to a specific section of the documentation.
+   * @param sectionName - The name of the section to navigate to
+   */
+  async navigateToSection(sectionName: string): Promise<void> {
+    // Example of additional functionality that could be added
+    const sectionSelector = `nav >> a:text-is("${sectionName}")`;
+    await this.click(sectionSelector);
+    // Additional steps would be added here to verify navigation
+  }
 }
 ```
 
