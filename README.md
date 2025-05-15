@@ -282,10 +282,6 @@ Then('I should receive status code {int}', async function(this: ICustomWorld, st
 });
 ```
 
-### Page Objects
-
-While not recommended for most cases, you can implement the Page Object Model if needed. See [this PR](https://github.com/Tallyb/cucumber-playwright/pull/95/files) for an example implementation.
-
 ## Troubleshooting
 
 ### Common Issues
@@ -321,5 +317,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [Gherkin Syntax Reference](https://cucumber.io/docs/gherkin/reference/)
 
 ---
-
-This project is based on the [Cucumber-typescript-starter](https://github.com/hdorgeval/cucumber7-ts-starter/) repo.
