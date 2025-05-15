@@ -8,7 +8,7 @@
     "cucumber": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js",
     "api": "DEBUG=pw:api npm run cucumber",
     "build": "rimraf build && npm run lint && tsc && npm run cucumber-check",
-    "cucumber-check": "npm run cucumber features/**/*.feature --dry-run --require src/support/custom-world.ts --require src/steps/**/*.ts --require src/support/common-hooks.ts --require-module ts-node/register --format-options \"{\\\"snippetInterface\\\": \\\"async-await\\\"}\" --format summary --format progress --format progress-bar  --publish-quiet",
+    "cucumber-check": "npm run cucumber features/**/*.feature --dry-run --publish-quiet",
     "debug": "PWDEBUG=1 DEBUG=pw:api npm run cucumber ",
     "video": "PWVIDEO=1 npm run cucumber ",
     "format": "prettier --write \"**/*.{ts,tsx,css,html}\" ",

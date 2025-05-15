@@ -66,6 +66,9 @@ typings/
 reports/*.html
 reports/*.json
 
+#screenshots + video files
+screenshots/
+
 traces/
 
 #build
