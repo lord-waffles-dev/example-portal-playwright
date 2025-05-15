@@ -174,11 +174,11 @@ export class PlaywrightPage extends BasePage {
   constructor(page: Page, customSelectors = {}) {
     super(page);
     this.selectors = {
-      logo: 'nav >> a >> text="Playwright"',
-      themeToggle: 'nav >> button[title*="dark and light mode"]',
-      html: 'html',
-      searchButton: 'button[aria-label="Search"]',
-      searchInput: 'input[aria-label="Search"]',
+      // logo: 'nav >> a >> text="Playwright"',
+      // themeToggle: 'nav >> button[title*="dark and light mode"]',
+      // html: 'html',
+      // searchButton: 'button[aria-label="Search"]',
+      // searchInput: 'input[aria-label="Search"]',
       ...customSelectors
     };
   }
