@@ -67,7 +67,8 @@ reports/*.html
 reports/*.json
 
 #screenshots + video files
-screenshots/
+screenshots/features
+screenshots/*.webm
 
 traces/
 
