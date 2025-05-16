@@ -1,8 +1,8 @@
-# Cucumber-Playwright
+# Provider Portal Cucumber-Playwright
 
 ![Test](https://github.com/Tallyb/cucumber-playwright/workflows/Test/badge.svg)
 
-A starter repo for writing E2E tests based on Cucumber with Playwright using TypeScript.
+A repo focused on writing E2E tests for the Provider Portal based on Cucumber with Playwright using TypeScript.
 
 ## Table of Contents
 
@@ -30,8 +30,6 @@ Cucumber-Playwright is a framework for writing end-to-end (E2E) tests using Beha
 - Structure tests in a way that's understandable by non-technical stakeholders
 - Generate comprehensive reports
 
-For more information about the motivation behind this project, you can [read this article](https://tally-b.medium.com/e2e-testing-with-cucumber-and-playwright-9584d3ef3360) or [watch this video](https://www.youtube.com/watch?v=PUVFmhYJNJA&list=PLwwCtx3xQxlVMZzS4oi2TafVRngQ1wF_0&index=2).
-
 ## Prerequisites
 
 - Node.js (version 18 or higher)
@@ -42,8 +40,8 @@ For more information about the motivation behind this project, you can [read thi
 
 1. Create a new repository using this template or clone it directly:
    ```bash
-   git clone cucumber-playwright-template
-   cd cucumber-playwright-template
+   git clone provider-portal-playwright
+   cd provider-portal-playwright
    ```
 
 2. Install dependencies:
@@ -54,7 +52,7 @@ For more information about the motivation behind this project, you can [read thi
 ## Project Structure
 
 ```
-cucumber-playwright/
+provider-portal-playwright/
 ├── features/                 # Feature files written in Gherkin
 │   ├── api/                  # API test features
 │   ├── perf/                 # Performance test features

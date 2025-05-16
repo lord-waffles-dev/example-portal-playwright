@@ -1,5 +1,5 @@
 {
-  "name": "cucumber-playwright",
+  "name": "provider-portal-cucumber-playwright",
   "version": "1.0.0",
   "description": "Starter project to write and debug cucumber-js features with Playwright",
   "main": "index.js",
@@ -25,10 +25,6 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tallyb/cucumber7-playwright.git"
   },
   "author": "Maxwell Leslie",
   "license": "ISC",
