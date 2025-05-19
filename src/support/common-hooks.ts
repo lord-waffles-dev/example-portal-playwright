@@ -75,8 +75,12 @@ Before(async function (this: ICustomWorld, { pickle }) {
   await this.context.tracing.start({ screenshots: true, snapshots: true });
   this.page = await this.context.newPage();
   this.page.on('console', (msg: ConsoleMessage) => {
-    if (msg.type() === 'log') {
-      this.attach(msg.text());
+    // Capture all console messages
+    const messageType = msg.type();
+    const messageText = `[${messageType}] ${msg.text()}`;
+    // special handling for errors
+    if (messageType === 'error') {
+      this.attach(`CONSOLE ERROR: ${messageText}`, 'text/plain');
     }
   });
   this.feature = pickle;

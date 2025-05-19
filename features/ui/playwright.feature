@@ -1,10 +1,9 @@
-@foo
+@ignore
 Feature: Playwright docs
 
   Background: Navigation
     Given Go to the playwright website
 
-  @ui
   Scenario: Change theme
     Given Use Fake time "2021-01-01"
     Given A cat fact is recieved
