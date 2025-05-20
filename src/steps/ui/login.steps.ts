@@ -17,25 +17,25 @@ Given('provider navigates to the provider portal', async function (this: ICustom
 When('they enter a valid email', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
-  await LoginPage.inputEmail(config.STAGING_PROVIDER_1_EMAIL);
+  await LoginPage.inputEmail(config.credentials.staging.validProvider1.email);
 });
 
 When('they enter an invalid email', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
-  await LoginPage.inputEmail(config.STAGING_PROVIDER_1_EMAIL_INVALID);
+  await LoginPage.inputEmail(config.credentials.staging.invalidProvider2.email);
 });
 
 When('they enter a valid password', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
-  await LoginPage.inputPassword(config.STAGING_PROVIDER_1_PASSWORD);
+  await LoginPage.inputPassword(config.credentials.staging.validProvider1.password);
 });
 
 When('they enter an invalid password', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
-  await LoginPage.inputPassword(config.STAGING_PROVIDER_1_PASSWORD_INVALID);
+  await LoginPage.inputPassword(config.credentials.staging.invalidProvider2.password);
 });
 
 When('they select login continue button', async function (this: ICustomWorld) {

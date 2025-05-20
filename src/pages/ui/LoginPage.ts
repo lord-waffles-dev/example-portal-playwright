@@ -68,7 +68,7 @@ export class LoginPage extends BasePage {
    * Navigate to the Provider Portal website.
    */
   async navigateToLogin(): Promise<void> {
-    await this.navigateTo(config.NEW_PROVIDER_STAGING_URL);
+    await this.navigateTo(config.environments.staging.newProviderUrl);
     await this.waitForElement(this.selectors.logo);
   }
 
