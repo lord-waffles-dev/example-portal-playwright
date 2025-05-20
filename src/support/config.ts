@@ -12,13 +12,88 @@ export const config = {
   browser: process.env.BROWSER ?? 'chromium',
   browserOptions,
   EXAMPLE_URL: 'https://playwright.dev',
-  LEGACY_PROVIDER_PROD_URL: 'https://provider.recurohealth.com/',
-  NEW_PROVIDER_PROD_URL: 'https://provider-new.recurohealth.com/',
-  NEW_PROVIDER_STAGING_URL: 'https://provider-new-staging.recurohealth.com/',
   IMG_THRESHOLD: { threshold: 0.4 },
   BASE_API_URL: 'https://catfact.ninja/',
-  STAGING_PROVIDER_1_EMAIL: 'staging.provider+nolabs-nobh@recurohealth.com',
-  STAGING_PROVIDER_1_EMAIL_INVALID: 'notanemail@email',
-  STAGING_PROVIDER_1_PASSWORD: 'RecuroStaging1!',
-  STAGING_PROVIDER_1_PASSWORD_INVALID: 'notapassword'
+  environments: {
+    staging: {
+      providerUrl: 'https://staging.recurohealth.com/',
+      newProviderUrl: 'https://provider-new-staging.recurohealth.com/'
+    },
+    production: {
+      providerUrl: 'https://provider.recurohealth.com/',
+      newProviderUrl: 'https://provider-new.recurohealth.com/'
+    }
+  },
+  credentials: {
+    staging: {
+      validProvider1: {
+        email: 'staging.provider+nolabs-nobh@recurohealth.com',
+        password: 'RecuroStaging1!'
+      },
+      invalidProvider2: {
+        email: 'notanemail@email',
+        password: 'notapassword'
+      },
+      autoProvider1: {
+        // Provider w/ ePrescribe
+        // Timezone: Central
+        // Name: Auto1 Provider
+        email: 'qa-auto+eprescribe@recurohealth.com',
+        password: 'RecuroTest1!'
+      },
+      autoProvider2: {
+        // Provider w/o ePrescribe
+        // Timezone: Mountain Time (USMT)
+        // Name: Auto2 Provider
+        email: 'qa-auto+no-eprescribe@recurohealth.com',
+        password: 'RecuroTest1!'
+      },
+      autoProvider3: {
+        // Provider w/o licenses
+        // Timezone: Eastern
+        // Name: Auto3 Provider
+        email: 'qa-auto+no-licenses@recurohealth.com',
+        password: 'RecuroTest1!'
+      },
+      autoProvider4: {
+        // Provider w/ single state license
+        // Timezone: Central
+        // State: Texas
+        // Name: Auto4 Provider
+        email: 'qa-auto+one-state@recurohealth.com',
+        password: 'RecuroTest1!'
+      },
+      autoProvider5: {
+        // Provider w/ all state licenses
+        // Timezone: Pacific
+        // Name: Auto5 Provider
+        email: 'qa-auto+all-states@recurohealth.com',
+        password: 'RecuroTest1!'
+      },
+      autoProvider6: {
+        // Provider w/ Grail
+        // Timezone: Central
+        // Name: Auto6 Provider
+        email: 'qa-auto+grail@recurohealth.com',
+        password: 'RecuroTest1!'
+      },
+      autoProvider7: {
+        // Provider w/ Cologuard
+        // Timezone: Central
+        // Name: Auto7 Provider
+        email: 'qa-auto+cologuard@recurohealth.com',
+        password: 'RecuroTest1!'
+      },
+      autoProvider8: {
+        // Provider w/ Grail, Cologuard, and ePrescribe
+        // Timezone: Pacific
+        // Name: Auto8 Provider
+        email: 'qa-auto+labs@recurohealth.com',
+        password: 'RecuroTest1!'
+      }
+    },
+    production: {
+      // Production credentials
+    }
+  }
 };
