@@ -1,5 +1,5 @@
 import { ICustomWorld } from './custom-world';
-import { config } from './config';
+import { config, viewports } from './config';
 import { Before, After, BeforeAll, AfterAll, Status, setDefaultTimeout } from '@cucumber/cucumber';
 import {
   chromium,
@@ -62,10 +62,20 @@ Before(async function (this: ICustomWorld, { pickle }) {
   this.startTime = new Date();
   this.testName = pickle.name.replace(/\W/g, '-');
   // customize the [browser context](https://playwright.dev/docs/next/api/class-browser#browsernewcontextoptions)
+
+  const getViewport = () => {
+    if (!process.env.VIEWPORT) {
+      return viewports[0]; // Default to desktop if not specified
+    }
+
+    const matchedViewport = viewports.find(v => v.name === process.env.VIEWPORT);
+    return matchedViewport ?? viewports[0];
+  };
+
   this.context = await browser.newContext({
     acceptDownloads: true,
     recordVideo: process.env.PWVIDEO ? { dir: 'screenshots' } : undefined,
-    viewport: { width: 1200, height: 800 }
+    viewport: getViewport()
   });
   this.server = await request.newContext({
     // All requests we send go to this API endpoint.

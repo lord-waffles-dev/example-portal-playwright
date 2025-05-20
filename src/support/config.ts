@@ -8,6 +8,12 @@ const browserOptions: LaunchOptions = {
   }
 };
 
+export const viewports = [
+  { width: 1920, height: 1080, name: 'desktop' },
+  { width: 768, height: 1024, name: 'tablet' },
+  { width: 375, height: 667, name: 'mobile' }
+];
+
 export const config = {
   browser: process.env.BROWSER ?? 'chromium',
   browserOptions,

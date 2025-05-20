@@ -13,8 +13,6 @@
     "video": "PWVIDEO=1 npm run cucumber ",
     "format": "prettier --write \"**/*.{ts,tsx,css,html}\" ",
     "lint": "eslint",
-    "only": "npm run cucumber -- --tags @only",
-    "ui": "npm run cucumber -- --tags @ui",
     "login": "npm run cucumber -- --tags @login",
     "d-login": "PWDEBUG=1 DEBUG=pw:api npm run cucumber -- --tags @login",
     "report": "open reports/report.html",
@@ -23,7 +21,11 @@
     "all": "npm run cucumber features/**/*.feature",
     "test": "npm run cucumber ",
     "test:parallel": "npm run cucumber  --parallel=2",
-    "docker": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:latest /bin/bash"
+    "docker": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:latest /bin/bash",
+    "test:desktop": "VIEWPORT=desktop npm run cucumber",
+    "debug:desktop": "PWDEBUG=1 VIEWPORT=desktop npm run cucumber",
+    "video:desktop": "PWVIDEO=1 VIEWPORT=desktop npm run cucumber",
+    "login:desktop": "VIEWPORT=desktop npm run cucumber -- --tags @login"
   },
   "engines": {
     "node": ">=18"
