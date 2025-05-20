@@ -2,6 +2,7 @@ import { Page } from '@playwright/test';
 import { PlaywrightPage } from '../ui/PlaywrightPage';
 import { FormPage } from '../ui/FormPage';
 import { HomePage } from '../ui/HomePage';
+import { LoginPage } from '../ui/LoginPage';
 
 /**
  * PageFactory class that helps with creating and managing page objects.
@@ -37,6 +38,16 @@ export class PageFactory {
    */
   static getPlaywrightPage(page: Page, customSelectors = {}): PlaywrightPage {
     return this.getPage(PlaywrightPage, page, customSelectors);
+  }
+
+  /**
+   * Get the LoginPage object.
+   * @param page - The Login Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
+   * @returns The LoginPage object
+   */
+  static getLoginPage(page: Page, customSelectors = {}): LoginPage {
+    return this.getPage(LoginPage, page, customSelectors);
   }
 
   /**

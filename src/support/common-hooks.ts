@@ -26,9 +26,9 @@ declare global {
 // The timeout value is dynamically set based on the PWDEBUG environment variable.
 // - If PWDEBUG is set (e.g., `PWDEBUG=1`), debugging mode is enabled by setting the timeout to -1.
 //   This disables timeouts entirely, allowing operations to run indefinitely during debugging.
-// - If PWDEBUG is not set, the timeout is set to 60 seconds (60,000 ms).
+// - If PWDEBUG is not set, the timeout is set to 30 seconds (30,000 ms).
 //   This ensures that steps have a limit to prevent potential hangs during test execution.
-setDefaultTimeout(process.env.PWDEBUG ? -1 : 60 * 1000);
+setDefaultTimeout(process.env.PWDEBUG ? -1 : 30 * 1000);
 
 BeforeAll(async function () {
   switch (config.browser) {
@@ -75,8 +75,24 @@ Before(async function (this: ICustomWorld, { pickle }) {
   await this.context.tracing.start({ screenshots: true, snapshots: true });
   this.page = await this.context.newPage();
   this.page.on('console', (msg: ConsoleMessage) => {
-    if (msg.type() === 'log') {
-      this.attach(msg.text());
+    // Capture all console messages
+    const messageType = msg.type();
+    const messageText = `[${messageType}] ${msg.text()}`;
+    // Handling for errors
+    if (messageType === 'error') {
+      this.attach(`CONSOLE ERROR: ${messageText}`, 'text/plain');
+    }
+  });
+  this.page.on('pageerror', (error) => {
+    // Capture all page error messages
+    this.attach(`PAGE ERROR: ${error.message}`, 'text/plain');
+  });
+  // Capture HTTP error responses (4xx, 5xx)
+  this.page.on('response', (response) => {
+    const status = response.status();
+    if (status >= 400) {
+      const requestUrl = response.url();
+      this.attach(`HTTP ERROR: ${requestUrl} - Status ${status}`, 'text/plain');
     }
   });
   this.feature = pickle;
@@ -87,13 +103,17 @@ After(async function (this: ICustomWorld, { result }) {
     this.attach(`Status: ${result?.status}. Duration:${result.duration?.seconds}s`);
 
     if (result.status !== Status.PASSED) {
+      this.attach(`Taking screenshot for a failed test...`, 'text/plain');
       const image = await this.page?.screenshot();
 
-      // Replace : with _ because colons aren't allowed in Windows paths
+      // Replace: with _ because colons aren't allowed in Windows paths
       const timePart = this.startTime?.toISOString().split('.')[0].replaceAll(':', '_');
 
       if (image) {
+        this.attach(`Screenshot captured successfully`, 'text/plain');
         this.attach(image, 'image/png');
+      } else {
+        this.attach(`Screenshot failed to capture`, 'text/plain');
       }
       await this.context?.tracing.stop({
         path: `${tracesDir}/${this.testName}-${timePart}trace.zip`

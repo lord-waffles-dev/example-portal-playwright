@@ -36,7 +36,7 @@ export class PlaywrightPage extends BasePage {
    * Navigate to the Playwright documentation website.
    */
   async navigateToPlaywrightDocs(): Promise<void> {
-    await this.navigateTo(config.BASE_URL);
+    await this.navigateTo(config.EXAMPLE_URL);
     await this.waitForElement(this.selectors.logo);
   }
 
