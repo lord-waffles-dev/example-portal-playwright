@@ -10,6 +10,7 @@ const browserOptions: LaunchOptions = {
 
 export const viewports = [
   { width: 1920, height: 1080, name: 'desktop' },
+  { width: 1512, height: 900, name: 'laptop' },
   { width: 768, height: 1024, name: 'tablet' },
   { width: 375, height: 667, name: 'mobile' }
 ];
