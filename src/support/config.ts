@@ -18,5 +18,7 @@ export const config = {
   IMG_THRESHOLD: { threshold: 0.4 },
   BASE_API_URL: 'https://catfact.ninja/',
   STAGING_PROVIDER_1_EMAIL: 'staging.provider+nolabs-nobh@recurohealth.com',
-  STAGING_PROVIDER_1_PASSWORD: 'RecuroStaging1!'
+  STAGING_PROVIDER_1_EMAIL_INVALID: 'notanemail@email',
+  STAGING_PROVIDER_1_PASSWORD: 'RecuroStaging1!',
+  STAGING_PROVIDER_1_PASSWORD_INVALID: 'notapassword'
 };

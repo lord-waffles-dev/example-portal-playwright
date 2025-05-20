@@ -78,9 +78,21 @@ Before(async function (this: ICustomWorld, { pickle }) {
     // Capture all console messages
     const messageType = msg.type();
     const messageText = `[${messageType}] ${msg.text()}`;
-    // special handling for errors
+    // Handling for errors
     if (messageType === 'error') {
       this.attach(`CONSOLE ERROR: ${messageText}`, 'text/plain');
+    }
+  });
+  this.page.on('pageerror', (error) => {
+    // Capture all page error messages
+    this.attach(`PAGE ERROR: ${error.message}`, 'text/plain');
+  });
+  // Capture HTTP error responses (4xx, 5xx)
+  this.page.on('response', (response) => {
+    const status = response.status();
+    if (status >= 400) {
+      const requestUrl = response.url();
+      this.attach(`HTTP ERROR: ${requestUrl} - Status ${status}`, 'text/plain');
     }
   });
   this.feature = pickle;
@@ -91,13 +103,17 @@ After(async function (this: ICustomWorld, { result }) {
     this.attach(`Status: ${result?.status}. Duration:${result.duration?.seconds}s`);
 
     if (result.status !== Status.PASSED) {
+      this.attach(`Taking screenshot for a failed test...`, 'text/plain');
       const image = await this.page?.screenshot();
 
-      // Replace : with _ because colons aren't allowed in Windows paths
+      // Replace: with _ because colons aren't allowed in Windows paths
       const timePart = this.startTime?.toISOString().split('.')[0].replaceAll(':', '_');
 
       if (image) {
+        this.attach(`Screenshot captured successfully`, 'text/plain');
         this.attach(image, 'image/png');
+      } else {
+        this.attach(`Screenshot failed to capture`, 'text/plain');
       }
       await this.context?.tracing.stop({
         path: `${tracesDir}/${this.testName}-${timePart}trace.zip`

@@ -16,7 +16,10 @@ const config = {
     'progress-bar'
   ],
   formatOptions: {
-    snippetInterface: 'async-await'
+    snippetInterface: 'async-await',
+    theme: 'cucumber',
+    // Enable image display
+    displayAttachments: true
   },
   worldParameters: getWorldParams()
 };

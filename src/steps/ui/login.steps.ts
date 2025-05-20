@@ -20,10 +20,22 @@ When('they enter a valid email', async function (this: ICustomWorld) {
   await LoginPage.inputEmail(config.STAGING_PROVIDER_1_EMAIL);
 });
 
+When('they enter an invalid email', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  await LoginPage.inputEmail(config.STAGING_PROVIDER_1_EMAIL_INVALID);
+});
+
 When('they enter a valid password', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   await LoginPage.inputPassword(config.STAGING_PROVIDER_1_PASSWORD);
+});
+
+When('they enter an invalid password', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  await LoginPage.inputPassword(config.STAGING_PROVIDER_1_PASSWORD_INVALID);
 });
 
 When('they select login continue button', async function (this: ICustomWorld) {
@@ -42,6 +54,24 @@ When('they select 2fa continue button', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   await LoginPage.clickContinueMfa();
+});
+
+When('they should observe an email error message', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  // Expecting Text
+  await LoginPage.verifyEmailError('Please enter a valid email address');
+  // Verifying Presence
+  await LoginPage.verifyEmailError();
+});
+
+When('they should observe an password error message', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  // Expecting Text
+  await LoginPage.verifyPasswordError('Incorrect email or password');
+  // Verifying Presence
+  await LoginPage.verifyPasswordError();
 });
 
 Then('they should be logged in successfully', async function (this: ICustomWorld) {
