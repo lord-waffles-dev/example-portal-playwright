@@ -26,9 +26,9 @@ declare global {
 // The timeout value is dynamically set based on the PWDEBUG environment variable.
 // - If PWDEBUG is set (e.g., `PWDEBUG=1`), debugging mode is enabled by setting the timeout to -1.
 //   This disables timeouts entirely, allowing operations to run indefinitely during debugging.
-// - If PWDEBUG is not set, the timeout is set to 60 seconds (60,000 ms).
+// - If PWDEBUG is not set, the timeout is set to 30 seconds (30,000 ms).
 //   This ensures that steps have a limit to prevent potential hangs during test execution.
-setDefaultTimeout(process.env.PWDEBUG ? -1 : 60 * 1000);
+setDefaultTimeout(process.env.PWDEBUG ? -1 : 30 * 1000);
 
 BeforeAll(async function () {
   switch (config.browser) {
