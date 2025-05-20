@@ -105,12 +105,14 @@ export class LoginPage extends BasePage {
    */
   async inputMfa(): Promise<void> {
     await this.isVisible(this.selectors.mfa_1);
-    await this.fill(this.selectors.mfa_1, '1');
-    await this.fill(this.selectors.mfa_2, '2');
-    await this.fill(this.selectors.mfa_3, '3');
-    await this.fill(this.selectors.mfa_4, '4');
-    await this.fill(this.selectors.mfa_5, '5');
-    await this.fill(this.selectors.mfa_6, '6');
+
+    for (let i = 1; i <= 6; i++) {
+      const selector = this.selectors[`mfa_${i}` as keyof typeof this.selectors];
+      await this.fill(selector, String(i));
+      if (await this.page.locator(selector).inputValue() !== String(i)) {
+        throw new Error(`MFA validation failed at position ${i}`);
+      }
+    }
   }
 
   /**

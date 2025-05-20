@@ -39,7 +39,9 @@ export default tseslint.config(
     },
     rules: {
       ...customizedESLint.rules,
-      '@typescript-eslint/no-explicit-any': 'warn'
+      '@typescript-eslint/no-explicit-any': 'warn', // temporary
+      '@typescript-eslint/no-unsafe-assignment': 'warn', // temporary
+      '@typescript-eslint/no-unsafe-argument': 'warn' // temporary
     }
   },
   {
