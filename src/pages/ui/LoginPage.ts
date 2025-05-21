@@ -27,8 +27,6 @@ export class LoginPage extends BasePage {
     resendButton: string;
     checkbox: string;
     mfaContinueButton: string;
-    // Dashboard Page
-    dashboardTitle: string;
   };
 
   /**
@@ -58,8 +56,6 @@ export class LoginPage extends BasePage {
       resendButton: 'xpath=//button[normalize-space(text())=\'Resend\']',
       checkbox: 'xpath=//input[@type=\'checkbox\']',
       mfaContinueButton: 'id=mfa__continue',
-      // Dashboard Page
-      dashboardTitle: 'xpath=//h1[normalize-space(text())=\'Dashboard\']',
       ...customSelectors
     };
   }
@@ -166,12 +162,5 @@ export class LoginPage extends BasePage {
 
     // If no expectedText is provided, verify that the actual text is not empty
     return actualText.trim() !== '';
-  }
-
-  /**
-   * Verify Dashboard is present upon redirection from the 2FA screen.
-   */
-  async verifyDashboard(): Promise<void> {
-    await this.waitForElement(this.selectors.dashboardTitle); // update to dashboard element
   }
 }

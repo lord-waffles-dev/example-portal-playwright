@@ -14,6 +14,32 @@ Given('provider navigates to the provider portal', async function (this: ICustom
   await LoginPage.navigateToLogin();
 });
 
+/**
+ * Comprehensive login step that handles the entire login flow
+ * Including navigation, email/password entry, and 2FA
+ */
+Given('I log into the provider portal', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  const DashboardPage = PageFactory.getDashboardPage(page);
+
+  // Navigate to log in if needed (check if we're already on the login page)
+  const currentUrl = page.url();
+  if (!currentUrl.includes('login') && !currentUrl.includes('auth')) {
+    await LoginPage.navigateToLogin();
+  }
+
+  // Complete the login process
+  await LoginPage.inputEmail(config.credentials.staging.validProvider1.email);
+  await LoginPage.inputPassword(config.credentials.staging.validProvider1.password);
+  await LoginPage.clickContinue();
+  await LoginPage.inputMfa();
+  await LoginPage.clickContinueMfa();
+
+  // Verify login was successful
+  await DashboardPage.verifyDashboard();
+});
+
 When('they enter a valid email', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
@@ -76,6 +102,6 @@ When('they should observe an password error message', async function (this: ICus
 
 Then('they should be logged in successfully', async function (this: ICustomWorld) {
   const page = this.page!;
-  const LoginPage = PageFactory.getLoginPage(page);
-  await LoginPage.verifyDashboard();
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyDashboard();
 });
