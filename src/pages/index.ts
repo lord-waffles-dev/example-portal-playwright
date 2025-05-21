@@ -12,6 +12,6 @@ export * from './common/page-hooks';
 export * from './common/components/HeaderComponent';
 
 // Export UI page objects
-export * from './ui/PlaywrightPage';
-export * from './ui/FormPage';
-export * from './ui/HomePage';
+export * from './example/PlaywrightPage';
+export * from './example/FormPage';
+export * from './example/HomePage';
