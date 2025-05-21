@@ -8,16 +8,20 @@ import { config } from '../../support/config';
  * These steps use the LoginPage page object to interact with the website.
  */
 
+type ProviderKey = 'validProvider1' | 'invalidProvider2' | 'autoProvider1' | 'autoProvider2' |
+  'autoProvider3' | 'autoProvider4' | 'autoProvider5' | 'autoProvider6' |
+  'autoProvider7' | 'autoProvider8';
+
 Given('provider navigates to the provider portal', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   await LoginPage.navigateToLogin();
 });
 
-When('they enter a valid email', async function (this: ICustomWorld) {
+When('they enter a valid email with {string}', async function (this: ICustomWorld, email: string) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
-  await LoginPage.inputEmail(config.credentials.staging.validProvider1.email);
+  await LoginPage.inputEmail(config.credentials.staging[email as ProviderKey].email);
 });
 
 When('they enter an invalid email', async function (this: ICustomWorld) {
@@ -26,10 +30,10 @@ When('they enter an invalid email', async function (this: ICustomWorld) {
   await LoginPage.inputEmail(config.credentials.staging.invalidProvider2.email);
 });
 
-When('they enter a valid password', async function (this: ICustomWorld) {
+When('they enter a valid password with {string}', async function (this: ICustomWorld, password: string) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
-  await LoginPage.inputPassword(config.credentials.staging.validProvider1.password);
+  await LoginPage.inputPassword(config.credentials.staging[password as ProviderKey].password);
 });
 
 When('they enter an invalid password', async function (this: ICustomWorld) {
