@@ -41,7 +41,8 @@ export default tseslint.config(
       ...customizedESLint.rules,
       '@typescript-eslint/no-explicit-any': 'warn', // temporary
       '@typescript-eslint/no-unsafe-assignment': 'warn', // temporary
-      '@typescript-eslint/no-unsafe-argument': 'warn' // temporary
+      '@typescript-eslint/no-unsafe-argument': 'warn', // temporary
+      '@typescript-eslint/no-unsafe-member-access': 'warn'
     }
   },
   {

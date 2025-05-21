@@ -73,9 +73,14 @@ export class LoginPage extends BasePage {
    * @param email
    */
   async inputEmail(email: string): Promise<void> {
-    await this.isVisible(this.selectors.emailInput);
-    await this.fill(this.selectors.emailInput, email);
-    await this.click(this.selectors.loginToYourAccount);
+    try {
+      await this.isVisible(this.selectors.emailInput);
+      await this.fill(this.selectors.emailInput, email);
+      await this.click(this.selectors.loginToYourAccount);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to input email "${email}": ${errorMessage}`);
+    }
   }
 
   /**
@@ -83,16 +88,25 @@ export class LoginPage extends BasePage {
    * @param password
    */
   async inputPassword(password: string): Promise<void> {
-    await this.isVisible(this.selectors.passwordInput);
-    await this.fill(this.selectors.passwordInput, password);
-    await this.click(this.selectors.loginToYourAccount);
+    try {
+      await this.isVisible(this.selectors.passwordInput);
+      await this.fill(this.selectors.passwordInput, password);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to input password "${password}": ${errorMessage}`);
+    }
   }
 
   /**
    * Click the Continue Button to proceed to the 2FA screen.
    */
   async clickContinue(): Promise<void> {
-    await this.click(this.selectors.continueButton);
+    try {
+      await this.click(this.selectors.continueButton);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to click continue button: ${errorMessage}`);
+    }
   }
 
   /**
