@@ -93,7 +93,7 @@ export class LoginPage extends BasePage {
       await this.fill(this.selectors.passwordInput, password);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
-      throw new Error(`Failed to input email "${password}": ${errorMessage}`);
+      throw new Error(`Failed to input password "${password}": ${errorMessage}`);
     }
   }
 
