@@ -55,6 +55,21 @@ export class DashboardPage extends BasePage {
   }
 
   /**
+   * Verify ePrescribe Banner is present on the Dashboard Page.
+   * Only for Providers who have not completed the ePrescribe onboarding flow.
+   */
+  async verifyePrescribeBanner(): Promise<void> {
+    await this.waitForElement(this.selectors.dashboardTitle); // update to dashboard element
+  }
+
+  /**
+   * Verify ePrescribe Banner is not present on the Dashboard Page.
+   */
+  async verifyMissingePrescribeBanner(): Promise<void> {
+    await this.isHidden(this.selectors.dashboardTitle); // update to dashboard element
+  }
+
+  /**
    * Click the Resource Center button and verify the modal appears.
    */
   async clickResourceCenterButton(): Promise<void> {

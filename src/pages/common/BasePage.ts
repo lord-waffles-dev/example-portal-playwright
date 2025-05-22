@@ -64,6 +64,15 @@ export class BasePage {
   }
 
   /**
+   * Check if an element is not visible.
+   * @param selector - The selector for the element
+   * @returns True if the element is hidden, false otherwise
+   */
+  async isHidden(selector: string): Promise<boolean> {
+    return await this.page.locator(selector).isHidden();
+  }
+
+  /**
    * Get an attribute value from an element.
    * @param selector - The selector for the element
    * @param attributeName - The name of the attribute

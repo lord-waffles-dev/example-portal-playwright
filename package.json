@@ -23,6 +23,8 @@
     "debug:laptop": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber",
 
     "feature:login": "npm run cucumber -- --tags @login",
+    "feature:dashboard": "npm run cucumber -- --tags @dashboard",
+    "feature:eprescribe": "npm run cucumer -- --tags @eprescribe",
     "feature:resource-center": "npm run cucumber -- --tags @recource-center",
 
     "report": "open reports/report.html",

@@ -3,7 +3,7 @@ Feature: Provider Resource Center
 
   Background: Navigation
     Given provider navigates to the provider portal
-    Given I log into the provider portal
+    Given I log into the provider portal with "validProvider1"
 
  Scenario: Verify Resource Center links are functional
    When I select the Resource Center link
