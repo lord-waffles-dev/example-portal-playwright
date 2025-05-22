@@ -92,14 +92,14 @@ export class DashboardPage extends BasePage {
    * Only for Providers who have not completed the ePrescribe onboarding flow.
    */
   async verifyePrescribeBanner(): Promise<void> {
-    await this.waitForElement(this.selectors.dashboardTitle); // update to dashboard element
+    await this.waitForElement(this.selectors.ePrescribeBanner); // update to dashboard element
   }
 
   /**
    * Verify ePrescribe Banner is not present on the Dashboard Page.
    */
   async verifyMissingePrescribeBanner(): Promise<void> {
-    await this.isHidden(this.selectors.dashboardTitle); // update to dashboard element
+    await this.isHidden(this.selectors.ePrescribeBanner); // update to dashboard element
   }
 
   /**
@@ -108,6 +108,32 @@ export class DashboardPage extends BasePage {
   async clickResourceCenterButton(): Promise<void> {
     await this.click(this.selectors.resourceCenterButton);
     await expect(this.page.locator(this.selectors.resourceCenterModal)).toBeVisible();
+  }
+
+  /**
+   * Verify Requested Visits Section is Hidden.
+   * Update to include outline test vs. individual per step.
+   */
+  async verifyEmptyRequestedVisits(): Promise<void> {
+    await this.isHidden(this.selectors.requestedVisitsTitle);
+  }
+
+  // Rework into above
+  async verifyRequestedVPCVisit(): Promise<void> {
+    await this.isVisible(this.selectors.requestedVPCVisit);
+  }
+
+  /**
+   * Verify Upcoming Visits Section displays the "No upcoming visits" message.
+   * Update to include outline test vs. individual per step.
+   */
+  async verifyEmptyUpcomingVisits(): Promise<void> {
+    await this.isVisible(this.selectors.noUpcomingVisitsMessage);
+  }
+
+  // Rework into above
+  async verifyUpcomingVPCVisit(): Promise<void> {
+    await this.isVisible(this.selectors.upcomingVPCVisit);
   }
 
   /**

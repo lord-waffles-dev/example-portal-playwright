@@ -49,3 +49,27 @@ Then(/^I verify all other links within the Resource Center modal$/, async functi
     this.attach(`Link "${result.linkText}" opened URL: ${result.url}`, 'text/plain');
   }
 });
+// Cleanup with an Outline
+When(`I observe no requested visits`, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyEmptyRequestedVisits();
+});
+// Cleanup with an Outline
+When(`I observe an requested vpc visit`, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyRequestedVPCVisit();
+});
+// Cleanup with an Outline
+When(`I observe no upcoming visits`, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyEmptyUpcomingVisits();
+});
+// Cleanup with an Outline
+When(`I observe an upcoming vpc visit`, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyUpcomingVPCVisit();
+});
