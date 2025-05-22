@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
-import { PlaywrightPage } from '../ui/PlaywrightPage';
-import { FormPage } from '../ui/FormPage';
-import { HomePage } from '../ui/HomePage';
+import { PlaywrightPage } from '../example/PlaywrightPage';
+import { FormPage } from '../example/FormPage';
+import { HomePage } from '../example/HomePage';
 import { LoginPage } from '../ui/LoginPage';
 import { DashboardPage } from '../ui/DashboardPage';
 
