@@ -9,7 +9,22 @@ export class DashboardPage extends BasePage {
   private readonly selectors: {
     // Dashboard Page
     dashboardTitle: string;
+    ePrescribeBanner: string;
+    ePrescribeGetStartedButton: string;
+    upcomingVisitsTitle: string;
+    noUpcomingVisitsMessage: string;
+    requestedVisitsTitle: string;
+    requestedVisitsSelectTime: string;
+    requestedVisitsConfirmButton: string;
+    requestedVPCVisit: string;
+    upcomingVPCVisit: string;
+    // Nav Bar
+    userAvatarButton: string;
+    dashboardButton: string;
+    visitHistoryButton: string;
+    myScheduleButton: string;
     resourceCenterButton: string;
+    // Resource Center
     resourceCenterModal: string;
     videoConsultTroubleshootingLink: string;
     troubleshootSectionBox: string;
@@ -36,8 +51,26 @@ export class DashboardPage extends BasePage {
   constructor(page: Page, customSelectors = {}) {
     super(page);
     this.selectors = {
+      // Dashboard Page
       dashboardTitle: 'xpath=//h1[normalize-space(text())=\'Dashboard\']',
+      ePrescribeBanner: 'xpath=//p[normalize-space(text())=\'Please complete the ePrescribe identity proofing process\']',
+      ePrescribeGetStartedButton: 'xpath=//button[normalize-space(text())=\'Get Started\']',
+      upcomingVisitsTitle: 'xpath=//h6[normalize-space(text())=\'Upcoming Visits\']',
+      noUpcomingVisitsMessage: 'xpath=//div[normalize-space(text())=\'No upcoming visits\']',
+      requestedVisitsTitle: 'xpath=//h6[normalize-space(text())=\'Requested Visits\']',
+      requestedVisitsSelectTime: 'id=requested-visit-select',
+      requestedVisitsConfirmButton: 'xpath=//button[@data-testid=\'visit-date-confirm-button-0\']',
+      // This is not the best way to select a requested vpc visit, but it works for now.
+      requestedVPCVisit: 'xpath=(//div[@class=\'MuiStack-root\'])//div[1]//p[normalize-space(text())=\'Virtual Primary Care (Initial Visit)\']',
+      // This is not the best way to select an upcoming vpc visit, but it works for now.
+      upcomingVPCVisit: 'xpath=(//div[contains(@class,\'MuiDataGrid-cell MuiDataGrid-cell--textLeft\')])[2]//p[normalize-space(text())=\'Virtual Primary Care (Upcoming Visit)\']',
+      // Nav Bar
+      userAvatarButton: 'id=user-avatar',
+      dashboardButton: 'id=navbar-button-0',
+      visitHistoryButton: 'id=navbar-button-1',
+      myScheduleButton: 'id=navbar-button-2',
       resourceCenterButton: 'id=navbar-button-4',
+      // Resource Center
       resourceCenterModal: 'xpath=//div[@role="dialog"][@aria-labelledby="dialog__title"]',
       videoConsultTroubleshootingLink: 'xpath=//div[@role="dialog"]//a[contains(text(), "Video Consult Troubleshooting Guide")]',
       troubleshootSectionBox: '[data-testid="troubleshoot-section-box"]',
@@ -94,7 +127,7 @@ export class DashboardPage extends BasePage {
       // Get link text and href
       const linkText = await linkElement.textContent() ?? '';
       const href = await linkElement.getAttribute('href') ?? '';
-      const cleanLinkText = linkText.replace(/\s*<svg.*$/, '').trim(); // Remove SVG part from text
+      const cleanLinkText = linkText.replace(/\s*<svg.*$/, '').trim(); // Remove the SVG part from the text
 
       // Create a promise that will resolve when a new page is opened
       const pagePromise = this.page.context().waitForEvent('page');
@@ -119,7 +152,7 @@ export class DashboardPage extends BasePage {
       if (expectedLink) {
         verified = actualUrl.includes(expectedLink.url);
       } else {
-        // If no expected link found, just check that URL contains the href
+        // If no expected link found, just check that the URL contains the href
         verified = actualUrl.includes(href);
       }
 
