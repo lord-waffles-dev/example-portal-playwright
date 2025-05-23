@@ -109,7 +109,7 @@ export class LoginPage extends BasePage {
       await this.click(this.selectors.passwordToggleButton);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
-      throw new Error(`Failed to click continue button: ${errorMessage}`);
+      throw new Error(`Failed to click password visibility toggle button: ${errorMessage}`);
     }
   }
 
