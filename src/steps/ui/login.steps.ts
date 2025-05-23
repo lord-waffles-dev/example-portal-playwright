@@ -22,7 +22,7 @@ Given('provider navigates to the provider portal', async function (this: ICustom
  * Comprehensive login step that handles the entire login flow
  * Including navigation, email/password entry, and 2FA
  */
-Given('I log into the provider portal', async function (this: ICustomWorld) {
+Given('I log into the provider portal with {string}', async function (this: ICustomWorld, provider: string) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   const DashboardPage = PageFactory.getDashboardPage(page);
@@ -34,8 +34,8 @@ Given('I log into the provider portal', async function (this: ICustomWorld) {
   }
 
   // Complete the login process
-  await LoginPage.inputEmail(config.credentials.staging.validProvider1.email);
-  await LoginPage.inputPassword(config.credentials.staging.validProvider1.password);
+  await LoginPage.inputEmail(config.credentials.staging[provider as ProviderKey].email);
+  await LoginPage.inputPassword(config.credentials.staging[provider as ProviderKey].password);
   await LoginPage.clickContinue();
   await LoginPage.inputMfa();
   await LoginPage.clickContinueMfa();

@@ -34,8 +34,8 @@ export const config = {
   credentials: {
     staging: {
       validProvider1: {
-        email: 'staging.provider+nolabs-nobh@recurohealth.com',
-        password: 'RecuroStaging1!'
+        email: 'qa-auto+eprescribe@recurohealth.com',
+        password: 'RecuroTest1!'
       },
       invalidProvider2: {
         email: 'notanemail@email',

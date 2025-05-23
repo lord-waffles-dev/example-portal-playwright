@@ -6,6 +6,24 @@ import { PageFactory } from '../../pages';
  * Step definitions for the Provider Portal Dashboard.
  * These steps use the DashboardPage page object to interact with the dashboard.
  */
+When('I am on the dashboard', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyDashboard();
+});
+
+Then('Provider is presented with the banner', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyePrescribeBanner();
+});
+
+Then('Provider is not presented with the banner', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyMissingePrescribeBanner();
+});
+
 When('I select the Resource Center link', async function (this: ICustomWorld) {
   const page = this.page!;
   const DashboardPage = PageFactory.getDashboardPage(page);
@@ -30,4 +48,28 @@ Then(/^I verify all other links within the Resource Center modal$/, async functi
   for (const result of linkResults) {
     this.attach(`Link "${result.linkText}" opened URL: ${result.url}`, 'text/plain');
   }
+});
+// Cleanup with an Outline
+When(`I observe no requested visits`, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyEmptyRequestedVisits();
+});
+// Cleanup with an Outline
+When(`I observe an requested vpc visit`, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyRequestedVPCVisit();
+});
+// Cleanup with an Outline
+When(`I observe no upcoming visits`, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyEmptyUpcomingVisits();
+});
+// Cleanup with an Outline
+When(`I observe an upcoming vpc visit`, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.verifyUpcomingVPCVisit();
 });

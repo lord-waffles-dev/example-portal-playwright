@@ -19,11 +19,14 @@
     "test:laptop": "VIEWPORT=laptop npm run cucumber",
 
     "debug": "PWDEBUG=1 DEBUG=pw:api npm run cucumber",
+    "debug:dashboard": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @dashboard",
     "debug:desktop": "PWDEBUG=1 VIEWPORT=desktop npm run cucumber",
     "debug:laptop": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber",
 
     "feature:login": "npm run cucumber -- --tags @login",
-    "feature:resource-center": "npm run cucumber -- --tags @recource-center",
+    "feature:dashboard": "npm run cucumber -- --tags @dashboard",
+    "feature:eprescribe": "npm run cucumber -- --tags @eprescribe",
+    "feature:resource-center": "npm run cucumber -- --tags @resource-center",
 
     "report": "open reports/report.html",
     "video": "PWVIDEO=1 npm run cucumber",
