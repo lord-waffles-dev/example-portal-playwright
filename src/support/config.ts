@@ -41,10 +41,17 @@ export const config = {
         email: 'notanemail@email',
         password: 'notapassword'
       },
+      no2FAProvider: {
+        // Name: Auto9 Provider
+        // Account 2FA is not bypassed in staging
+        email: 'qa-auto+no-2fa@recurohealth.com',
+        password: 'RecuroTest1!'
+      },
       autoProvider1: {
         // Provider w/ ePrescribe
         // Timezone: Central
         // Name: Auto1 Provider
+        // Account 2FA bypassed in staging
         email: 'qa-auto+eprescribe@recurohealth.com',
         password: 'RecuroTest1!'
       },
@@ -52,6 +59,7 @@ export const config = {
         // Provider w/o ePrescribe
         // Timezone: Mountain Time (USMT)
         // Name: Auto2 Provider
+        // Account 2FA bypassed in staging
         email: 'qa-auto+no-eprescribe@recurohealth.com',
         password: 'RecuroTest1!'
       },
@@ -59,6 +67,7 @@ export const config = {
         // Provider w/o licenses
         // Timezone: Eastern
         // Name: Auto3 Provider
+        // Account 2FA bypassed in staging
         email: 'qa-auto+no-licenses@recurohealth.com',
         password: 'RecuroTest1!'
       },
@@ -67,6 +76,7 @@ export const config = {
         // Timezone: Central
         // State: Texas
         // Name: Auto4 Provider
+        // Account 2FA bypassed in staging
         email: 'qa-auto+one-state@recurohealth.com',
         password: 'RecuroTest1!'
       },
@@ -74,6 +84,7 @@ export const config = {
         // Provider w/ all state licenses
         // Timezone: Pacific
         // Name: Auto5 Provider
+        // Account 2FA bypassed in staging
         email: 'qa-auto+all-states@recurohealth.com',
         password: 'RecuroTest1!'
       },
@@ -81,6 +92,7 @@ export const config = {
         // Provider w/ Grail
         // Timezone: Central
         // Name: Auto6 Provider
+        // Account 2FA bypassed in staging
         email: 'qa-auto+grail@recurohealth.com',
         password: 'RecuroTest1!'
       },
@@ -88,6 +100,7 @@ export const config = {
         // Provider w/ Cologuard
         // Timezone: Central
         // Name: Auto7 Provider
+        // Account 2FA bypassed in staging
         email: 'qa-auto+cologuard@recurohealth.com',
         password: 'RecuroTest1!'
       },
@@ -95,6 +108,7 @@ export const config = {
         // Provider w/ Grail, Cologuard, and ePrescribe
         // Timezone: Pacific
         // Name: Auto8 Provider
+        // Account 2FA bypassed in staging
         email: 'qa-auto+labs@recurohealth.com',
         password: 'RecuroTest1!'
       }

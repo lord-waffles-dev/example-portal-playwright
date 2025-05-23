@@ -19,6 +19,7 @@
     "test:laptop": "VIEWPORT=laptop npm run cucumber",
 
     "debug": "PWDEBUG=1 DEBUG=pw:api npm run cucumber",
+    "debug:login": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @login",
     "debug:dashboard": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @dashboard",
     "debug:desktop": "PWDEBUG=1 VIEWPORT=desktop npm run cucumber",
     "debug:laptop": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber",
