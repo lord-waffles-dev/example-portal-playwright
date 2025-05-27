@@ -17,6 +17,7 @@ export class LoginPage extends BasePage {
     forgotPasswordLink: string;
     emailErrorMessage: string;
     passwordErrorMessage: string;
+    passwordToggleButton: string;
     // Two-Step Authentication Page
     mfa_1: string;
     mfa_2: string;
@@ -27,6 +28,7 @@ export class LoginPage extends BasePage {
     resendButton: string;
     checkbox: string;
     mfaContinueButton: string;
+    mfaErrorMessage: string;
   };
 
   /**
@@ -45,7 +47,8 @@ export class LoginPage extends BasePage {
       continueButton: 'id=login__continue',
       forgotPasswordLink: 'id=login__forgot-password',
       emailErrorMessage: 'id=login__email-helper-text',
-      passwordErrorMessage: 'id=login__email-helper-text', // same message
+      passwordErrorMessage: 'id=login__password-helper-text', // same message
+      passwordToggleButton: 'xpath=//button[@aria-label=\'toggle password visibility.\']',
       // Two-Step Authentication Page
       mfa_1: 'xpath=(//input[@inputmode=\'numeric\'])[1]',
       mfa_2: 'xpath=(//input[@inputmode=\'numeric\'])[2]',
@@ -56,6 +59,7 @@ export class LoginPage extends BasePage {
       resendButton: 'xpath=//button[normalize-space(text())=\'Resend\']',
       checkbox: 'xpath=//input[@type=\'checkbox\']',
       mfaContinueButton: 'id=mfa__continue',
+      mfaErrorMessage: 'xpath=//p[normalize-space(text())=\'Incorrect verification code. Please try again.\']',
       ...customSelectors
     };
   }
@@ -95,6 +99,60 @@ export class LoginPage extends BasePage {
       const errorMessage = error instanceof Error ? error.message : String(error);
       throw new Error(`Failed to input password "${password}": ${errorMessage}`);
     }
+  }
+
+  /**
+   * Click the Password Visibility Toggle Button to toggle password visibility.
+   */
+  async clickPasswordVisibilityToggle(): Promise<void> {
+    try {
+      await this.click(this.selectors.passwordToggleButton);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      throw new Error(`Failed to click password visibility toggle button: ${errorMessage}`);
+    }
+  }
+
+  /**
+   * Verify that the password message is displayed and matches the expected text.
+   * @param expectedText - The expected error message text
+   * @returns True if the password is unmasked and matches the expected text, false otherwise
+   */
+  async verifyPasswordVisible(expectedText?: string): Promise<boolean> {
+    // Get the actual text from the error message element
+    const actualText = await this.getAttribute(this.selectors.passwordInput, 'value');
+
+    // If expectedText is provided, verify that it matches the actual text
+    if (expectedText) {
+      if (actualText !== expectedText) {
+        throw new Error(`Password text does not match. Expected: "${expectedText}", Actual: "${actualText}"`);
+      }
+      return true;
+    }
+
+    // If no expectedText is provided, verify that the actual text is not empty
+    return (actualText ?? '').trim() !== '';
+  }
+
+  /**
+   * Verify that the password message is masked and does not display the expected text.
+   * @param expectedText - The expected error message text
+   * @returns True if the password is masked and matches the expected text, false otherwise
+   */
+  async verifyPasswordMasked(expectedText?: string): Promise<boolean> {
+    // Get the actual text from the error message element
+    const actualText = await this.getAttribute(this.selectors.passwordInput, 'value');
+
+    // If expectedText is provided, verify that it matches the actual text
+    if (expectedText) {
+      if (actualText == expectedText) {
+        throw new Error(`Password text is not masked. Expected: "${expectedText}", Actual: "${actualText}"`);
+      }
+      return true;
+    }
+
+    // If no expectedText is provided, verify that the actual text is not empty
+    return (actualText ?? '').trim() !== '';
   }
 
   /**
@@ -158,7 +216,7 @@ export class LoginPage extends BasePage {
   /**
    * Verify that the password error message is displayed and matches the expected text.
    * @param expectedText - The expected error message text
-   * @returns True if the email error message is displayed and matches the expected text, false otherwise
+   * @returns True if the password error message is displayed and matches the expected text, false otherwise
    */
   async verifyPasswordError(expectedText?: string): Promise<boolean> {
     await this.waitForElement(this.selectors.passwordErrorMessage);
@@ -169,7 +227,30 @@ export class LoginPage extends BasePage {
     // If expectedText is provided, verify that it matches the actual text
     if (expectedText) {
       if (actualText !== expectedText) {
-        throw new Error(`Email error message text does not match. Expected: "${expectedText}", Actual: "${actualText}"`);
+        throw new Error(`Password error message text does not match. Expected: "${expectedText}", Actual: "${actualText}"`);
+      }
+      return true;
+    }
+
+    // If no expectedText is provided, verify that the actual text is not empty
+    return actualText.trim() !== '';
+  }
+
+  /**
+   * Verify that the 2FA error message is displayed and matches the expected text.
+   * @param expectedText - The expected error message text
+   * @returns True if the 2FA error message is displayed and matches the expected text, false otherwise
+   */
+  async verify2FAError(expectedText?: string): Promise<boolean> {
+    await this.waitForElement(this.selectors.mfaErrorMessage);
+
+    // Get the actual text from the error message element
+    const actualText = await this.getText(this.selectors.mfaErrorMessage);
+
+    // If expectedText is provided, verify that it matches the actual text
+    if (expectedText) {
+      if (actualText !== expectedText) {
+        throw new Error(`2FA error message text does not match. Expected: "${expectedText}", Actual: "${actualText}"`);
       }
       return true;
     }

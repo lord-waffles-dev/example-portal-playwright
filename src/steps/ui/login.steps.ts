@@ -50,10 +50,16 @@ When('they enter a valid email with {string}', async function (this: ICustomWorl
   await LoginPage.inputEmail(config.credentials.staging[email as ProviderKey].email);
 });
 
-When('they enter an invalid email', async function (this: ICustomWorld) {
+When('they enter an invalid email with {string}', async function (this: ICustomWorld, email: string) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
-  await LoginPage.inputEmail(config.credentials.staging.invalidProvider2.email);
+  await LoginPage.inputEmail(email);
+});
+
+When('they enter an invalid email format with {string}', async function (this: ICustomWorld, email: string) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  await LoginPage.inputEmail(email);
 });
 
 When('they enter a valid password with {string}', async function (this: ICustomWorld, password: string) {
@@ -68,19 +74,44 @@ When('they enter an invalid password', async function (this: ICustomWorld) {
   await LoginPage.inputPassword(config.credentials.staging.invalidProvider2.password);
 });
 
-When('they select login continue button', async function (this: ICustomWorld) {
+When('they click the login continue button', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   await LoginPage.clickContinue();
 });
 
-When('they enter a valid 2fa code', async function (this: ICustomWorld) {
+When('they click the password visibility toggle', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  await LoginPage.clickPasswordVisibilityToggle();
+});
+
+Then('the password should be visible as {string}', async function (this: ICustomWorld, password: string) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  // Expecting Text
+  await LoginPage.verifyPasswordVisible(password);
+});
+
+Then('the password {string} should be masked', async function (this: ICustomWorld, password: string) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  await LoginPage.verifyPasswordMasked(password);
+});
+
+When('they enter a valid 2FA code', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   await LoginPage.inputMfa();
 });
 
-When('they select 2fa continue button', async function (this: ICustomWorld) {
+When('they enter an invalid 2FA code', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  await LoginPage.inputMfa(); // no need to change as 2FA won't match 123456
+});
+
+When('they click the 2FA continue button', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   await LoginPage.clickContinueMfa();
@@ -104,8 +135,35 @@ When('they should observe an password error message', async function (this: ICus
   await LoginPage.verifyPasswordError();
 });
 
-Then('they should be logged in successfully', async function (this: ICustomWorld) {
+Then('they should be successfully logged in to the dashboard', async function (this: ICustomWorld) {
   const page = this.page!;
   const DashboardPage = PageFactory.getDashboardPage(page);
   await DashboardPage.verifyDashboard();
+});
+
+Then('they should see an email error message {string}', async function (this: ICustomWorld, message: string) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  // Expecting Text
+  await LoginPage.verifyEmailError(message);
+  // Verifying Presence
+  await LoginPage.verifyEmailError();
+});
+
+Then('they should see a password error message {string}', async function (this: ICustomWorld, message: string) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  // Expecting Text
+  await LoginPage.verifyPasswordError(message);
+  // Verifying Presence
+  await LoginPage.verifyPasswordError();
+});
+
+Then('they should see a 2FA error message {string}', async function (this: ICustomWorld, message: string) {
+  const page = this.page!;
+  const LoginPage = PageFactory.getLoginPage(page);
+  // Expecting Text
+  await LoginPage.verify2FAError(message);
+  // Verifying Presence
+  await LoginPage.verify2FAError();
 });
