@@ -5,6 +5,6 @@ Feature: Provider Portal Visits Functionality
     Given I log into the provider portal with "autoProvider1"
 
   Scenario: Provider views an Upcoming Visit.
-    When I am on the dashboard
+    When I should see the dashboard page
     And I click the view button
     Then I am on the Visit page
