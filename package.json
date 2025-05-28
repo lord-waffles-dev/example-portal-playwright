@@ -26,7 +26,6 @@
 
     "feature:login": "npm run cucumber -- --tags @login",
     "feature:dashboard": "npm run cucumber -- --tags @dashboard",
-    "feature:eprescribe": "npm run cucumber -- --tags @eprescribe",
     "feature:resource-center": "npm run cucumber -- --tags @resource-center",
 
     "report": "open reports/report.html",
