@@ -24,6 +24,7 @@ export class DashboardPage extends BasePage {
     visitHistoryButton: string;
     myScheduleButton: string;
     resourceCenterButton: string;
+    labOrderRequestsButton: string;
     // Resource Center
     resourceCenterModal: string;
     videoConsultTroubleshootingLink: string;
@@ -70,6 +71,7 @@ export class DashboardPage extends BasePage {
       visitHistoryButton: 'id=navbar-button-1',
       myScheduleButton: 'id=navbar-button-2',
       resourceCenterButton: 'id=navbar-button-4',
+      labOrderRequestsButton: 'id=navbar-button-3',
       // Resource Center
       resourceCenterModal: 'xpath=//div[@role="dialog"][@aria-labelledby="dialog__title"]',
       videoConsultTroubleshootingLink: 'xpath=//div[@role="dialog"]//a[contains(text(), "Video Consult Troubleshooting Guide")]',
@@ -108,6 +110,13 @@ export class DashboardPage extends BasePage {
   async clickResourceCenterButton(): Promise<void> {
     await this.click(this.selectors.resourceCenterButton);
     await expect(this.page.locator(this.selectors.resourceCenterModal)).toBeVisible();
+  }
+
+  /**
+   * Click the Lab Order Requests button
+   */
+  async clickLabOrderRequestsButton(): Promise<void> {
+    await this.click(this.selectors.labOrderRequestsButton);
   }
 
   /**

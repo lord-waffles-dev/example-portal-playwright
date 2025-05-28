@@ -73,3 +73,12 @@ When(`I observe an upcoming vpc visit`, async function (this: ICustomWorld) {
   const DashboardPage = PageFactory.getDashboardPage(page);
   await DashboardPage.verifyUpcomingVPCVisit();
 });
+
+When('I select the Lab Order Requests link', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.clickLabOrderRequestsButton();
+  
+  // Add this to make it a little more explicit in the log
+  this.attach('Clicked on Lab Order Requests link', 'text/plain');
+});

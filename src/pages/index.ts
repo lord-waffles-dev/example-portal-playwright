@@ -15,3 +15,6 @@ export * from './common/components/HeaderComponent';
 export * from './example/PlaywrightPage';
 export * from './example/FormPage';
 export * from './example/HomePage';
+export * from './ui/LoginPage';
+export * from './ui/DashboardPage';
+export * from './ui/LabOrderRequestsPage';
