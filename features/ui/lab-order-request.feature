@@ -9,5 +9,25 @@ Feature: Lab Order request
   Scenario: Verify Lab Order Requests page loads successfully
     When I select the Lab Order Requests link
     And I should see the Cologuard Lab Orders data grid
-    And I should see the Galleri Lab Orders data grid
+    Then I should see the Galleri Lab Orders data grid
 
+  # We are currently limited with data setup. In the future this scenario
+  # can encompass more searches but for now it just looks for empty search results.
+  Scenario Outline: Verify the functionality of the Lab Order Requests search
+    When I select the Lab Order Requests link
+    And I enter the search term "<Search Term>"
+    And I get the search result of "<Pending requests>" in Pending requests
+    And I get the search result of "<Approved orders>" in Approved orders
+    And I click the Galleri tab
+    And I get the search result of "<Pending requests>" in Pending requests
+    Then I get the search result of "<Approved orders>" in Approved orders
+
+    Examples:
+      | Search Term            | Pending requests  | Approved orders    |
+      | No results search term | No results found. | No approved orders |
+
+  Scenario: Verify the Review modals are displayed on the Lab Order Requests page
+    When I select the Lab Order Requests link
+    And I select the Review button the the Cologuard page for Pending Requests
+    And I verify that the Cologuard Request modal appears
+    Then I verify that the Galleri Request modal appears

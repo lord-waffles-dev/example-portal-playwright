@@ -19,9 +19,8 @@ Then('I should see the Cologuard Lab Orders data grid', async function (this: IC
 
   // Wait for the Lab Orders DataGrid to appear and verify it's loaded
   await LabOrderRequestsPage.verifyLabOrdersPageLoaded();
-
-  // Attach a message to the test report
-  this.attach('Cologuard Lab Orders data grid is visible', 'text/plain');
+  await LabOrderRequestsPage.clickApprovedOrders();
+  await LabOrderRequestsPage.verifyLabOrdersPageLoaded();
 });
 
 Then('I should see the Galleri Lab Orders data grid', async function (this: ICustomWorld) {
@@ -33,7 +32,57 @@ Then('I should see the Galleri Lab Orders data grid', async function (this: ICus
 
   // Wait for the Lab Orders DataGrid to appear and verify it's loaded
   await LabOrderRequestsPage.verifyLabOrdersPageLoaded();
+  await LabOrderRequestsPage.clickApprovedOrders();
+  await LabOrderRequestsPage.verifyLabOrdersPageLoaded();
+});
 
-  // Attach a message to the test report
-  this.attach('Cologuard Lab Orders data grid is visible', 'text/plain');
+When(/^I enter the search term "([^"]*)"$/, async function (this: ICustomWorld, searchTerm: string) {
+  const page = this.page!;
+  const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
+  await LabOrderRequestsPage.searchInGrid(searchTerm);
+});
+
+Then(/^I get the search result of "([^"]*)" in Pending requests$/, async function (this: ICustomWorld, expectedResult: string) {
+  const page = this.page!;
+  const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
+  await LabOrderRequestsPage.clickPendingRequests();
+  await LabOrderRequestsPage.verifySearchResult(expectedResult);
+});
+
+Then(/^I get the search result of "([^"]*)" in Approved orders$/, async function (this: ICustomWorld, expectedResult: string) {
+  const page = this.page!;
+  const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
+  await LabOrderRequestsPage.clickApprovedOrders();
+  await LabOrderRequestsPage.verifySearchResult(expectedResult);
+});
+
+When(/^I click the Galleri tab$/, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
+  await LabOrderRequestsPage.clickGalleriTab();
+});
+
+When(/^I select the Review button the the Cologuard page for Pending Requests$/, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
+  await LabOrderRequestsPage.clickCologuardTab();
+  await LabOrderRequestsPage.waitForLabOrdersDataGrid();
+  await LabOrderRequestsPage.clickReviewButton();
+});
+
+When(/^I verify that the Cologuard Request modal appears$/, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
+  await LabOrderRequestsPage.isCologuardRequestVisible();
+  await LabOrderRequestsPage.clickCancelButton();
+});
+
+Then(/^I verify that the Galleri Request modal appears$/, async function (this: ICustomWorld) {
+  const page = this.page!;
+  const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
+  await LabOrderRequestsPage.clickGalleriTab();
+  await LabOrderRequestsPage.waitForLabOrdersDataGrid();
+  await LabOrderRequestsPage.clickReviewButton();
+  await LabOrderRequestsPage.isGalleriRequestVisible();
+  await LabOrderRequestsPage.clickCancelButton();
 });
