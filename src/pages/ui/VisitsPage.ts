@@ -265,7 +265,7 @@ export class VisitsPage extends BasePage {
       noSurgeryHistoryEnteredMessage: '//p[normalize-space(text())=\'No surgery history entered\']',
       addSurgeryHistoryButton: '//button[normalize-space(text())=\'Add surgery history\']',
       // Immunizations Card
-      immunizationsCard: '//button[normalize-space(text())=\'Add surgery history\']', // data-testid missing for card
+      immunizationsCard: '//h3[normalize-space(text())=\'Immunizations\']', // data-testid missing for card
       noImmunizationsEnteredMessage: '//p[normalize-space(text())=\'No immunizations entered\']',
       addImmunizationButton: '//button[normalize-space(text())=\'Add immunization\']',
 
