@@ -8,8 +8,8 @@ Feature: Lab Order request
 
   Scenario: Verify Lab Order Requests page loads successfully
     When I select the Lab Order Requests link
-    And I should see the Cologuard Lab Orders data grid
-    Then I should see the Galleri Lab Orders data grid
+    Then I should see the Cologuard Lab Orders data grid
+    And I should see the Galleri Lab Orders data grid
 
   # We are currently limited with data setup. In the future this scenario
   # can encompass more searches but for now it just looks for empty search results.
