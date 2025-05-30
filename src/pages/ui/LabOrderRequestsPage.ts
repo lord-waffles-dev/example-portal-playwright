@@ -1,26 +1,24 @@
-import { Page, expect } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 import { BasePage } from '../common/BasePage';
 
 /**
- * LabOrderRequestsPage class.
- * This class extends BasePage and provides specific functionality for the Lab Order Requests page.
+ * LabOrderRequestsPage class represents the Lab Order Requests page
  */
 export class LabOrderRequestsPage extends BasePage {
-  private readonly selectors: {
-    labOrdersDataGrid: string;
-    labOrdersGridLoading: string;
-    galleriTab: string;
-    cologuardTab: string;
-    approvedOrdersButton: string;
-    pendingRequestsButton: string;
-    searchInput: string;
-    noResultsMessage: string;
-    alertMessage: string;
-    reviewButton: string;
-    cologuardModal: string;
-    galleriModal: string;
-    cancelButton: string;
-  };
+  readonly page: Page;
+  readonly labOrdersDataGrid: Locator;
+  readonly loadingOverlay: Locator;
+  readonly galleriTab: Locator;
+  readonly cologuardTab: Locator;
+  readonly approvedOrdersButton: Locator;
+  readonly pendingRequestsButton: Locator;
+  readonly searchInput: Locator;
+  readonly noResultsMessage: Locator;
+  readonly alertMessage: Locator;
+  readonly reviewButton: Locator;
+  readonly cologuardModal: Locator;
+  readonly galleriModal: Locator;
+  readonly cancelButton: Locator;
 
   /**
    * Constructor for the LabOrderRequestsPage class.
