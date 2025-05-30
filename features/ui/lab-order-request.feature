@@ -19,8 +19,8 @@ Feature: Lab Order request
     And I get the search result of "<Pending requests>" in Pending requests
     And I get the search result of "<Approved orders>" in Approved orders
     And I click the Galleri tab
-    And I get the search result of "<Pending requests>" in Pending requests
-    Then I get the search result of "<Approved orders>" in Approved orders
+    Then I get the search result of "<Pending requests>" in Pending requests
+    And I get the search result of "<Approved orders>" in Approved orders
 
     Examples:
       | Search Term            | Pending requests  | Approved orders    |
