@@ -20,29 +20,12 @@ export class LabOrderRequestsPage extends BasePage {
   readonly galleriModal: Locator;
   readonly cancelButton: Locator;
 
-  /**
-   * Constructor for the LabOrderRequestsPage class.
-   * @param page - The Playwright Page object
-   * @param customSelectors - Optional custom selectors to override the default selectors
-   */
-  constructor(page: Page, customSelectors = {}) {
+  constructor(page: Page) {
     super(page);
-    this.selectors = {
-      labOrdersDataGrid: '[role="grid"]',
-      labOrdersGridLoading: '.MuiDataGrid-loadingOverlay',
-      galleriTab: '[role="tab"]:has-text("Galleri")',
-      cologuardTab: '[role="tab"]:has-text("Cologuard")',
-      approvedOrdersButton: 'label:has-text("Approved orders")',
-      pendingRequestsButton: 'label:has-text("Pending requests")',
-      searchInput: 'input.MuiInputBase-input',
-      noResultsMessage: '.MuiDataGrid-overlay',
-      alertMessage: '.MuiAlert-message',
-      reviewButton: 'button.MuiButton-root.MuiButton-text:has-text("Review")',
-      cologuardModal: '[role="dialog"][aria-labelledby="dialog__title"]:has-text("Cologuard Request")',
-      galleriModal: '[role="dialog"][aria-labelledby="dialog__title"]:has-text("Galleri Request")',
-      cancelButton: 'button.MuiButton-root:has-text("Cancel")',
-      ...customSelectors
-    };
+    this.page = page;
+
+    this.labOrdersDataGrid = page.locator('.MuiDataGrid-root').first();
+
   }
 
   /**
