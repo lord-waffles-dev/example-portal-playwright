@@ -29,5 +29,5 @@ Feature: Lab Order request
   Scenario: Verify the Review modals are displayed on the Lab Order Requests page
     When I select the Lab Order Requests link
     And I select the Review button the the Cologuard page for Pending Requests
-    And I verify that the Cologuard Request modal appears
-    Then I verify that the Galleri Request modal appears
+    Then I verify that the Cologuard Request modal appears
+    And I verify that the Galleri Request modal appears
