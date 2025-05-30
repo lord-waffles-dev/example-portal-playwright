@@ -74,6 +74,12 @@ When(`I should see an upcoming vpc visit`, async function (this: ICustomWorld) {
   await DashboardPage.verifyUpcomingVPCVisit();
 });
 
+When('I click the "View" button for the first upcoming visit', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.clickViewButton();
+});
+
 When('I select the Lab Order Requests link', async function (this: ICustomWorld) {
   const page = this.page!;
   const DashboardPage = PageFactory.getDashboardPage(page);
