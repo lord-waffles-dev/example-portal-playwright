@@ -18,6 +18,7 @@ export class DashboardPage extends BasePage {
     requestedVisitsConfirmButton: string;
     requestedVPCVisit: string;
     upcomingVPCVisit: string;
+    upcomingVPCVisitViewButton: string;
     // Nav Bar
     userAvatarButton: string;
     dashboardButton: string;
@@ -64,6 +65,7 @@ export class DashboardPage extends BasePage {
       requestedVPCVisit: 'xpath=(//div[@class=\'MuiStack-root\'])//div[1]//p[normalize-space(text())=\'Virtual Primary Care (Initial Visit)\']',
       // This is not the best way to select an upcoming vpc visit, but it works for now.
       upcomingVPCVisit: 'xpath=(//div[contains(@class,\'MuiDataGrid-cell MuiDataGrid-cell--textLeft\')])[2]//p[normalize-space(text())=\'Virtual Primary Care (Upcoming Visit)\']',
+      upcomingVPCVisitViewButton: '//button[normalize-space(text())=\'View\']', // This is not unique enough. If more than one visit, this will fail.
       // Nav Bar
       userAvatarButton: 'id=user-avatar',
       dashboardButton: 'id=navbar-button-0',
@@ -108,6 +110,13 @@ export class DashboardPage extends BasePage {
   async clickResourceCenterButton(): Promise<void> {
     await this.click(this.selectors.resourceCenterButton);
     await expect(this.page.locator(this.selectors.resourceCenterModal)).toBeVisible();
+  }
+
+  /**
+   * Click the View button for the first upcoming visit.
+   */
+  async clickViewButton(): Promise<void> {
+    await this.click(this.selectors.upcomingVPCVisitViewButton);
   }
 
   /**

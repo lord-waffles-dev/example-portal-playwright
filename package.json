@@ -21,11 +21,13 @@
     "debug": "PWDEBUG=1 DEBUG=pw:api npm run cucumber",
     "debug:login": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @login",
     "debug:dashboard": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @dashboard",
+    "debug:visits": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @visits",
     "debug:desktop": "PWDEBUG=1 VIEWPORT=desktop npm run cucumber",
     "debug:laptop": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber",
 
     "feature:login": "npm run cucumber -- --tags @login",
     "feature:dashboard": "npm run cucumber -- --tags @dashboard",
+    "feature:visits": "npm run cucumber -- --tags @visits",
     "feature:resource-center": "npm run cucumber -- --tags @resource-center",
 
     "report": "open reports/report.html",
