@@ -23,105 +23,89 @@ export class LabOrderRequestsPage extends BasePage {
   constructor(page: Page) {
     super(page);
     this.page = page;
-
     this.labOrdersDataGrid = page.locator('.MuiDataGrid-root').first();
-
+    this.loadingOverlay = page.locator('.MuiDataGrid-loadingOverlay');
+    this.galleriTab = page.getByRole('tab', { name: 'Galleri' });
+    this.cologuardTab = page.getByRole('tab', { name: 'Cologuard' });
+    this.approvedOrdersButton = page.locator('label', { hasText: 'Approved orders' });
+    this.pendingRequestsButton = page.locator('label', { hasText: 'Pending requests' });
+    this.searchInput = page.locator('input[type="text"]').first();
+    this.noResultsMessage = page.locator('.MuiDataGrid-overlay');
+    this.alertMessage = page.locator('.MuiAlert-message');
+    this.reviewButton = page.getByRole('button', { name: 'Review' }).first();
+    this.cologuardModal = page.getByRole('dialog', { name: 'Cologuard Request' });
+    this.galleriModal = page.getByRole('dialog', { name: 'Galleri Request' });
+    this.cancelButton = page.getByRole('button', { name: 'Cancel' });
   }
 
   /**
    * Wait for the Lab Orders DataGrid to appear and finish loading.
-   * The DataGrid can take a while to load due to backend slowness.
    */
   async waitForLabOrdersDataGrid(): Promise<void> {
-    console.log('Waiting for Lab Orders DataGrid to load...');
-    // First, wait for the grid container to be present
-    const dataGrid = this.page.locator(this.selectors.labOrdersDataGrid);
-    await dataGrid.waitFor({ state: 'attached', timeout: 60000 });
+    await this.labOrdersDataGrid.waitFor({ state: 'attached', timeout: 60000 });
     try {
-      // Wait for the loading overlay to appear (this happens when the stored proc runs)
-      const loadingOverlay = this.page.locator(this.selectors.labOrdersGridLoading);
-      await loadingOverlay.waitFor({ state: 'visible', timeout: 5000 });
-      // Then wait for the loading overlay to disappear (means data finished loading)
-      await loadingOverlay.waitFor({ state: 'hidden', timeout: 60000 });
+      await this.loadingOverlay.waitFor({ state: 'visible', timeout: 5000 });
+      await this.loadingOverlay.waitFor({ state: 'hidden', timeout: 60000 });
     } catch {
       // If we didn't see the loading overlay, proceed
     }
-    // Final verification that grid is visible and interactive
-    await expect(dataGrid).toBeVisible({ timeout: 60000 });
-    console.log('Lab Orders DataGrid has loaded successfully');
+    await expect(this.labOrdersDataGrid).toBeVisible({ timeout: 60000 });
   }
 
-  /**
-   * Verify that the Lab Orders page has loaded completely with the data grid.
-   * This is a wrapper method that calls waitForLabOrdersDataGrid.
-   */
   async verifyLabOrdersPageLoaded(): Promise<void> {
     await this.waitForLabOrdersDataGrid();
-    console.log('Lab Orders page loaded successfully with data grid');
   }
 
   async clickGalleriTab(): Promise<void> {
-    await this.click(this.selectors.galleriTab);
+    await this.galleriTab.click();
+    await this.waitForLabOrdersDataGrid();
   }
 
   async clickCologuardTab(): Promise<void> {
-    await this.click(this.selectors.cologuardTab);
+    await this.cologuardTab.click();
+    await this.waitForLabOrdersDataGrid();
   }
 
   async clickPendingRequests(): Promise<void> {
-    await this.click(this.selectors.pendingRequestsButton);
+    await this.pendingRequestsButton.click();
+    await this.waitForLabOrdersDataGrid();
   }
 
   async clickApprovedOrders(): Promise<void> {
-    await this.click(this.selectors.approvedOrdersButton);
+    await this.approvedOrdersButton.click();
+    await this.waitForLabOrdersDataGrid();
   }
 
   async clickCancelButton(): Promise<void> {
-    await this.click(this.selectors.cancelButton);
+    await this.cancelButton.click();
   }
 
-  /**
-   * Click the Review button if it exists, fail if it doesn't
-   * @throws Error if the Review button is not found
-   */
   async clickReviewButton(): Promise<void> {
     await this.waitForLabOrdersDataGrid();
-    const reviewButton = this.page.locator('button.MuiButton-root', { hasText: 'Review' }).first();
-    await reviewButton.waitFor({ state: 'visible', timeout: 10000 });
-    await reviewButton.click();
+    await this.reviewButton.waitFor({ state: 'visible', timeout: 10000 });
+    await this.reviewButton.click();
   }
 
-  /**
-   * Enter a search term in the grid search input.
-   * @param searchTerm - The term to search for
-   */
   async searchInGrid(searchTerm: string): Promise<void> {
-    const searchInput = this.page.locator(this.selectors.searchInput);
-    await searchInput.waitFor({ state: 'visible' });
-    await searchInput.fill(searchTerm);
+    await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    await this.searchInput.click();
+    await this.searchInput.fill(searchTerm);
+    await this.page.keyboard.press('Enter');
     await this.waitForLabOrdersDataGrid();
   }
 
-  /**
-   * Verify the search results or alert message
-   * @param expectedMessage - The expected message to verify
-   */
   async verifySearchResult(expectedMessage: string): Promise<void> {
-    const gridMessage = this.page.locator(this.selectors.noResultsMessage);
-    const alertMessage = this.page.locator(this.selectors.alertMessage);
-
-    // First, wait for the grid to finish any loading
     await this.waitForLabOrdersDataGrid();
 
     for (let i = 0; i < 10; i++) {
       try {
-        const hasGridMessage = await gridMessage.isVisible();
-        if (hasGridMessage && (await gridMessage.textContent() ?? '').trim() === expectedMessage) {
+        const hasGridMessage = await this.noResultsMessage.isVisible();
+        if (hasGridMessage && (await this.noResultsMessage.textContent() ?? '').trim() === expectedMessage) {
           return;
         }
 
-        const hasAlertMessage = await alertMessage.isVisible();
-        if (hasAlertMessage && (await alertMessage.textContent() ?? '').trim() === expectedMessage) {
+        const hasAlertMessage = await this.alertMessage.isVisible();
+        if (hasAlertMessage && (await this.alertMessage.textContent() ?? '').trim() === expectedMessage) {
           return;
         }
 
@@ -135,10 +119,12 @@ export class LabOrderRequestsPage extends BasePage {
   }
 
   async isCologuardRequestVisible(): Promise<boolean> {
-    return await this.isVisible(this.selectors.cologuardModal);
+    await this.cologuardModal.waitFor({ state: 'visible', timeout: 10000 });
+    return true;
   }
 
   async isGalleriRequestVisible(): Promise<boolean> {
-    return await this.isVisible(this.selectors.galleriModal);
+    await this.galleriModal.waitFor({ state: 'visible', timeout: 10000 });
+    return true;
   }
 }
