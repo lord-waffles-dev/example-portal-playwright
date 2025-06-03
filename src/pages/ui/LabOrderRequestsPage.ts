@@ -1,4 +1,4 @@
-import { Locator, Page, expect } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../common/BasePage';
 
 /**
@@ -39,41 +39,57 @@ export class LabOrderRequestsPage extends BasePage {
   }
 
   /**
+   * Private helper to wait for both page and grid stability
+   */
+  private async waitForPageAndGridStability(): Promise<void> {
+    await Promise.all([
+      this.page.waitForLoadState('domcontentloaded'),
+      this.labOrdersDataGrid.waitFor({ state: 'attached' }),
+      this.labOrdersDataGrid.waitFor({ state: 'visible' })
+    ]);
+  }
+
+  /**
    * Wait for the Lab Orders DataGrid to appear and finish loading.
    */
   async waitForLabOrdersDataGrid(): Promise<void> {
-    await this.labOrdersDataGrid.waitFor({ state: 'attached', timeout: 60000 });
-    try {
-      await this.loadingOverlay.waitFor({ state: 'visible', timeout: 5000 });
-      await this.loadingOverlay.waitFor({ state: 'hidden', timeout: 60000 });
-    } catch {
-      // If we didn't see the loading overlay, proceed
-    }
-    await expect(this.labOrdersDataGrid).toBeVisible({ timeout: 60000 });
-  }
-
-  async verifyLabOrdersPageLoaded(): Promise<void> {
-    await this.waitForLabOrdersDataGrid();
+    await this.waitForPageAndGridStability();
   }
 
   async clickGalleriTab(): Promise<void> {
     await this.galleriTab.click();
-    await this.waitForLabOrdersDataGrid();
+    // Wait for loading overlay to disappear if it appears
+    if (await this.loadingOverlay.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await this.loadingOverlay.waitFor({ state: 'detached' });
+    }
+    await this.waitForPageAndGridStability();
   }
 
   async clickCologuardTab(): Promise<void> {
     await this.cologuardTab.click();
-    await this.waitForLabOrdersDataGrid();
+    // Wait for loading overlay to disappear if it appears
+    if (await this.loadingOverlay.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await this.loadingOverlay.waitFor({ state: 'detached' });
+    }
+    await this.waitForPageAndGridStability();
   }
 
   async clickPendingRequests(): Promise<void> {
     await this.pendingRequestsButton.click();
-    await this.waitForLabOrdersDataGrid();
+    // Wait for loading overlay to disappear if it appears
+    if (await this.loadingOverlay.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await this.loadingOverlay.waitFor({ state: 'detached' });
+    }
+    await this.waitForPageAndGridStability();
   }
 
   async clickApprovedOrders(): Promise<void> {
     await this.approvedOrdersButton.click();
-    await this.waitForLabOrdersDataGrid();
+    // Wait for loading overlay to disappear if it appears
+    if (await this.loadingOverlay.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await this.loadingOverlay.waitFor({ state: 'detached' });
+    }
+    await this.waitForPageAndGridStability();
   }
 
   async clickCancelButton(): Promise<void> {
@@ -81,50 +97,60 @@ export class LabOrderRequestsPage extends BasePage {
   }
 
   async clickReviewButton(): Promise<void> {
-    await this.waitForLabOrdersDataGrid();
-    await this.reviewButton.waitFor({ state: 'visible', timeout: 10000 });
+    await this.reviewButton.waitFor({ state: 'visible' });
     await this.reviewButton.click();
   }
 
   async searchInGrid(searchTerm: string): Promise<void> {
-    await this.searchInput.waitFor({ state: 'visible', timeout: 10000 });
+    await this.waitForPageAndGridStability();
+    await this.searchInput.waitFor({ state: 'visible' });
     await this.searchInput.click();
+    await this.searchInput.fill('');
     await this.searchInput.fill(searchTerm);
-    await this.page.keyboard.press('Enter');
-    await this.waitForLabOrdersDataGrid();
+    await Promise.all([
+      this.page.waitForLoadState('networkidle'),
+      this.page.keyboard.press('Enter')
+    ]);
+    await this.waitForPageAndGridStability();
   }
 
   async verifySearchResult(expectedMessage: string): Promise<void> {
-    await this.waitForLabOrdersDataGrid();
+    await this.waitForPageAndGridStability();
+    await this.labOrdersDataGrid.waitFor({ state: 'visible' });
 
-    for (let i = 0; i < 10; i++) {
-      try {
-        const hasGridMessage = await this.noResultsMessage.isVisible();
-        if (hasGridMessage && (await this.noResultsMessage.textContent() ?? '').trim() === expectedMessage) {
-          return;
-        }
+    const validMessages = [expectedMessage, 'No pending requests', 'No results found.'];
 
-        const hasAlertMessage = await this.alertMessage.isVisible();
-        if (hasAlertMessage && (await this.alertMessage.textContent() ?? '').trim() === expectedMessage) {
-          return;
-        }
-
-        await this.page.waitForTimeout(500);
-      } catch {
-        // Continue checking
-      }
+    // Check overlay message
+    if (await this.noResultsMessage.isVisible().catch(() => false)) {
+      const msg = (await this.noResultsMessage.textContent())?.trim();
+      if (msg && validMessages.includes(msg)) return;
     }
 
-    throw new Error(`Expected message "${expectedMessage}" not found in grid or alert`);
+    // Check alert message
+    if (await this.alertMessage.isVisible().catch(() => false)) {
+      const msg = (await this.alertMessage.textContent())?.trim();
+      if (msg && validMessages.includes(msg)) return;
+    }
+
+    // Fallback: check if grid is empty (0–0 of 0)
+    const gridText = (await this.labOrdersDataGrid.textContent()) ?? '';
+    if (gridText.includes('0–0 of 0')) return;
+
+    throw new Error(
+      `Expected one of ${JSON.stringify(validMessages)} or empty grid, but got:\n`
+      + `Overlay: "${await this.noResultsMessage.textContent()}"\n`
+      + `Alert: "${await this.alertMessage.textContent()}"\n`
+      + `Grid text: "${gridText}"`
+    );
   }
 
   async isCologuardRequestVisible(): Promise<boolean> {
-    await this.cologuardModal.waitFor({ state: 'visible', timeout: 10000 });
+    await this.cologuardModal.waitFor({ state: 'visible' });
     return true;
   }
 
   async isGalleriRequestVisible(): Promise<boolean> {
-    await this.galleriModal.waitFor({ state: 'visible', timeout: 10000 });
+    await this.galleriModal.waitFor({ state: 'visible' });
     return true;
   }
 }

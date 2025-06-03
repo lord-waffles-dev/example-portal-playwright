@@ -15,16 +15,15 @@ Feature: Lab Order request
   # can encompass more searches but for now it just looks for empty search results.
   Scenario Outline: Verify the functionality of the Lab Order Requests search
     When I select the Lab Order Requests link
+    And I click the "<Lab Type>" tab
     And I enter the search term "<Search Term>"
     And I get the search result of "<Pending requests>" in Pending requests
     And I get the search result of "<Approved orders>" in Approved orders
-    And I click the Galleri tab
-    Then I get the search result of "<Pending requests>" in Pending requests
-    And I get the search result of "<Approved orders>" in Approved orders
 
     Examples:
-      | Search Term            | Pending requests  | Approved orders    |
-      | No results search term | No results found. | No approved orders |
+      | Search Term            | Lab Type    | Pending requests  | Approved orders    |
+      | No results search term | Cologuard   | No results found. | No approved orders |
+      | No results search term | Galleri     | No results found. | No approved orders |
 
   Scenario: Verify the Review modals are displayed on the Lab Order Requests page
     When I select the Lab Order Requests link

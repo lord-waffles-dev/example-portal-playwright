@@ -18,9 +18,8 @@ Then('I should see the Cologuard Lab Orders data grid', async function (this: IC
   const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
 
   // Wait for the Lab Orders DataGrid to appear and verify it's loaded
-  await LabOrderRequestsPage.verifyLabOrdersPageLoaded();
+  await LabOrderRequestsPage.waitForLabOrdersDataGrid();
   await LabOrderRequestsPage.clickApprovedOrders();
-  await LabOrderRequestsPage.verifyLabOrdersPageLoaded();
 });
 
 Then('I should see the Galleri Lab Orders data grid', async function (this: ICustomWorld) {
@@ -29,11 +28,7 @@ Then('I should see the Galleri Lab Orders data grid', async function (this: ICus
   const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
 
   await LabOrderRequestsPage.clickGalleriTab();
-
-  // Wait for the Lab Orders DataGrid to appear and verify it's loaded
-  await LabOrderRequestsPage.verifyLabOrdersPageLoaded();
   await LabOrderRequestsPage.clickApprovedOrders();
-  await LabOrderRequestsPage.verifyLabOrdersPageLoaded();
 });
 
 When(/^I enter the search term "([^"]*)"$/, async function (this: ICustomWorld, searchTerm: string) {
@@ -85,4 +80,17 @@ Then(/^I verify that the Galleri Request modal appears$/, async function (this: 
   await LabOrderRequestsPage.clickReviewButton();
   await LabOrderRequestsPage.isGalleriRequestVisible();
   await LabOrderRequestsPage.clickCancelButton();
+});
+
+When(/^I click the "([^"]*)" tab$/, async function (this: ICustomWorld, labType: string) {
+  const page = this.page!;
+  const LabOrderRequestsPage = PageFactory.getLabOrderRequestsPage(page);
+
+  if (labType === 'Galleri') {
+    await LabOrderRequestsPage.clickGalleriTab();
+  } else if (labType === 'Cologuard') {
+    await LabOrderRequestsPage.clickCologuardTab();
+  } else {
+    throw new Error(`Unsupported lab type: ${labType}`);
+  }
 });
