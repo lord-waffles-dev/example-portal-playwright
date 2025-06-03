@@ -24,7 +24,7 @@ Feature: Provider Portal Visits Functionality
       | Field        | Expected Value                       |
       | Reference ID | 2709092                              |
       | Status       | Assigned                             |
-      | Date         | Monday, 05/26/2025 @ 11:00 AM CT     |
+      | Date         | Monday, 05/26/2025 @ 10:00 AM CT     |
       | Type         | Virtual Primary Care (Initial Visit) |
       | Length       | 45 Minutes                           |
 
