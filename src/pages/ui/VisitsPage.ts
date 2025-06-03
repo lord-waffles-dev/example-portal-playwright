@@ -319,6 +319,7 @@ export class VisitsPage extends BasePage {
           throw new Error(`Unknown field: ${field}`);
       }
 
+      // Trim whitespace from the actual value
       actualValue = actualValue?.trim();
 
       if (actualValue !== expectedValue) {
