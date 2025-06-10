@@ -18,6 +18,9 @@
     "test:desktop": "VIEWPORT=desktop npm run cucumber",
     "test:laptop": "VIEWPORT=laptop npm run cucumber",
 
+    "dry": "npm run cucumber --dry-run",
+    "dry:visits": "npm run cucumber -- --dry-run --tags @visits",
+
     "debug": "PWDEBUG=1 DEBUG=pw:api npm run cucumber",
     "debug:login": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @login",
     "debug:dashboard": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @dashboard",

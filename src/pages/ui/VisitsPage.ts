@@ -10,6 +10,11 @@ export class VisitsPage extends BasePage {
   readonly emergencyProtocolChartButton: Locator;
   // Visit Page Tabs
   readonly visitNotesTab: Locator;
+  readonly historyTab: Locator;
+  readonly medicalRecordTab: Locator;
+  readonly qualityTab: Locator;
+  readonly imagesTab: Locator;
+  readonly documentsTab: Locator;
   // Consultation Card
   readonly consultationCard: Locator;
   readonly joinVideoCallButton: Locator;
@@ -44,10 +49,10 @@ export class VisitsPage extends BasePage {
   readonly planField: Locator;
   readonly additionalProviderNotesField: Locator;
   readonly postVisitNotesField: Locator;
-  // Diagnosis Card
-  readonly diagnosisCard: Locator;
-  readonly primaryDiagnosisDropdown: Locator;
-  readonly addDiagnosisButton: Locator;
+  // Diagnoses Card
+  readonly diagnosesCard: Locator;
+  readonly primaryDiagnosesDropdown: Locator;
+  readonly addDiagnosesButton: Locator;
   // CPT Codes Card
   readonly cptCodesCard: Locator;
   readonly cptCodeDropdown: Locator;
@@ -74,6 +79,11 @@ export class VisitsPage extends BasePage {
     this.emergencyProtocolChartButton = page.getByTestId('emergency-protocol-button'); // data-testid="visits-page-emergency-protocol-button-select"
     // Visit Page Tabs
     this.visitNotesTab = page.locator('#visit-tab-0'); // data-testid="visits-visit-notes-tab-select"
+    this.historyTab = page.locator('#visit-tab-1'); // data-testid="visits-history-tab-select"
+    this.medicalRecordTab = page.locator('#visit-tab-2'); // data-testid="visits-medical-record-tab-select"
+    this.qualityTab = page.locator('#visit-tab-3'); // data-testid="visits-quality-tab-select"
+    this.imagesTab = page.locator('#visit-tab-4'); // data-testid="visits-images-tab-select"
+    this.documentsTab = page.locator('#visit-tab-5'); // data-testid="visits-documents-tab-select"
     // Consultation Card
     this.consultationCard = page.getByTestId('consultation-card'); // data-testid="visits-consultation-card-container-view"
     this.joinVideoCallButton = page.getByRole('button', { name: 'Join video call' }); // data-testid="visits-consultation-card-button-video-join"
@@ -101,17 +111,17 @@ export class VisitsPage extends BasePage {
     // Visit Notes Card
     this.visitNotesCard = page.getByTestId('visit-notes-card'); // data-testid="visits-visit-notes-card-container-view"
     this.chiefComplaintField = page.locator('#visit-notes__chief-complaint'); // data-testid="visits-visit-notes-card-chief-complaint-field-input"
-    this.subjectiveField = page.getByTestId('subjective-field'); // data-testid="visits-visit-notes-card-subjective-field-input"
-    this.medicalRecordsReviewCheckbox = page.getByRole('checkbox', { name: 'medicalRecordsReview' }); // data-testid="visits-visit-notes-card-medical-records-review-checkbox-toggle"
-    this.objectiveField = page.getByTestId('objective-field'); // data-testid="visits-visit-notes-card-objective-field-input"
-    this.assessmentField = page.getByTestId('assessment-field'); // data-testid="visits-visit-notes-card-assessment-field-input"
-    this.planField = page.getByTestId('plan-field'); // data-testid="visits-visit-notes-card-plan-field-input"
+    this.subjectiveField = page.locator('#visit-notes__subjective'); // data-testid="visits-visit-notes-card-subjective-field-input"
+    this.medicalRecordsReviewCheckbox = page.getByRole('checkbox', { name: 'I have reviewed the patient’s' }); // data-testid="visits-visit-notes-card-medical-records-review-checkbox-toggle"
+    this.objectiveField = page.locator('#visit-notes__objective'); // data-testid="visits-visit-notes-card-objective-field-input"
+    this.assessmentField = page.locator('#visit-notes__assessment'); // data-testid="visits-visit-notes-card-assessment-field-input"
+    this.planField = page.locator('#visit-notes__plan'); // data-testid="visits-visit-notes-card-plan-field-input"
     this.additionalProviderNotesField = page.locator('#visit-notes__additional-provider-notes'); // data-testid"visits-visit-notes-card-additional-provider-notes-field-input"
     this.postVisitNotesField = page.locator('#visit-notes__post-visit-task'); // data-testid="visits-visit-notes-card-post-visit-notes-field-input"
     // Diagnosis Card
-    this.diagnosisCard = page.getByTestId('diagnoses-card'); // data-testid="visits-diagnosis-card-container-view"
-    this.primaryDiagnosisDropdown = page.locator('(//div[@name=\'noteDetails[0]\'])[1]'); // data-testid="visits-diagnosis-card-primary-diagnosis-dropdown-select"
-    this.addDiagnosisButton = page.locator('//button[normalize-space(text())=\'Add diagnosis\']'); // data-testid="visits-diagnosis-card-add-diagnosis-button-select"
+    this.diagnosesCard = page.getByTestId('diagnoses-card'); // data-testid="visits-diagnosis-card-container-view"
+    this.primaryDiagnosesDropdown = page.locator('(//div[@name=\'noteDetails[0]\'])[1]'); // data-testid="visits-diagnosis-card-primary-diagnosis-dropdown-select"
+    this.addDiagnosesButton = page.locator('//button[normalize-space(text())=\'Add diagnosis\']'); // data-testid="visits-diagnosis-card-add-diagnosis-button-select"
     // CPT Codes Card
     this.cptCodesCard = page.getByTestId('cpt-codes-card'); // data-testid="visits-cpt-codes-card-container-view"
     this.cptCodeDropdown = page.locator('#visit-notes__cpt-code'); // data-testid="visits-cpt-codes-card-cpt-code-dropdown-select"
@@ -145,6 +155,105 @@ export class VisitsPage extends BasePage {
   async viewVisitDetailsCard(): Promise<void> {
     await this.visitDetailsCard.waitFor();
     await this.visitDetailsCard.scrollIntoViewIfNeeded();
+  }
+
+  async selectVisitPageTabs(tab: string): Promise<void> {
+    const tabMap: Record<string, Locator> = {
+      'Visit Notes': this.visitNotesTab,
+      'History': this.historyTab,
+      'Medical Record': this.medicalRecordTab,
+      'Quality': this.qualityTab,
+      'Images': this.imagesTab,
+      'Documents': this.documentsTab
+    };
+
+    const locator = tabMap[tab];
+    if (locator) {
+      await locator.click();
+    } else {
+      throw new Error(`Unknown Tab: ${tab}`);
+    }
+  }
+
+  async checkVisitsPageCheckboxes(checkbox: string): Promise<void> {
+    const tabMap: Record<string, Locator> = {
+      'Medical Records Review': this.medicalRecordsReviewCheckbox,
+      'Clinical Quality Review': this.clinicalQualityReviewCheckbox
+    };
+
+    const locator = tabMap[checkbox];
+    if (locator) {
+      await locator.click();
+    } else {
+      throw new Error(`Unknown Checkbox: ${checkbox}`);
+    }
+  }
+
+  async viewVisitPageCards(tab: string): Promise<void> {
+    const tabMap: Record<string, Locator> = {
+      'Visit Notes': this.visitNotesCard,
+      'Diagnoses': this.diagnosesCard,
+      'CPT Code': this.cptCodesCard,
+      'Prescriptions': this.prescriptionsCard,
+      'Pharmacy': this.pharmacyCard,
+      'Referrals': this.referralsCard,
+      'Schedule Next Visit': this.scheduleNextVisitCard
+    };
+
+    const locator = tabMap[tab];
+    if (locator) {
+      await locator.click();
+    } else {
+      throw new Error(`Unknown Tab: ${tab}`);
+    }
+  }
+
+  async interactWithVisitNotesFields(field: string, options?: { visible?: boolean; checkText?: string; fillText?: string; select?: boolean }, inputText?: string): Promise<void> {
+    const tabMap: Record<string, Locator> = {
+      'Chief Complaint': this.chiefComplaintField,
+      'Subjective': this.subjectiveField,
+      'Objective': this.objectiveField,
+      'Assessment': this.assessmentField,
+      'Plan': this.planField,
+      'Additional Provider Notes': this.additionalProviderNotesField,
+      'Post Visit Notes': this.postVisitNotesField
+    };
+
+    const locator = tabMap[field];
+    if (!locator) {
+      throw new Error(`Unknown Field: ${field}`);
+    }
+
+    if (options?.visible) {
+      const isVisible = await locator.isVisible();
+      if (!isVisible) {
+        throw new Error(`Field "${field}" is not visible`);
+      }
+    }
+
+    if (options?.checkText) {
+      const selector = await locator.textContent();
+      if (!text || !selector.includes(field)) {
+        throw new Error(`Field text does not match expected: "${inputText}"`);
+      }
+    }
+
+    if (options?.fillText) {
+      if (inputText != null) {
+        await locator.fill(inputText);
+      }
+      const updatedText = await locator.textContent();
+      if (!inputText || !updatedText.includes(inputText)) {
+        throw new Error(`Field was not filled correctly with: "${inputText}"`);
+      }
+    }
+
+    if (options?.select) {
+      const clickField = await locator.click();
+      if (!clickField) {
+        throw new Error(`Unable to click on field: "${field}"`);
+      }
+    }
   }
 
   async verifyPatientInformation(expectedValues: { 'Field': string; 'Expected Value': string }[]): Promise<void> {
