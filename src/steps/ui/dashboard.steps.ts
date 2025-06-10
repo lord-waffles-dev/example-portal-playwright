@@ -85,3 +85,9 @@ When('I select the Lab Order Requests link', async function (this: ICustomWorld)
   const DashboardPage = PageFactory.getDashboardPage(page);
   await DashboardPage.clickLabOrderRequestsButton();
 });
+
+When('I click the "View" button for the first upcoming visit', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const DashboardPage = PageFactory.getDashboardPage(page);
+  await DashboardPage.clickViewButton();
+});
