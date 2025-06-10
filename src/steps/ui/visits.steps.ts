@@ -1,5 +1,5 @@
 import { ICustomWorld } from '../../support/custom-world';
-import { When, Then } from '@cucumber/cucumber';
+import { Then, When } from '@cucumber/cucumber';
 import { PageFactory } from '../../pages';
 
 /**
@@ -26,14 +26,44 @@ When('I view the Visit Details card', async function (this: ICustomWorld) {
 
 Then('I should see the following patient information with correct values:', async function (this: ICustomWorld, dataTable) {
   const page = this.page!;
-  const visitsPage = PageFactory.getVisitsPage(page);
+  const VisitsPage = PageFactory.getVisitsPage(page);
   const expectedValues = dataTable.hashes();
-  await visitsPage.verifyPatientInformation(expectedValues);
+  await VisitsPage.verifyPatientInformation(expectedValues);
 });
 
 Then('I should see the following visit information with correct values:', async function (this: ICustomWorld, dataTable) {
   const page = this.page!;
-  const visitsPage = PageFactory.getVisitsPage(page);
+  const VisitsPage = PageFactory.getVisitsPage(page);
   const expectedValues = dataTable.hashes();
-  await visitsPage.verifyVisitInformation(expectedValues);
+  await VisitsPage.verifyVisitInformation(expectedValues);
+});
+
+When('I click on the {string} tab', async function (this: ICustomWorld, tab: string) {
+  const page = this.page!;
+  const VisitsPage = PageFactory.getVisitsPage(page);
+  await VisitsPage.selectVisitPageTabs(tab);
+});
+
+Then('I should see the {string} card', async function (this: ICustomWorld, card: string) {
+  const page = this.page!;
+  const VisitsPage = PageFactory.getVisitsPage(page);
+  await VisitsPage.viewVisitPageCards(card);
+});
+
+Then('I should see the {string} fields', async function (this: ICustomWorld, field: string) {
+  const page = this.page!;
+  const VisitsPage = PageFactory.getVisitsPage(page);
+  await VisitsPage.interactWithVisitNotesFields(field, { visible: true });
+});
+
+When('I enter {string} in the {string} field', async function (this: ICustomWorld, text: string, field: string) {
+  const page = this.page!;
+  const VisitsPage = PageFactory.getVisitsPage(page);
+  await VisitsPage.interactWithVisitNotesFields(field, { fillText: text }, text);
+});
+
+When('I check the {string} checkbox', async function (this: ICustomWorld, checkbox: string) {
+  const page = this.page!;
+  const VisitsPage = PageFactory.getVisitsPage(page);
+  await VisitsPage.checkVisitsPageCheckboxes(checkbox);
 });

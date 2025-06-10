@@ -28,25 +28,25 @@ Feature: Provider Portal Visits Functionality
       | Type         | Virtual Primary Care (Initial Visit) |
       | Length       | 45 Minutes                           |
 
-#  Scenario: Interact with Visit Notes fields
-#    When I click on the "Visit Notes" tab
-#    Then I should see the Visit Notes card
-#    When I enter "Patient reports headache" in the Chief Complaint field
-#    And I enter "Patient has been experiencing headaches for 3 days" in the Subjective field
-#    And I check the Medical Records Review checkbox
-#    And I enter "BP: 120/80, Temp: 98.6F" in the Objective field
-#    And I enter "Tension headache" in the Assessment field
-#    And I enter "OTC pain reliever, rest, hydration" in the Plan field
-#    And I enter "Follow up in 2 weeks if symptoms persist" in the Additional Provider Notes field
-#    And I enter "Schedule follow-up appointment" in the Post Visit Notes field
-#    Then all entered information should be saved correctly
-#
+  Scenario: Interact with Visit Notes fields
+    When I click on the "Visit Notes" tab
+    Then I should see the "Visit Notes" card
+    When I enter "Patient reports headache" in the "Chief Complaint" field
+    And I enter "Patient has been experiencing headaches for 3 days" in the "Subjective" field
+    And I check the "Medical Records Review" checkbox
+    And I enter "BP: 120/80, Temp: 98.6F" in the "Objective" field
+    And I enter "Tension headache" in the "Assessment" field
+    And I enter "OTC pain reliever, rest, hydration" in the "Plan" field
+    And I enter "Follow up in 2 weeks if symptoms persist" in the "Additional Provider Notes" field
+    And I enter "Schedule follow-up appointment" in the "Post Visit Notes" field
+    Then all entered information should be saved correctly
+
 #  Scenario: Interact with Diagnosis fields
 #    When I click on the "Visit Notes" tab
-#    Then I should see the Diagnosis card
+#    Then I should see the "Diagnosis" card
 #    When I click the "Add diagnosis" button
-#    Then I should see the diagnosis search field
-#    When I search for "Tension headache" in the diagnosis field
+#    Then I should see the "diagnosis search" field
+#    When I search for "Tension headache" in the "diagnosis" field
 #    And I select "Tension headache" from the search results
 #    Then "Tension headache" should be added to the diagnosis list
 #
