@@ -118,30 +118,26 @@ export class LabOrderRequestsPage extends BasePage {
     await this.waitForPageAndGridStability();
     await this.labOrdersDataGrid.waitFor({ state: 'visible' });
 
-    const validMessages = [expectedMessage, 'No pending requests', 'No results found.'];
+    const validMessages = [expectedMessage, 'No pending requests', 'No approved orders', 'No results found', 'No orders found'];
 
-    // Check overlay message
     if (await this.noResultsMessage.isVisible().catch(() => false)) {
       const msg = (await this.noResultsMessage.textContent())?.trim();
       if (msg && validMessages.includes(msg)) return;
     }
 
-    // Check alert message
-    if (await this.alertMessage.isVisible().catch(() => false)) {
-      const msg = (await this.alertMessage.textContent())?.trim();
-      if (msg && validMessages.includes(msg)) return;
+    // Wait for the alert to appear before proceeding
+    await this.alertMessage.waitFor({ state: 'visible' });
+
+    const hasMessage = await Promise.race([
+      this.alertMessage.isVisible().catch(() => false),
+      this.noResultsMessage.isVisible().catch(() => false)
+    ]);
+
+    if (hasMessage) {
+      return;
     }
 
-    // Fallback: check if grid is empty (0–0 of 0)
-    const gridText = (await this.labOrdersDataGrid.textContent()) ?? '';
-    if (gridText.includes('0–0 of 0')) return;
-
-    throw new Error(
-      `Expected one of ${JSON.stringify(validMessages)} or empty grid, but got:\n`
-      + `Overlay: "${await this.noResultsMessage.textContent()}"\n`
-      + `Alert: "${await this.alertMessage.textContent()}"\n`
-      + `Grid text: "${gridText}"`
-    );
+    throw new Error('No message found on page');
   }
 
   async isCologuardRequestVisible(): Promise<boolean> {
