@@ -51,8 +51,9 @@ export class VisitsPage extends BasePage {
   readonly postVisitNotesField: Locator;
   // Diagnoses Card
   readonly diagnosesCard: Locator;
-  readonly primaryDiagnosesDropdown: Locator;
-  readonly addDiagnosesButton: Locator;
+  readonly primaryDiagnosisDropdown: Locator;
+  readonly diagnosisSelection: Locator;
+  readonly addDiagnosisButton: Locator;
   // CPT Codes Card
   readonly cptCodesCard: Locator;
   readonly cptCodeDropdown: Locator;
@@ -120,8 +121,9 @@ export class VisitsPage extends BasePage {
     this.postVisitNotesField = page.locator('#visit-notes__post-visit-task'); // data-testid="visits-visit-notes-card-post-visit-notes-field-input"
     // Diagnosis Card
     this.diagnosesCard = page.getByTestId('diagnoses-card'); // data-testid="visits-diagnosis-card-container-view"
-    this.primaryDiagnosesDropdown = page.locator('(//div[@name=\'noteDetails[0]\'])[1]'); // data-testid="visits-diagnosis-card-primary-diagnosis-dropdown-select"
-    this.addDiagnosesButton = page.locator('//button[normalize-space(text())=\'Add diagnosis\']'); // data-testid="visits-diagnosis-card-add-diagnosis-button-select"
+    this.primaryDiagnosisDropdown = page.locator('(//div[@name=\'noteDetails[0]\'])[1]'); // data-testid="visits-diagnosis-card-primary-diagnosis-dropdown-select"
+    this.diagnosisSelection = page.getByRole('option', { name: '[input_value_here]' });
+    this.addDiagnosisButton = page.locator('//button[normalize-space(text())=\'Add diagnosis\']'); // data-testid="visits-diagnosis-card-add-diagnosis-button-select"
     // CPT Codes Card
     this.cptCodesCard = page.getByTestId('cpt-codes-card'); // data-testid="visits-cpt-codes-card-container-view"
     this.cptCodeDropdown = page.locator('#visit-notes__cpt-code'); // data-testid="visits-cpt-codes-card-cpt-code-dropdown-select"
@@ -155,6 +157,17 @@ export class VisitsPage extends BasePage {
   async viewVisitDetailsCard(): Promise<void> {
     await this.visitDetailsCard.waitFor();
     await this.visitDetailsCard.scrollIntoViewIfNeeded();
+  }
+
+  async selectAddDiagnosisButton(): Promise<void> {
+    await this.addDiagnosisButton.waitFor();
+    await this.addDiagnosisButton.click();
+  }
+
+  async selectDiagnosis(diagnosis: string): Promise<void> {
+    await this.primaryDiagnosisDropdown.click();
+    await this.primaryDiagnosisDropdown.fill(diagnosis);
+    await this.diagnosisSelection.click();
   }
 
   async selectVisitPageTabs(tab: string): Promise<void> {
@@ -233,7 +246,7 @@ export class VisitsPage extends BasePage {
 
     if (options?.checkText) {
       const selector = await locator.textContent();
-      if (!text || !selector.includes(field)) {
+      if (!inputText || !selector.includes(field)) {
         throw new Error(`Field text does not match expected: "${inputText}"`);
       }
     }
