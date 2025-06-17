@@ -12,27 +12,22 @@
     "snippets": "npm run cucumber features/**/*.feature --dry-run --format snippets",
     "steps-usage": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js features/**/*.feature --dry-run",
     "docker": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:latest /bin/bash",
-
     "test": "npm run cucumber",
     "test:parallel": "npm run cucumber --parallel=2",
     "test:desktop": "VIEWPORT=desktop npm run cucumber",
     "test:laptop": "VIEWPORT=laptop npm run cucumber",
-
     "debug": "PWDEBUG=1 DEBUG=pw:api npm run cucumber",
     "debug:login": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @login",
     "debug:dashboard": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @dashboard",
     "debug:lab-order-requests": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber -- --tags @lab-order-requests",
     "debug:desktop": "PWDEBUG=1 VIEWPORT=desktop npm run cucumber",
     "debug:laptop": "PWDEBUG=1 VIEWPORT=laptop npm run cucumber",
-  
     "feature:login": "npm run cucumber -- --tags @login",
     "feature:dashboard": "npm run cucumber -- --tags @dashboard",
     "feature:resource-center": "npm run cucumber -- --tags @resource-center",
     "feature:lab-order-requests": "npm run cucumber -- --tags @lab-order-requests",
-
     "report": "open reports/report.html",
     "video": "PWVIDEO=1 npm run cucumber",
-
     "build": "rimraf build && npm run lint && tsc && npm run cucumber-check",
     "cucumber-check": "npm run cucumber features/**/*.feature --dry-run --publish-quiet"
   },
@@ -41,7 +36,6 @@
   },
   "author": "Maxwell Leslie",
   "license": "ISC",
-
   "devDependencies": {
     "@cucumber/cucumber": "11.2.0",
     "@cucumber/html-formatter": "21.10.0",
@@ -56,7 +50,7 @@
     "@typescript-eslint/eslint-plugin": "8.29.0",
     "@typescript-eslint/parser": "8.29.0",
     "allure-cucumberjs": "3.2.1",
-    "cucumber-html-reporter": "7.2.0",
+    "cucumber-html-reporter": "^6.0.0",
     "eslint": "9.24.0",
     "eslint-config-prettier": "10.1.1",
     "eslint-plugin-playwright": "2.2.0",
@@ -72,7 +66,5 @@
     "tsx": "4.19.3",
     "typescript": "5.8.3",
     "typescript-eslint": "8.29.0"
-  },
-  "dependencies": {
   }
 }
