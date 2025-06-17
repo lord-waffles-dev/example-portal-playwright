@@ -43,7 +43,7 @@ Feature: Provider Portal Visits Functionality
 #    And I enter "Schedule follow-up appointment" in the "Post Visit Notes" field
 #    Then all entered information should be saved correctly
 
-   #
+   # Pending API Steps before expanding steps/scenario.
 #  Scenario: Interact with Diagnosis fields
 #    When I click on the "Visit Notes" tab
 #    Then I should see the "Diagnoses" card
@@ -51,15 +51,17 @@ Feature: Provider Portal Visits Functionality
 #    And I select "Bitten by duck, initial encounter" from the search results
 #    Then "Bitten by duck, initial encounter" should be added to the diagnosis list
 #    When I click the Add diagnosis button
-#
+
+   # Pending API Steps before expanding steps/scenario
 #  Scenario: Interact with CPT Codes dropdown
 #    When I click on the "Visit Notes" tab
 #    Then I should see the CPT Codes card
 #    When I click on the CPT Code dropdown
 #    Then I should see the list of available CPT codes
-#    When I select "99213 - Office Visit, Est Pt, Low Complexity" from the dropdown
-#    Then "99213 - Office Visit, Est Pt, Low Complexity" should be selected in the CPT Code field
-#
+#    When I select "" from the dropdown
+#    Then "" should be selected in the CPT Code field
+
+   # Pending API Steps before expanding steps/scenario
 #  Scenario: Interact with Prescriptions functionality
 #    When I click on the "Visit Notes" tab
 #    Then I should see the Prescriptions card
@@ -74,7 +76,8 @@ Feature: Provider Portal Visits Functionality
 #    And I select "0" from the Refills dropdown
 #    And I click the "Save prescription" button
 #    Then "Ibuprofen 200mg tablet" should be added to the prescriptions list
-#
+
+   # Pending API Steps before expanding steps/scenario
 #  Scenario: Interact with Pharmacy functionality
 #    When I click on the "Visit Notes" tab
 #    Then I should see the Pharmacy card
@@ -85,7 +88,8 @@ Feature: Provider Portal Visits Functionality
 #    Then I should see a list of pharmacies
 #    When I select the first pharmacy from the list
 #    Then the selected pharmacy should be displayed in the Pharmacy card
-#
+
+   # Pending API Steps before expanding steps/scenario
 #  Scenario: Interact with Schedule Next Visit switch
 #    When I click on the "Visit Notes" tab
 #    Then I should see the Schedule Next Visit card
@@ -94,60 +98,3 @@ Feature: Provider Portal Visits Functionality
 #    When I select "2 weeks" from the Follow-up Period dropdown
 #    And I select "Virtual Primary Care" from the Visit Type dropdown
 #    Then the schedule next visit information should be saved correctly
-#
-#  Scenario: Interact with Demographics fields in Medical Record
-#    When I click on the "Medical Record" tab
-#    And I view the Demographics card
-#    When I select "5" from the Height (ft) dropdown
-#    And I select "10" from the Height (in) dropdown
-#    And I enter "180" in the Weight field
-#    Then I should see the calculated BMI value
-#    When I select "Never smoker" from the Smoking Status dropdown
-#    And I select "Non-drinker" from the Alcohol Status dropdown
-#    And I click the Save button
-#    Then the demographics information should be saved successfully
-#
-#  Scenario: Interact with Allergies in Medical Record
-#    When I click on the "Medical Record" tab
-#    And I view the Allergies card
-#    When I click the "Add allergy" button
-#    Then I should see the allergy form
-#    When I search for "Penicillin" in the allergy field
-#    And I select "Penicillin" from the search results
-#    And I select "Hives" from the Reaction dropdown
-#    And I select "Severe" from the Severity dropdown
-#    And I click the "Save allergy" button
-#    Then "Penicillin" should be added to the allergies list
-#
-#  Scenario: Interact with Quality Measures fields
-#    When I click on the "Quality" tab
-#    Then I should see the Blood Pressure card
-#    When I click the "Add result" button in the Blood Pressure card
-#    Then I should see the blood pressure form
-#    When I enter "120" in the Systolic field
-#    And I enter "80" in the Diastolic field
-#    And I select today's date in the Date field
-#    And I click the "Save result" button
-#    Then "120/80" should be added to the blood pressure results
-#
-#  Scenario: Interact with Documents upload
-#    When I click on the "Documents" tab
-#    Then I should see the "Upload document" button
-#    When I click the "Upload document" button
-#    Then I should see the document upload form
-#    When I enter "Test Report" in the Document Title field
-#    And I select "Lab Report" from the Document Type dropdown
-#    And I upload a test file
-#    And I click the "Save document" button
-#    Then "Test Report" should be added to the document table
-#
-#  Scenario: Verify document table filtering
-#    When I click on the "Documents" tab
-#    Then I should see the document table
-#    When I click on the Document Title column filter
-#    And I enter "Test" in the filter field
-#    Then I should see only documents with "Test" in the title
-#    When I clear the Document Title filter
-#    And I click on the Document Type column filter
-#    And I select "Lab Report" from the filter dropdown
-#    Then I should see only documents with type "Lab Report"
