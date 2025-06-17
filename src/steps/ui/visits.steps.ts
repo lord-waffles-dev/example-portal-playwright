@@ -67,3 +67,15 @@ When('I check the {string} checkbox', async function (this: ICustomWorld, checkb
   const VisitsPage = PageFactory.getVisitsPage(page);
   await VisitsPage.checkVisitsPageCheckboxes(checkbox);
 });
+
+When('I click the Add diagnosis button', async function (this: ICustomWorld) {
+  const page = this.page!;
+  const VisitsPage = PageFactory.getVisitsPage(page);
+  await VisitsPage.selectAddDiagnosisButton();
+});
+
+When('I search for {string} in the diagnosis dropdown', async function (this: ICustomWorld, diagnosis: string) {
+  const page = this.page!;
+  const VisitsPage = PageFactory.getVisitsPage(page);
+  await VisitsPage.selectDiagnosis(diagnosis);
+});
