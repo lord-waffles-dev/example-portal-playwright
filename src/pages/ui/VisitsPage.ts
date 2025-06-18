@@ -245,7 +245,7 @@ export class VisitsPage extends BasePage {
     }
 
     if (options?.checkText) {
-      const selector = await locator.textContent();
+      const selector = await locator.textContent() ?? '';
       if (!inputText || !selector.includes(field)) {
         throw new Error(`Field text does not match expected: "${inputText}"`);
       }
@@ -255,15 +255,16 @@ export class VisitsPage extends BasePage {
       if (inputText != null) {
         await locator.fill(inputText);
       }
-      const updatedText = await locator.textContent();
+      const updatedText = await locator.textContent() ?? '';
       if (!inputText || !updatedText.includes(inputText)) {
         throw new Error(`Field was not filled correctly with: "${inputText}"`);
       }
     }
 
     if (options?.select) {
-      const clickField = await locator.click();
-      if (!clickField) {
+      try {
+        await locator.click();
+      } catch (error) {
         throw new Error(`Unable to click on field: "${field}"`);
       }
     }

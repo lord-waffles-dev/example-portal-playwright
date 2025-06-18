@@ -39,12 +39,13 @@ export default tseslint.config(
     },
     rules: {
       ...customizedESLint.rules,
-      '@typescript-eslint/no-explicit-any': 'warn', // temporary
-      '@typescript-eslint/no-unsafe-assignment': 'warn', // temporary
-      '@typescript-eslint/no-unsafe-argument': 'warn', // temporary
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
       '@typescript-eslint/no-unsafe-member-access': 'warn',
       '@typescript-eslint/no-unsafe-call': 'warn',
-      '@typescript-eslint/prefer-optional-chain': 'warn'
+      '@typescript-eslint/prefer-optional-chain': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn'
     }
   },
   {
