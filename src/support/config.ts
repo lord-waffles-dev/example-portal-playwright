@@ -24,7 +24,7 @@ export const config = {
   environments: {
     staging: {
       providerUrl: 'https://staging.recurohealth.com/',
-      newProviderUrl: 'https://provider-new-staging.recurohealth.com/'
+      newProviderUrl: 'https://provider-staging.recurohealth.com/'
     },
     production: {
       providerUrl: 'https://provider.recurohealth.com/',

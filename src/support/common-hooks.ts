@@ -13,6 +13,7 @@ import {
   Browser
 } from '@playwright/test';
 import { ensureDir } from 'fs-extra';
+import { setupNetworkCapture } from '../utils/networkCapture';
 
 let browser: ChromiumBrowser | FirefoxBrowser | WebKitBrowser | Browser;
 const tracesDir = 'traces';
@@ -82,8 +83,15 @@ Before(async function (this: ICustomWorld, { pickle }) {
     baseURL: config.BASE_API_URL
   });
 
-  await this.context.tracing.start({ screenshots: true, snapshots: true });
+  await this.context.tracing.start({
+    screenshots: true,
+    snapshots: true,
+    sources: true
+  });
   this.page = await this.context.newPage();
+
+  await setupNetworkCapture(this.page);
+
   this.page.on('console', (msg: ConsoleMessage) => {
     // Capture all console messages
     const messageType = msg.type();
