@@ -90,7 +90,10 @@ Before(async function (this: ICustomWorld, { pickle }) {
   });
   this.page = await this.context.newPage();
 
-  await setupNetworkCapture(this.page);
+  const hasNetworkCaptureTag = pickle.tags.some(tag => tag.name === '@network-capture');
+  if (process.env.NETWORK_CAPTURE === 'true' || hasNetworkCaptureTag) {
+    await setupNetworkCapture(this.page);
+  }
 
   this.page.on('console', (msg: ConsoleMessage) => {
     // Capture all console messages

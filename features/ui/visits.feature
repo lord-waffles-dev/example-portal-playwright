@@ -11,7 +11,7 @@ Feature: Provider Portal Visits Functionality
     When I view the Patient Details card
     Then I should see the following patient information with correct values:
       | Field         | Expected Value                  |
-      | Date of birth | 01/01/1970 (55 years, 5 months) |
+      | Date of birth | 01/01/1970 (55 years, 6 months) |
       | ID            | 266110416                       |
       | Gender        | M                               |
       | Location      | TX                              |

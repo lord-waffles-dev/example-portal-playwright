@@ -15,6 +15,7 @@ This document lists all tags used in the project and their purposes.
 - `@only` - Used for running specific scenarios during development
 - `@ignore` - Skips the tagged scenario (implemented in hooks)
 - `@debug` - Enables debug mode for the scenario (implemented in hooks)
+- `@network-capture` - Enables network capture for the scenario (logs requests/responses)
 
 ### Recuro Scenario Tags
 - `@happy` - Used for Happy-Path test scenarios
