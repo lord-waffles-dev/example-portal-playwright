@@ -11,7 +11,7 @@ Feature: Provider Portal Login Functionality
   Scenario Outline: Existing provider logs in successfully
     When they enter a valid email with "<email>"
     And they enter a valid password with "<password>"
-    And they click the login continue button
+    And they click the continue button
     And they enter a valid 2FA code
     And they click the 2FA continue button
     Then they should be successfully logged in to the dashboard
@@ -31,9 +31,9 @@ Feature: Provider Portal Login Functionality
   Scenario: Provider attempts to login with empty credentials
     # They leave the email field empty
     # They leave the password field empty
-    When they click the login continue button
+    When they click the continue button
     Then they should see an email error message "Please enter a valid email address"
-    And they should see a password error message "Please enter a password"
+    And they should see an password error message "Please enter a password"
 
   # Tooltip is present as well as error message
   # Expand in future iteration on checking tooltip

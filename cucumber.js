@@ -1,11 +1,3 @@
-const getWorldParams = () => {
-  const params = {
-    foo: 'bar'
-  };
-
-  return params;
-};
-
 const config = {
   import: ['src/**/*.ts', '!src/playwright-tests/**/*.ts', '!src/**/*.test.ts', '!tests/**/*.ts'],
   format: [
@@ -20,8 +12,7 @@ const config = {
     theme: 'cucumber',
     // Enable image display
     displayAttachments: true
-  },
-  worldParameters: getWorldParams()
+  }
 };
 
 export default config;
