@@ -20,7 +20,8 @@ export default tseslint.config(
       '**/{www,dist,build}/**/*.*',
       'projects/*/!(src)/**/*.*',
       `!(${includedFolders.join(',')})/**/*.*`,
-      '!*.{js,ts,mjs,cjs}'
+      '!*.{js,ts,mjs,cjs}',
+      'README.md'
     ]
   },
   {
