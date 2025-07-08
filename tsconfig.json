@@ -58,7 +58,7 @@
   },
   "exclude": ["node_modules", "src/playwright-tests", "**/*.test.ts", "tests"],
   "include": ["src"],
-  "files": ["cucumber.js", "eslint.config.js"],
+  "files": ["cucumber.js", "eslint.config.js", "playwright.config.ts"],
   "ts-node": {
     "esm": true,
     "experimentalSpecifierResolution": "node"
