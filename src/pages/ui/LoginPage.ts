@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 import { BasePage } from '../common/BasePage';
 import { config } from '../../support/config';
 
@@ -7,61 +7,55 @@ import { config } from '../../support/config';
  * This class extends BasePage and provides specific functionality for the Provider Portal website.
  */
 export class LoginPage extends BasePage {
-  private readonly selectors: {
-    // Login Page
-    logo: string;
-    loginToYourAccount: string;
-    emailInput: string;
-    passwordInput: string;
-    continueButton: string;
-    forgotPasswordLink: string;
-    emailErrorMessage: string;
-    passwordErrorMessage: string;
-    passwordToggleButton: string;
-    // Two-Step Authentication Page
-    mfa_1: string;
-    mfa_2: string;
-    mfa_3: string;
-    mfa_4: string;
-    mfa_5: string;
-    mfa_6: string;
-    resendButton: string;
-    checkbox: string;
-    mfaContinueButton: string;
-    mfaErrorMessage: string;
-  };
+  readonly page: Page;
+  // Login Page
+  readonly loginPage: Locator;
+  readonly emailInput: Locator;
+  readonly passwordInput: Locator;
+  readonly continueButton: Locator;
+  readonly forgotPasswordLink: Locator;
+  readonly emailErrorMessage: Locator;
+  readonly passwordErrorMessage: Locator;
+  readonly passwordToggleButton: Locator;
+  // Two-Step Authentication Page
+  readonly mfa_1: Locator;
+  readonly mfa_2: Locator;
+  readonly mfa_3: Locator;
+  readonly mfa_4: Locator;
+  readonly mfa_5: Locator;
+  readonly mfa_6: Locator;
+  readonly resendButton: Locator;
+  readonly checkbox: Locator;
+  readonly mfaContinueButton: Locator;
+  readonly mfaErrorMessage: Locator;
 
   /**
    * Constructor for the LoginPage class.
    * @param page - The Login Page object
-   * @param customSelectors - Optional custom selectors to override the default selectors
    */
-  constructor(page: Page, customSelectors = {}) {
+  constructor(page: Page) {
     super(page);
-    this.selectors = {
-      // Login Page
-      logo: 'xpath=//img[@alt=\'Recuro Health\']',
-      loginToYourAccount: 'xpath=//h1[normalize-space(text())=\'Login to your account\']',
-      emailInput: 'id=login__email',
-      passwordInput: 'id=login__password',
-      continueButton: 'id=login__continue',
-      forgotPasswordLink: 'id=login__forgot-password',
-      emailErrorMessage: 'id=login__email-helper-text',
-      passwordErrorMessage: 'id=login__password-helper-text', // same message
-      passwordToggleButton: 'xpath=//button[@aria-label=\'toggle password visibility.\']',
-      // Two-Step Authentication Page
-      mfa_1: 'xpath=(//input[@inputmode=\'numeric\'])[1]',
-      mfa_2: 'xpath=(//input[@inputmode=\'numeric\'])[2]',
-      mfa_3: 'xpath=(//input[@inputmode=\'numeric\'])[3]',
-      mfa_4: 'xpath=(//input[@inputmode=\'numeric\'])[4]',
-      mfa_5: 'xpath=(//input[@inputmode=\'numeric\'])[5]',
-      mfa_6: 'xpath=(//input[@inputmode=\'numeric\'])[6]',
-      resendButton: 'xpath=//button[normalize-space(text())=\'Resend\']',
-      checkbox: 'xpath=//input[@type=\'checkbox\']',
-      mfaContinueButton: 'id=mfa__continue',
-      mfaErrorMessage: 'xpath=//p[normalize-space(text())=\'Incorrect verification code. Please try again.\']',
-      ...customSelectors
-    };
+    this.page = page;
+    // Login Page
+    this.loginPage = page.locator('//img[@alt=\'Recuro Health\']');
+    this.emailInput = page.locator('#login__email');
+    this.passwordInput = page.locator('#login__password');
+    this.continueButton = page.getByRole('button', { name: 'Continue' });
+    this.forgotPasswordLink = page.locator('#m_login_forget_password');
+    this.emailErrorMessage = page.locator('#login__email-helper-text');
+    this.passwordErrorMessage = page.locator('#login__password-helper-text');
+    this.passwordToggleButton = page.locator('button[aria-label="toggle password visibility."]');
+    // Two-Step Authentication Page
+    this.mfa_1 = page.locator('input[inputmode="numeric"]').nth(0);
+    this.mfa_2 = page.locator('input[inputmode="numeric"]').nth(1);
+    this.mfa_3 = page.locator('input[inputmode="numeric"]').nth(2);
+    this.mfa_4 = page.locator('input[inputmode="numeric"]').nth(3);
+    this.mfa_5 = page.locator('input[inputmode="numeric"]').nth(4);
+    this.mfa_6 = page.locator('input[inputmode="numeric"]').nth(5);
+    this.resendButton = page.getByRole('button', { name: 'Resend' });
+    this.checkbox = page.locator('input[type="checkbox"]');
+    this.mfaContinueButton = page.locator('#mfa__continue');
+    this.mfaErrorMessage = page.locator('p:text("Incorrect verification code. Please try again.")');
   }
 
   /**
@@ -69,7 +63,7 @@ export class LoginPage extends BasePage {
    */
   async navigateToLogin(): Promise<void> {
     await this.navigateTo(config.environments.staging.newProviderUrl);
-    await this.waitForElement(this.selectors.logo);
+    await this.loginPage.waitFor();
   }
 
   /**
@@ -78,9 +72,8 @@ export class LoginPage extends BasePage {
    */
   async inputEmail(email: string): Promise<void> {
     try {
-      await this.isVisible(this.selectors.emailInput);
-      await this.fill(this.selectors.emailInput, email);
-      await this.click(this.selectors.loginToYourAccount);
+      await this.emailInput.waitFor({ state: 'visible' });
+      await this.emailInput.fill(email);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       throw new Error(`Failed to input email "${email}": ${errorMessage}`);
@@ -93,8 +86,8 @@ export class LoginPage extends BasePage {
    */
   async inputPassword(password: string): Promise<void> {
     try {
-      await this.isVisible(this.selectors.passwordInput);
-      await this.fill(this.selectors.passwordInput, password);
+      await this.passwordInput.waitFor({ state: 'visible' });
+      await this.passwordInput.fill(password);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       throw new Error(`Failed to input password "${password}": ${errorMessage}`);
@@ -106,7 +99,7 @@ export class LoginPage extends BasePage {
    */
   async clickPasswordVisibilityToggle(): Promise<void> {
     try {
-      await this.click(this.selectors.passwordToggleButton);
+      await this.passwordToggleButton.click();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       throw new Error(`Failed to click password visibility toggle button: ${errorMessage}`);
@@ -120,7 +113,7 @@ export class LoginPage extends BasePage {
    */
   async verifyPasswordVisible(expectedText?: string): Promise<boolean> {
     // Get the actual text from the error message element
-    const actualText = await this.getAttribute(this.selectors.passwordInput, 'value');
+    const actualText = await this.passwordInput.inputValue();
 
     // If expectedText is provided, verify that it matches the actual text
     if (expectedText) {
@@ -141,7 +134,7 @@ export class LoginPage extends BasePage {
    */
   async verifyPasswordMasked(expectedText?: string): Promise<boolean> {
     // Get the actual text from the error message element
-    const actualText = await this.getAttribute(this.selectors.passwordInput, 'value');
+    const actualText = await this.passwordInput.inputValue();
 
     // If expectedText is provided, verify that it matches the actual text
     if (expectedText) {
@@ -160,7 +153,7 @@ export class LoginPage extends BasePage {
    */
   async clickContinue(): Promise<void> {
     try {
-      await this.click(this.selectors.continueButton);
+      await this.continueButton.click();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error);
       throw new Error(`Failed to click continue button: ${errorMessage}`);
@@ -172,13 +165,14 @@ export class LoginPage extends BasePage {
    * This test is for Test Provider Accounts that have Bypassed MFA.
    */
   async inputMfa(): Promise<void> {
-    await this.isVisible(this.selectors.mfa_1);
+    await this.mfa_1.waitFor({ state: 'visible' });
 
-    for (let i = 1; i <= 6; i++) {
-      const selector = this.selectors[`mfa_${i}` as keyof typeof this.selectors];
-      await this.fill(selector, String(i));
-      if (await this.page.locator(selector).inputValue() !== String(i)) {
-        throw new Error(`MFA validation failed at position ${i}`);
+    const mfaInputs = [this.mfa_1, this.mfa_2, this.mfa_3, this.mfa_4, this.mfa_5, this.mfa_6];
+
+    for (let i = 0; i < 6; i++) {
+      await mfaInputs[i].fill(String(i + 1));
+      if (await mfaInputs[i].inputValue() !== String(i + 1)) {
+        throw new Error(`MFA validation failed at position ${i + 1}`);
       }
     }
   }
@@ -187,25 +181,14 @@ export class LoginPage extends BasePage {
    * Click the Continue Button to proceed to the Dashboard screen.
    */
   async clickContinueMfa(): Promise<void> {
-    await this.click(this.selectors.mfaContinueButton);
+    await this.mfaContinueButton.click();
   }
 
-  /**
-   * Verify that the email error message is displayed and matches the expected text.
-   * @param expectedText - The expected error message text
-   * @returns True if the email error message is displayed and matches the expected text, false otherwise
-   */
   async verifyEmailError(expectedText?: string): Promise<boolean> {
-    await this.waitForElement(this.selectors.emailErrorMessage);
-
-    // Get the actual text from the error message element
-    const actualText = await this.getText(this.selectors.emailErrorMessage);
-
-    // If expectedText is provided, verify that it matches the actual text
+    await this.emailErrorMessage.waitFor({ state: 'visible' });
+    const actualText = await this.emailErrorMessage.textContent() ?? '';
     if (expectedText) {
-      if (actualText !== expectedText) {
-        throw new Error(`Email error message text does not match. Expected: "${expectedText}", Actual: "${actualText}"`);
-      }
+      await expect(this.emailErrorMessage).toHaveText(expectedText);
       return true;
     }
 
@@ -213,22 +196,11 @@ export class LoginPage extends BasePage {
     return actualText.trim() !== '';
   }
 
-  /**
-   * Verify that the password error message is displayed and matches the expected text.
-   * @param expectedText - The expected error message text
-   * @returns True if the password error message is displayed and matches the expected text, false otherwise
-   */
   async verifyPasswordError(expectedText?: string): Promise<boolean> {
-    await this.waitForElement(this.selectors.passwordErrorMessage);
-
-    // Get the actual text from the error message element
-    const actualText = await this.getText(this.selectors.passwordErrorMessage);
-
-    // If expectedText is provided, verify that it matches the actual text
+    await this.passwordErrorMessage.waitFor({ state: 'visible' });
+    const actualText = await this.passwordErrorMessage.textContent() ?? '';
     if (expectedText) {
-      if (actualText !== expectedText) {
-        throw new Error(`Password error message text does not match. Expected: "${expectedText}", Actual: "${actualText}"`);
-      }
+      await expect(this.passwordErrorMessage).toHaveText(expectedText);
       return true;
     }
 
@@ -242,10 +214,10 @@ export class LoginPage extends BasePage {
    * @returns True if the 2FA error message is displayed and matches the expected text, false otherwise
    */
   async verify2FAError(expectedText?: string): Promise<boolean> {
-    await this.waitForElement(this.selectors.mfaErrorMessage);
+    await this.mfaErrorMessage.waitFor();
 
     // Get the actual text from the error message element
-    const actualText = await this.getText(this.selectors.mfaErrorMessage);
+    const actualText = await this.mfaErrorMessage.textContent() ?? '';
 
     // If expectedText is provided, verify that it matches the actual text
     if (expectedText) {

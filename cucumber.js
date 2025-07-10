@@ -1,13 +1,5 @@
-const getWorldParams = () => {
-  const params = {
-    foo: 'bar'
-  };
-
-  return params;
-};
-
 const config = {
-  import: ['src/**/*.ts'],
+  import: ['src/**/*.ts', '!src/playwright-tests/**/*.ts', '!src/**/*.test.ts', '!tests/**/*.ts'],
   format: [
     // 'message:e2e/reports/cucumber-report.ndjson',
     'json:reports/cucumber-report.json',
@@ -20,8 +12,7 @@ const config = {
     theme: 'cucumber',
     // Enable image display
     displayAttachments: true
-  },
-  worldParameters: getWorldParams()
+  }
 };
 
 export default config;

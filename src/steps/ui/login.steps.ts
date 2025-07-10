@@ -74,7 +74,7 @@ When('they enter an invalid password', async function (this: ICustomWorld) {
   await LoginPage.inputPassword(config.credentials.staging.invalidProvider2.password);
 });
 
-When('they click the login continue button', async function (this: ICustomWorld) {
+When('they click the continue button', async function (this: ICustomWorld) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   await LoginPage.clickContinue();
@@ -117,24 +117,6 @@ When('they click the 2FA continue button', async function (this: ICustomWorld) {
   await LoginPage.clickContinueMfa();
 });
 
-When('they should observe an email error message', async function (this: ICustomWorld) {
-  const page = this.page!;
-  const LoginPage = PageFactory.getLoginPage(page);
-  // Expecting Text
-  await LoginPage.verifyEmailError('Please enter a valid email address');
-  // Verifying Presence
-  await LoginPage.verifyEmailError();
-});
-
-When('they should observe an password error message', async function (this: ICustomWorld) {
-  const page = this.page!;
-  const LoginPage = PageFactory.getLoginPage(page);
-  // Expecting Text
-  await LoginPage.verifyPasswordError('Incorrect email or password');
-  // Verifying Presence
-  await LoginPage.verifyPasswordError();
-});
-
 Then('they should be successfully logged in to the dashboard', async function (this: ICustomWorld) {
   const page = this.page!;
   const DashboardPage = PageFactory.getDashboardPage(page);
@@ -144,10 +126,7 @@ Then('they should be successfully logged in to the dashboard', async function (t
 Then('they should see an email error message {string}', async function (this: ICustomWorld, message: string) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
-  // Expecting Text
   await LoginPage.verifyEmailError(message);
-  // Verifying Presence
-  await LoginPage.verifyEmailError();
 });
 
 Then('they should see a password error message {string}', async function (this: ICustomWorld, message: string) {

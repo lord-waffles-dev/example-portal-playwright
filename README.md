@@ -1,7 +1,5 @@
 # Provider Portal Cucumber-Playwright
 
-![Test](https://github.com/Tallyb/cucumber-playwright/workflows/Test/badge.svg)
-
 A repo focused on writing E2E tests for the Provider Portal based on Cucumber with Playwright using TypeScript.
 
 ## Table of Contents
@@ -53,6 +51,7 @@ Cucumber-Playwright is a framework for writing end-to-end (E2E) tests using Beha
 
 ```
 provider-portal-playwright/
+├── docs/                     # Documentation files
 ├── features/                 # Feature files written in Gherkin
 │   ├── api/                  # API test features
 │   ├── perf/                 # Performance test features
@@ -73,8 +72,12 @@ provider-portal-playwright/
 │   └── utils/                # Utility functions
 ├── reports/                  # Test reports
 ├── screenshots/              # Screenshots captured during tests
+├── test-results/             # Playwright test results
+├── tests/                    # Additional test files
 ├── traces/                   # Playwright traces
 ├── cucumber.js              # Cucumber configuration
+├── eslint.config.js         # ESLint configuration
+├── playwright.config.ts     # Playwright configuration
 ├── package.json             # Project dependencies and scripts
 └── tsconfig.json            # TypeScript configuration
 ```
@@ -198,10 +201,39 @@ npm run test -- --tags @smoke
 npx cucumber-js --tags @smoke
 ```
 
+### Run Specific Features
+
+The framework includes pre-configured scripts for running specific features:
+
+```bash
+npm run feature:login        # Run login feature tests
+npm run feature:dashboard    # Run dashboard feature tests
+npm run feature:visits       # Run visits feature tests
+npm run feature:resource-center  # Run resource center feature tests
+npm run feature:lab-order-requests  # Run lab order requests feature tests
+```
+
 ### Run Tests in Parallel
 
 ```bash
 npm run test:parallel
+```
+
+### Viewport-Specific Testing
+
+Run tests with specific viewport sizes:
+
+```bash
+npm run test:desktop  # Run tests with desktop viewport
+npm run test:laptop   # Run tests with laptop viewport
+```
+
+### Network Capture
+
+Capture network traffic during test execution:
+
+```bash
+npm run test:network-capture  # Run tests with network capture enabled
 ```
 
 ## Browser Selection
@@ -225,9 +257,42 @@ Available options: `chromium`, `firefox`, `webkit`, `chrome`, `msedge`
 
 ### CLI Debugging
 
+Basic debugging options:
 - `npm run debug` - Run in headful mode with debugging enabled
 - `npm run api` - Run in headless mode with API debugging
 - `npm run video` - Run in headless mode with video recording
+
+### Feature-Specific Debugging
+
+Debug specific features:
+```bash
+npm run debug:login              # Debug login feature
+npm run debug:dashboard          # Debug dashboard feature
+npm run debug:visits             # Debug visits feature
+npm run debug:lab-order-requests # Debug lab order requests feature
+```
+
+### Viewport-Specific Debugging
+
+Debug with specific viewport sizes:
+```bash
+npm run debug:desktop  # Debug with desktop viewport
+npm run debug:laptop   # Debug with laptop viewport
+```
+
+### Network Capture Debugging
+
+Debug with network traffic capture:
+```bash
+npm run debug:network-capture  # Debug with network capture enabled
+```
+
+### Exploratory Testing
+
+Run exploratory tests with debugging enabled:
+```bash
+npm run debug:explore  # Run exploratory tests with debugging
+```
 
 ### Visual Studio Code Debugging
 
@@ -249,9 +314,27 @@ npm run report
 
 ### Allure Report
 
-Note: Allure reporting is included in the dependencies but not currently configured in the scripts. To use Allure reporting, you would need to add the appropriate scripts to package.json.
+The project includes the allure-cucumberjs package which can be used for advanced reporting. While it's included in the dependencies, you'll need to configure it for your specific needs:
 
-The project includes the allure-cucumberjs package (version 3.2.1) which can be configured for reporting if needed.
+1. Add Allure reporter to your cucumber.js configuration
+2. Add scripts to generate and serve Allure reports
+
+Example configuration:
+```javascript
+// In cucumber.js
+module.exports = {
+  default: {
+    // ... other options
+    format: ['@cucumber/pretty-formatter', 'allure-cucumberjs']
+  }
+}
+```
+
+Example scripts to add to package.json:
+```json
+"allure:generate": "allure generate ./allure-results --clean -o ./allure-report",
+"allure:open": "allure open ./allure-report"
+```
 
 ## Configuration
 

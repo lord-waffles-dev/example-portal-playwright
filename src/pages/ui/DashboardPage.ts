@@ -8,7 +8,7 @@ import { BasePage } from '../common/BasePage';
 export class DashboardPage extends BasePage {
   private readonly selectors: {
     // Dashboard Page
-    dashboardTitle: string;
+    dashboardPage: string;
     ePrescribeBanner: string;
     ePrescribeGetStartedButton: string;
     upcomingVisitsTitle: string;
@@ -54,7 +54,7 @@ export class DashboardPage extends BasePage {
     super(page);
     this.selectors = {
       // Dashboard Page
-      dashboardTitle: 'xpath=//h1[normalize-space(text())=\'Dashboard\']',
+      dashboardPage: 'id=provider-main',
       ePrescribeBanner: 'xpath=//p[normalize-space(text())=\'Please complete the ePrescribe identity proofing process\']',
       ePrescribeGetStartedButton: 'xpath=//button[normalize-space(text())=\'Get Started\']',
       upcomingVisitsTitle: 'xpath=//h6[normalize-space(text())=\'Upcoming Visits\']',
@@ -88,7 +88,7 @@ export class DashboardPage extends BasePage {
    * Verify Dashboard is present upon redirection from the 2FA screen.
    */
   async verifyDashboard(): Promise<void> {
-    await this.waitForElement(this.selectors.dashboardTitle); // update to dashboard element
+    await this.waitForElement(this.selectors.dashboardPage); // update to dashboard element
   }
 
   /**

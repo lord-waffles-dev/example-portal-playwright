@@ -11,7 +11,7 @@ Feature: Provider Portal Login Functionality
   Scenario Outline: Existing provider logs in successfully
     When they enter a valid email with "<email>"
     And they enter a valid password with "<password>"
-    And they click the login continue button
+    And they click the continue button
     And they enter a valid 2FA code
     And they click the 2FA continue button
     Then they should be successfully logged in to the dashboard
@@ -31,7 +31,7 @@ Feature: Provider Portal Login Functionality
   Scenario: Provider attempts to login with empty credentials
     # They leave the email field empty
     # They leave the password field empty
-    When they click the login continue button
+    When they click the continue button
     Then they should see an email error message "Please enter a valid email address"
     And they should see a password error message "Please enter a password"
 
@@ -40,7 +40,7 @@ Feature: Provider Portal Login Functionality
   Scenario Outline: Provider attempts to login with invalid email format
     When they enter an invalid email format with "<invalid_email>"
     And they enter a valid password with "<password>"
-    And they click the login continue button
+    And they click the continue button
     Then they should see an email error message "Please enter a valid email address"
 
     Examples:
@@ -53,20 +53,20 @@ Feature: Provider Portal Login Functionality
   Scenario: Provider attempts to login with non-existent account
     When they enter an invalid email with "nonexistant@example.com"
     And they enter a valid password with "validProvider1"
-    And they click the login continue button
+    And they click the continue button
     Then they should see an email error message "Incorrect email or password"
 
   Scenario: Provider attempts to login with incorrect password
     When they enter a valid email with "validProvider1"
     And they enter an invalid password
-    And they click the login continue button
+    And they click the continue button
     Then they should see a password error message "Incorrect email or password"
 
   # 2FA Scenarios
   Scenario: Provider enters invalid 2FA code
     When they enter a valid email with "no2FAProvider"
     And they enter a valid password with "no2FAProvider"
-    And they click the login continue button
+    And they click the continue button
     And they enter an invalid 2FA code
     And they click the 2FA continue button
     Then they should see a 2FA error message "Incorrect verification code. Please try again."
