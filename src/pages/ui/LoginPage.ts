@@ -188,7 +188,7 @@ export class LoginPage extends BasePage {
     await this.emailErrorMessage.waitFor({ state: 'visible' });
     const actualText = await this.emailErrorMessage.textContent() ?? '';
     if (expectedText) {
-      await expect(this.emailErrorMessage).toHaveText(expectedText, { timeout: 5000 });
+      await expect(this.emailErrorMessage).toHaveText(expectedText);
       return true;
     }
 
@@ -200,7 +200,7 @@ export class LoginPage extends BasePage {
     await this.passwordErrorMessage.waitFor({ state: 'visible' });
     const actualText = await this.passwordErrorMessage.textContent() ?? '';
     if (expectedText) {
-      await expect(this.passwordErrorMessage).toHaveText(expectedText, { timeout: 5000 });
+      await expect(this.passwordErrorMessage).toHaveText(expectedText);
       return true;
     }
 

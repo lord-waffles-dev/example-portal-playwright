@@ -129,7 +129,7 @@ Then('they should see an email error message {string}', async function (this: IC
   await LoginPage.verifyEmailError(message);
 });
 
-Then('they should see an password error message {string}', async function (this: ICustomWorld, message: string) {
+Then('they should see a password error message {string}', async function (this: ICustomWorld, message: string) {
   const page = this.page!;
   const LoginPage = PageFactory.getLoginPage(page);
   // Expecting Text

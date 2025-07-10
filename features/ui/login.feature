@@ -33,7 +33,7 @@ Feature: Provider Portal Login Functionality
     # They leave the password field empty
     When they click the continue button
     Then they should see an email error message "Please enter a valid email address"
-    And they should see an password error message "Please enter a password"
+    And they should see a password error message "Please enter a password"
 
   # Tooltip is present as well as error message
   # Expand in future iteration on checking tooltip
@@ -60,7 +60,7 @@ Feature: Provider Portal Login Functionality
     When they enter a valid email with "validProvider1"
     And they enter an invalid password
     And they click the continue button
-    Then they should see an password error message "Incorrect email or password"
+    Then they should see a password error message "Incorrect email or password"
 
   # 2FA Scenarios
   Scenario: Provider enters invalid 2FA code
