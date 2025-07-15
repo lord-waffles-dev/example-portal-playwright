@@ -88,7 +88,7 @@ provider-portal-playwright/
 
 1. Create a new feature file in the `features` directory:
    ```gherkin
-   # features/example.feature
+   # features/general.feature
    Feature: Example Feature
 
      Scenario: Basic example
@@ -115,7 +115,7 @@ provider-portal-playwright/
 
 3. Run your test:
    ```bash
-   npm run test features/example.feature
+   npm run test features/general.feature
    ```
 
 ## Writing Tests
@@ -188,9 +188,9 @@ npx cucumber-js
 ### Run a Specific Feature
 
 ```bash
-npm run test features/example.feature
+npm run test features/general.feature
 # or
-npx cucumber-js features/example.feature
+npx cucumber-js features/general.feature
 ```
 
 ### Run Tests with Tags
