@@ -13,6 +13,7 @@
     "steps-usage": "tsx node_modules/@cucumber/cucumber/bin/cucumber.js features/**/*.feature --dry-run",
     "docker": "docker run --rm --network host -v $(pwd):/work/ -w /work/ -it mcr.microsoft.com/playwright:latest /bin/bash",
     "test": "npm run cucumber",
+    "test:api": "npm run cucumber -- --tags @api",
     "test:parallel": "npm run cucumber --parallel=2",
     "test:desktop": "VIEWPORT=desktop npm run cucumber",
     "test:laptop": "VIEWPORT=laptop npm run cucumber",
@@ -76,5 +77,9 @@
   },
   "overrides": {
     "semver": ">=7.5.2"
+  },
+  "dependencies": {
+    "axios": "^1.10.0",
+    "dotenv": "^17.2.0"
   }
 }
