@@ -7,6 +7,8 @@ Feature: Provider Portal Visits Functionality
     And I click the "View" button for the first upcoming visit
     Then I should be on the Visit page
 
+  @ignore
+  # Ignoring, need to refactor with test data setup
   Scenario: Verify and validate Patient Details fields
     When I view the Patient Details card
     Then I should see the following patient information with correct values:
@@ -18,6 +20,8 @@ Feature: Provider Portal Visits Functionality
       | Client        | Recuro Demo                     |
       | Group         | Recuro Sales Group              |
 
+  @ignore
+  # Ignoring, need to refactor with test data setup
   Scenario: Verify and validate Visit Details fields
     When I view the Visit Details card
     Then I should see the following visit information with correct values:
