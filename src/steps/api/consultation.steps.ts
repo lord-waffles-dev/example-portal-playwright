@@ -33,7 +33,7 @@ Given('I check for existing consults for provider {string}', async function (
     RowsPerPage: 50,
     SortColumn: 'ScheduleDate',
     SortDirection: 'DESC',
-    ListOfStatusIds: [1, 7, 14], // 1 = Scheduled, 7 = Assigned, 14 = Pending Provider Confirmation
+    ListOfStatusIds: [config.consultStatus.scheduled, config.consultStatus.assigned, config.consultStatus.pending_provider_confirmation],
     ProviderID: providerID
   };
 
@@ -102,7 +102,7 @@ Given('I check for existing consults for provider {string}', async function (
   }
 });
 
-Given('I cancel all existing consults for provider {string}', async function (
+Given('I close all existing consults for provider {string}', async function (
   this: ICustomWorld,
   provider: string
 ) {
@@ -114,7 +114,7 @@ Given('I cancel all existing consults for provider {string}', async function (
 
   console.log(`Attempting to cancel ${this.visitHistory.items.length} existing consults for provider ${provider}`);
 
-  // Iterate through each consult and cancel it
+  // Iterate through each consult and close it
   for (const consult of this.visitHistory.items) {
     // Construct the endpoint for updating consult status
     const apiEndpoint = `${config.VISIT_API_URL.replace(/\/$/, '')}/api/v1/Consultation/${consult.id}/status`;
@@ -126,9 +126,9 @@ Given('I cancel all existing consults for provider {string}', async function (
       skipRefundTrigger: false
     };
 
-    // Request body for cancellation
+    // Request body for closing consult
     const data = {
-      statusID: 9 // Status ID 9 = Closed Status, Status ID 4 = Canceled Status
+      statusID: config.consultStatus.closed
     };
 
     console.log(`Cancelling consult with ID: ${consult.id}`);

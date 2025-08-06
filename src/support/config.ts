@@ -33,6 +33,20 @@ export const config = {
     vpc_initial: '1123',
     vpc_follow: '1126'
   },
+  consultStatus: {
+    scheduled: '1',
+    ongoing: '2',
+    completed: '3',
+    cancelled: '4',
+    assigned: '7',
+    error: '8',
+    closed: '9',
+    serviced: '10',
+    ongoing_first_missed_call: '11',
+    ongoing_second_missed_call: '12',
+    ongoing_third_missed_call: '13',
+    pending_provider_confirmation: '14'
+  },
   mediaType: {
     phone: '1',
     video: '2'
