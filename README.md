@@ -409,8 +409,14 @@ API tests require authentication credentials and tokens. These should be stored 
 2. Add the following variables to the file:
 
 ```
+# Login
+AUTH_CLIENT_ID=[Azure KeyVault - Auth0 Client ID]
+AUTH_CLIENT_SECRET=[Azure KeyVault - Auth0 Client Secret]
+AUTH_USERNAME=[Agent User]
+AUTH_PASSWORD=[Agen Pass]
+
 # Bearer Token
-STAGING_BEARER_TOKEN=
+STAGING_BEARER_TOKEN=...
 ```
 
 Replace the empty values with your actual credentials and tokens.
