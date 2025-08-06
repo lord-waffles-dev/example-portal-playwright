@@ -2,7 +2,7 @@ import { setWorldConstructor, World, IWorldOptions } from '@cucumber/cucumber';
 import * as messages from '@cucumber/messages';
 import { BrowserContext, Page, PlaywrightTestOptions, APIRequestContext } from '@playwright/test';
 import { AuthResponse } from '../models/api/auth.model';
-import { ConsultationResponse } from '../models/api/consultation.model';
+import { ConsultationResponse, VisitHistoryResponse } from '../models/api/consultation.model';
 
 export interface ICustomWorld extends World {
   debug: boolean;
@@ -16,6 +16,7 @@ export interface ICustomWorld extends World {
   playwrightOptions?: PlaywrightTestOptions; // Configuration options for Playwright tests
   authData?: AuthResponse; // For storing authentication data
   consultationData?: ConsultationResponse; // For storing consultation data
+  visitHistory?: VisitHistoryResponse; // For storing visit history data
 }
 
 export class CustomWorld extends World implements ICustomWorld {
