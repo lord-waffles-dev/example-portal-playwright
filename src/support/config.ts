@@ -1,4 +1,8 @@
 import { LaunchOptions } from '@playwright/test';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const browserOptions: LaunchOptions = {
   slowMo: 0,
   args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
@@ -18,24 +22,47 @@ export const viewports = [
 export const config = {
   browser: process.env.BROWSER ?? 'chromium',
   browserOptions,
-  EXAMPLE_URL: 'https://playwright.dev',
   IMG_THRESHOLD: { threshold: 0.4 },
-  BASE_API_URL: 'https://catfact.ninja/',
+  BASE_API_URL: 'https://staging-platform.wellviasolutions.com/',
+  VISIT_API_URL: 'https://visit-api-staging.recurohealth.cloud/',
+  consultType: {
+    general_medical: '1',
+    therapy_consult: '1099',
+    psychiatry_follow: '1102',
+    psychiatry_initial: '1111',
+    vpc_initial: '1123',
+    vpc_follow: '1126'
+  },
+  consultStatus: {
+    scheduled: '1',
+    ongoing: '2',
+    completed: '3',
+    cancelled: '4',
+    assigned: '7',
+    error: '8',
+    closed: '9',
+    serviced: '10',
+    ongoing_first_missed_call: '11',
+    ongoing_second_missed_call: '12',
+    ongoing_third_missed_call: '13',
+    pending_provider_confirmation: '14'
+  },
+  mediaType: {
+    phone: '1',
+    video: '2'
+  },
   environments: {
     staging: {
       providerUrl: 'https://staging.recurohealth.com/',
       newProviderUrl: 'https://provider-new-staging.recurohealth.com'
-    },
-    production: {
-      providerUrl: 'https://provider.recurohealth.com/',
-      newProviderUrl: 'https://provider-new.recurohealth.com/'
     }
   },
   credentials: {
     staging: {
       validProvider1: {
         email: 'qa-auto+eprescribe@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: '4161224'
       },
       invalidProvider2: {
         email: 'notanemail@email',
@@ -45,7 +72,8 @@ export const config = {
         // Name: Auto9 Provider
         // Account 2FA is not bypassed in staging
         email: 'qa-auto+no-2fa@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: ''
       },
       autoProvider1: {
         // Provider w/ ePrescribe
@@ -53,7 +81,8 @@ export const config = {
         // Name: Auto1 Provider
         // Account 2FA bypassed in staging
         email: 'qa-auto+eprescribe@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: '4161224'
       },
       autoProvider2: {
         // Provider w/o ePrescribe
@@ -61,7 +90,8 @@ export const config = {
         // Name: Auto2 Provider
         // Account 2FA bypassed in staging
         email: 'qa-auto+no-eprescribe@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: ''
       },
       autoProvider3: {
         // Provider w/o licenses
@@ -69,7 +99,8 @@ export const config = {
         // Name: Auto3 Provider
         // Account 2FA bypassed in staging
         email: 'qa-auto+no-licenses@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: ''
       },
       autoProvider4: {
         // Provider w/ single state license
@@ -78,7 +109,8 @@ export const config = {
         // Name: Auto4 Provider
         // Account 2FA bypassed in staging
         email: 'qa-auto+one-state@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: ''
       },
       autoProvider5: {
         // Provider w/ all state licenses
@@ -86,7 +118,8 @@ export const config = {
         // Name: Auto5 Provider
         // Account 2FA bypassed in staging
         email: 'qa-auto+all-states@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: ''
       },
       autoProvider6: {
         // Provider w/ Grail
@@ -94,7 +127,8 @@ export const config = {
         // Name: Auto6 Provider
         // Account 2FA bypassed in staging
         email: 'qa-auto+grail@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: ''
       },
       autoProvider7: {
         // Provider w/ Cologuard
@@ -102,7 +136,8 @@ export const config = {
         // Name: Auto7 Provider
         // Account 2FA bypassed in staging
         email: 'qa-auto+cologuard@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: ''
       },
       autoProvider8: {
         // Provider w/ Grail, Cologuard, and ePrescribe
@@ -110,11 +145,25 @@ export const config = {
         // Name: Auto8 Provider
         // Account 2FA bypassed in staging
         email: 'qa-auto+labs@recurohealth.com',
-        password: 'RecuroTest1!'
+        password: 'RecuroTest1!',
+        providerID: ''
+      },
+      autoMember1: {
+        // Client: Recuro Demo | Group: Recuro Sales Group
+        // Timezone: Central
+        // Name: Auto1 Member
+        email: 'qa-auto+member1@recurohealth.com',
+        password: 'RecuroTest1!',
+        memberID: '271658634'
+      },
+      autoMember2: {
+        // Client: ... | Group: ...
+        // Timezone: Central
+        // Name: Auto2 Member
+        email: 'qa-auto+member2@recurohealth.com',
+        password: 'RecuroTest1!',
+        memberID: ''
       }
-    },
-    production: {
-      // Production credentials
     }
   }
 };

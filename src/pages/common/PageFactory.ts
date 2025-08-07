@@ -1,7 +1,4 @@
 import { Page } from '@playwright/test';
-import { PlaywrightPage } from '../example/PlaywrightPage';
-import { FormPage } from '../example/FormPage';
-import { HomePage } from '../example/HomePage';
 import { LoginPage } from '../ui/LoginPage';
 import { DashboardPage } from '../ui/DashboardPage';
 import { LabOrderRequestsPage } from '../ui/LabOrderRequestsPage';
@@ -31,16 +28,6 @@ export class PageFactory {
     }
 
     return this.pages.get(key) as T;
-  }
-
-  /**
-   * Get the PlaywrightPage object.
-   * @param page - The Playwright Page object
-   * @param customSelectors - Optional custom selectors to override the default selectors
-   * @returns The PlaywrightPage object
-   */
-  static getPlaywrightPage(page: Page, customSelectors = {}): PlaywrightPage {
-    return this.getPage(PlaywrightPage, page, customSelectors);
   }
 
   /**
@@ -81,26 +68,6 @@ export class PageFactory {
    */
   static getVisitsPage(page: Page, customSelectors = {}): VisitsPage {
     return this.getPage(VisitsPage, page, customSelectors);
-  }
-
-  /**
-   * Get the FormPage object.
-   * @param page - The Playwright Page object
-   * @param customSelectors - Optional custom selectors to override the default selectors
-   * @returns The FormPage object
-   */
-  static getFormPage(page: Page, customSelectors = {}): FormPage {
-    return this.getPage(FormPage, page, customSelectors);
-  }
-
-  /**
-   * Get the HomePage object.
-   * @param page - The Playwright Page object
-   * @param customSelectors - Optional custom selectors to override the default selectors
-   * @returns The HomePage object
-   */
-  static getHomePage(page: Page, customSelectors = {}): HomePage {
-    return this.getPage(HomePage, page, customSelectors);
   }
 
   /**

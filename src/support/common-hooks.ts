@@ -80,7 +80,8 @@ Before(async function (this: ICustomWorld, { pickle }) {
   });
   this.server = await request.newContext({
     // All requests we send go to this API endpoint.
-    baseURL: config.BASE_API_URL
+    baseURL: config.BASE_API_URL,
+    ignoreHTTPSErrors: true // Ignore SSL certificate validation errors
   });
 
   await this.context.tracing.start({

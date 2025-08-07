@@ -18,6 +18,7 @@ A repo focused on writing E2E tests for the Provider Portal based on Cucumber wi
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
 - [Resources](#resources)
+- [Running API Tests](#running-api-tests)
 
 ## Introduction
 
@@ -88,7 +89,6 @@ provider-portal-playwright/
 
 1. Create a new feature file in the `features` directory:
    ```gherkin
-   # features/example.feature
    Feature: Example Feature
 
      Scenario: Basic example
@@ -115,7 +115,7 @@ provider-portal-playwright/
 
 3. Run your test:
    ```bash
-   npm run test features/example.feature
+   npm run test features/general.feature
    ```
 
 ## Writing Tests
@@ -188,9 +188,9 @@ npx cucumber-js
 ### Run a Specific Feature
 
 ```bash
-npm run test features/example.feature
+npm run test features/general.feature
 # or
-npx cucumber-js features/example.feature
+npx cucumber-js features/general.feature
 ```
 
 ### Run Tests with Tags
@@ -396,5 +396,37 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [Playwright Documentation](https://playwright.dev/docs/intro)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [Gherkin Syntax Reference](https://cucumber.io/docs/gherkin/reference/)
+
+## Running API Tests
+
+The framework includes support for API testing. API tests are located in the `features/api` directory and are tagged with `@api`.
+
+### Setting Up Environment Variables
+
+API tests require authentication credentials and tokens. These should be stored in a `.env` file at the root of the project. This file is gitignored to prevent sensitive information from being committed to the repository.
+
+1. Create a `.env` file in the project root directory
+2. Add the following variables to the file:
+
+```
+# Login
+AUTH_CLIENT_ID=[Azure KeyVault - Auth0 Client ID]
+AUTH_CLIENT_SECRET=[Azure KeyVault - Auth0 Client Secret]
+AUTH_USERNAME=[Agent User]
+AUTH_PASSWORD=[Agen Pass]
+
+# Bearer Token
+STAGING_BEARER_TOKEN=...
+```
+
+Replace the empty values with your actual credentials and tokens.
+
+### Running the Tests
+
+To run all API tests:
+
+```bash
+npm run test:api
+```
 
 ---

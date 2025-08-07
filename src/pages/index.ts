@@ -12,9 +12,7 @@ export * from './common/page-hooks';
 export * from './common/components/HeaderComponent';
 
 // Export UI page objects
-export * from './example/PlaywrightPage';
-export * from './example/FormPage';
-export * from './example/HomePage';
 export * from './ui/LoginPage';
 export * from './ui/DashboardPage';
+export * from './ui/VisitsPage';
 export * from './ui/LabOrderRequestsPage';
