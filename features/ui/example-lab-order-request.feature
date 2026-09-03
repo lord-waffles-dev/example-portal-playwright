@@ -1,4 +1,4 @@
-@lab-order-requests
+@example @ignore @lab-order-requests
 Feature: Lab Order request
 
   # autoProvider8 is a user who has access to Cologuard and Galleri labs

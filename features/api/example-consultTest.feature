@@ -1,4 +1,4 @@
-@api @ignore
+@example @api @ignore
 Feature: Consultation API
 
   Scenario: Create a consultation after checking for existing consults

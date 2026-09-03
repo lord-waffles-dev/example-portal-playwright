@@ -1,4 +1,4 @@
-@visits
+@example @ignore @visits
 Feature: Provider Portal Visits Functionality
 
   Background: Navigation

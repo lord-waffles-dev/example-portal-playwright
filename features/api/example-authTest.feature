@@ -1,4 +1,4 @@
-@api @ignore
+@example @api @ignore
 Feature: Test API
 
   Scenario: Login

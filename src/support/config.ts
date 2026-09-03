@@ -23,8 +23,13 @@ export const config = {
   browser: process.env.BROWSER ?? 'chromium',
   browserOptions,
   IMG_THRESHOLD: { threshold: 0.4 },
-  BASE_API_URL: 'https://staging-platform.wellviasolutions.com/',
-  VISIT_API_URL: 'https://visit-api-staging.recurohealth.cloud/',
+  BASE_API_URL: process.env.BASE_API_URL ?? 'https://qa-practice.razvanvancea.ro/',
+  VISIT_API_URL: process.env.VISIT_API_URL ?? 'https://qa-practice.razvanvancea.ro/',
+  targets: {
+    qaPractice: {
+      baseUrl: process.env.BASE_URL ?? 'https://qa-practice.razvanvancea.ro/'
+    }
+  },
   consultType: {
     general_medical: '1',
     therapy_consult: '1099',
@@ -53,116 +58,75 @@ export const config = {
   },
   environments: {
     staging: {
-      providerUrl: 'https://staging.recurohealth.com/',
-      newProviderUrl: 'https://provider-new-staging.recurohealth.com'
+      providerUrl: process.env.EXAMPLE_PROVIDER_URL ?? 'https://example-provider.test/',
+      newProviderUrl: process.env.EXAMPLE_NEW_PROVIDER_URL ?? 'https://example-new-provider.test/'
     }
   },
   credentials: {
     staging: {
       validProvider1: {
-        email: 'qa-auto+eprescribe@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: '4161224'
+        email: 'qa-auto+valid-provider@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000001'
       },
       invalidProvider2: {
         email: 'notanemail@email',
         password: 'notapassword'
       },
       no2FAProvider: {
-        // Name: Auto9 Provider
-        // Account 2FA is not bypassed in staging
-        email: 'qa-auto+no-2fa@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: ''
+        email: 'qa-auto+no-2fa@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000009'
       },
       autoProvider1: {
-        // Provider w/ ePrescribe
-        // Timezone: Central
-        // Name: Auto1 Provider
-        // Account 2FA bypassed in staging
-        email: 'qa-auto+eprescribe@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: '4161224'
+        email: 'qa-auto+provider1@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000001'
       },
       autoProvider2: {
-        // Provider w/o ePrescribe
-        // Timezone: Mountain Time (USMT)
-        // Name: Auto2 Provider
-        // Account 2FA bypassed in staging
-        email: 'qa-auto+no-eprescribe@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: ''
+        email: 'qa-auto+provider2@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000002'
       },
       autoProvider3: {
-        // Provider w/o licenses
-        // Timezone: Eastern
-        // Name: Auto3 Provider
-        // Account 2FA bypassed in staging
-        email: 'qa-auto+no-licenses@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: ''
+        email: 'qa-auto+provider3@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000003'
       },
       autoProvider4: {
-        // Provider w/ single state license
-        // Timezone: Central
-        // State: Texas
-        // Name: Auto4 Provider
-        // Account 2FA bypassed in staging
-        email: 'qa-auto+one-state@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: ''
+        email: 'qa-auto+provider4@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000004'
       },
       autoProvider5: {
-        // Provider w/ all state licenses
-        // Timezone: Pacific
-        // Name: Auto5 Provider
-        // Account 2FA bypassed in staging
-        email: 'qa-auto+all-states@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: ''
+        email: 'qa-auto+provider5@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000005'
       },
       autoProvider6: {
-        // Provider w/ Grail
-        // Timezone: Central
-        // Name: Auto6 Provider
-        // Account 2FA bypassed in staging
-        email: 'qa-auto+grail@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: ''
+        email: 'qa-auto+provider6@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000006'
       },
       autoProvider7: {
-        // Provider w/ Cologuard
-        // Timezone: Central
-        // Name: Auto7 Provider
-        // Account 2FA bypassed in staging
-        email: 'qa-auto+cologuard@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: ''
+        email: 'qa-auto+provider7@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000007'
       },
       autoProvider8: {
-        // Provider w/ Grail, Cologuard, and ePrescribe
-        // Timezone: Pacific
-        // Name: Auto8 Provider
-        // Account 2FA bypassed in staging
-        email: 'qa-auto+labs@recurohealth.com',
-        password: 'RecuroTest1!',
-        providerID: ''
+        email: 'qa-auto+provider8@example.test',
+        password: 'ExampleTest1!',
+        providerID: '1000008'
       },
       autoMember1: {
-        // Client: Recuro Demo | Group: Recuro Sales Group
-        // Timezone: Central
-        // Name: Auto1 Member
-        email: 'qa-auto+member1@recurohealth.com',
-        password: 'RecuroTest1!',
-        memberID: '271658634'
+        email: 'qa-auto+member1@example.test',
+        password: 'ExampleTest1!',
+        memberID: '2000001'
       },
       autoMember2: {
-        // Client: ... | Group: ...
-        // Timezone: Central
-        // Name: Auto2 Member
-        email: 'qa-auto+member2@recurohealth.com',
-        password: 'RecuroTest1!',
-        memberID: ''
+        email: 'qa-auto+member2@example.test',
+        password: 'ExampleTest1!',
+        memberID: '2000002'
       }
     }
   }

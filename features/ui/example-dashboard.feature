@@ -1,4 +1,4 @@
-@dashboard
+@example @ignore @dashboard
 Feature: Provider Portal Dashboard
   As a Recuro Health Provider
   I want to access and use the dashboard effectively

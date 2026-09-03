@@ -1,4 +1,4 @@
-@resource-center
+@example @ignore @resource-center
 Feature: Provider Resource Center
 
   Background: Navigation

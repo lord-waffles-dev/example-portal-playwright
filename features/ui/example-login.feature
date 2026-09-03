@@ -1,4 +1,4 @@
-@login
+@example @ignore @login
 Feature: Provider Portal Login Functionality
   As a Recuro Health Provider
   I want to securely access the provider portal

@@ -37,12 +37,12 @@ export class DashboardPage extends BasePage {
   // Define expected Resource Center links and their URLs for verification
   private readonly resourceLinks = [
     { name: 'APA Practice Guidelines', url: 'https://www.psychiatry.org/psychiatrists/practice/clinical-practice-guidelines' },
-    { name: 'Emergency Protocol', url: 'https://wellvia.app.box.com/s/l08uxnzzfv4u82716u6yfl7uihybkyaa' },
-    { name: 'Emergency Hotlines', url: 'https://wellvia.app.box.com/s/5q3y6y3opmrvt0a9vcl3g5ve70j2qo5w' },
-    { name: 'Behavioral Health Platform Training', url: 'https://wellvia.app.box.com/s/s73wg3oahgm4wjfl1dela2iudq3orqh6' },
-    { name: 'Provider Phone Consult Training Module', url: 'https://wellvia.app.box.com/s/cv6ztnar1oycxkdh3jv396tov46ouf0i' },
-    { name: 'Provider Video Consult Training Module', url: 'https://wellvia.app.box.com/s/8br027t1avvyub7wzx9eh6mwkmyj6x5s' },
-    { name: 'BSW Care Pathways', url: 'https://wellvia.app.box.com/s/ceyplzr84egic37nxdtezjujbhtdlgt0' }
+    { name: 'Emergency Protocol', url: 'https://example.test/resources/emergency-protocol' },
+    { name: 'Emergency Hotlines', url: 'https://example.test/resources/emergency-hotlines' },
+    { name: 'Behavioral Health Platform Training', url: 'https://example.test/resources/behavioral-health-training' },
+    { name: 'Provider Phone Consult Training Module', url: 'https://example.test/resources/phone-consult-training' },
+    { name: 'Provider Video Consult Training Module', url: 'https://example.test/resources/video-consult-training' },
+    { name: 'BSW Care Pathways', url: 'https://example.test/resources/bsw-care-pathways' }
   ];
 
   /**

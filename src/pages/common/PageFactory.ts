@@ -1,8 +1,9 @@
 import { Page } from '@playwright/test';
-import { LoginPage } from '../ui/LoginPage';
-import { DashboardPage } from '../ui/DashboardPage';
-import { LabOrderRequestsPage } from '../ui/LabOrderRequestsPage';
-import { VisitsPage } from '../ui/VisitsPage';
+import { LoginPage } from '../ui/ExampleLoginPage';
+import { DashboardPage } from '../ui/ExampleDashboardPage';
+import { LabOrderRequestsPage } from '../ui/ExampleLabOrderRequestsPage';
+import { VisitsPage } from '../ui/ExampleVisitsPage';
+import { QaPracticePage } from '../ui/qa-practice/QaPracticePage';
 
 /**
  * PageFactory class that helps with creating and managing page objects.
@@ -68,6 +69,16 @@ export class PageFactory {
    */
   static getVisitsPage(page: Page, customSelectors = {}): VisitsPage {
     return this.getPage(VisitsPage, page, customSelectors);
+  }
+
+  /**
+   * Get the QaPracticePage object.
+   * @param page - The Playwright Page object
+   * @param customSelectors - Optional custom selectors to override the default selectors
+   * @returns The QaPracticePage object
+   */
+  static getQaPracticePage(page: Page, customSelectors = {}): QaPracticePage {
+    return this.getPage(QaPracticePage, page, customSelectors);
   }
 
   /**

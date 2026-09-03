@@ -1,6 +1,6 @@
-# Provider Portal Cucumber-Playwright
+# Example Portal Playwright
 
-A repo focused on writing E2E tests for the Provider Portal based on Cucumber with Playwright using TypeScript.
+A repo focused on writing E2E tests with Cucumber and Playwright using TypeScript.
 
 ## Table of Contents
 
@@ -16,6 +16,7 @@ A repo focused on writing E2E tests for the Provider Portal based on Cucumber wi
 - [Configuration](#configuration)
 - [Advanced Topics](#advanced-topics)
 - [Troubleshooting](#troubleshooting)
+- [Publishing to GitHub](#publishing-to-github)
 - [Contributing](#contributing)
 - [Resources](#resources)
 - [Running API Tests](#running-api-tests)
@@ -39,8 +40,8 @@ Cucumber-Playwright is a framework for writing end-to-end (E2E) tests using Beha
 
 1. Create a new repository using this template or clone it directly:
    ```bash
-   git clone provider-portal-playwright
-   cd provider-portal-playwright
+   git clone https://github.com/<your-org-or-user>/example-portal-playwright.git
+   cd example-portal-playwright
    ```
 
 2. Install dependencies:
@@ -51,7 +52,7 @@ Cucumber-Playwright is a framework for writing end-to-end (E2E) tests using Beha
 ## Project Structure
 
 ```
-provider-portal-playwright/
+example-portal-playwright/
 ├── docs/                     # Documentation files
 ├── features/                 # Feature files written in Gherkin
 │   ├── api/                  # API test features
@@ -379,6 +380,60 @@ Then('I should receive status code {int}', async function(this: ICustomWorld, st
    - Use more reliable selectors
    - Add wait statements for dynamic content
    - Check if the element is inside an iframe
+
+## Publishing to GitHub
+
+Use this section to publish the project as `example-portal-playwright`.
+
+### 1) Verify your current remote state
+
+```bash
+git remote -v
+```
+
+If you see an `origin`, you already have a remote configured.
+
+### 2) Rename locally (optional, folder name only)
+
+From the parent folder of this project:
+
+```bash
+mv provider-portal-playwright example-portal-playwright
+cd example-portal-playwright
+```
+
+### 3) Create `example-portal-playwright` on GitHub
+
+- In GitHub, create a new empty repository named `example-portal-playwright`.
+- Do not initialize it with README/gitignore/license if you are pushing this existing project.
+
+### 4) Connect and push (choose one option)
+
+#### Option A: Replace current `origin` with your new repo
+
+```bash
+git remote set-url origin https://github.com/<your-org-or-user>/example-portal-playwright.git
+git branch -M main
+git push -u origin main
+```
+
+#### Option B: Keep current remote as `upstream`, use new repo as `origin`
+
+```bash
+git remote rename origin upstream
+git remote add origin https://github.com/<your-org-or-user>/example-portal-playwright.git
+git branch -M main
+git push -u origin main
+```
+
+### 5) Confirm everything
+
+```bash
+git remote -v
+git status
+```
+
+Expected result: `origin` points to your `example-portal-playwright` GitHub repository, and your local `main` tracks `origin/main`.
 
 ## Contributing
 
