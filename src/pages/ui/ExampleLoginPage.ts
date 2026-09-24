@@ -37,7 +37,7 @@ export class LoginPage extends BasePage {
     super(page);
     this.page = page;
     // Login Page
-    this.loginPage = page.locator('//img[@alt=\'Recuro Health\']');
+    this.loginPage = page.locator('//img[@alt=\'Company Health\']');
     this.emailInput = page.locator('#login__email');
     this.passwordInput = page.locator('#login__password');
     this.continueButton = page.getByRole('button', { name: 'Continue' });

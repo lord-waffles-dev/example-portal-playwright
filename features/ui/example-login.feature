@@ -1,6 +1,6 @@
 @example @ignore @login
 Feature: Provider Portal Login Functionality
-  As a Recuro Health Provider
+  As a Company Health Provider
   I want to securely access the provider portal
   So that I can manage patient care and administrative tasks
 
@@ -98,9 +98,9 @@ Feature: Provider Portal Login Functionality
 #    When they enter a valid email with "autoProvider1"
 #    And they enter a valid password with "autoProvider1"
 #    And they click the password visibility toggle
-#    Then the password should be visible as "RecuroTest1!"
+#    Then the password should be visible as "CompanyTest1!"
 #    When they click the password visibility toggle
-#    Then the password "RecuroTest1!" should be masked
+#    Then the password "CompanyTest1!" should be masked
 
    # Missing Functional/Setup for Tests to Run Scenario
 #  Scenario: Provider uses forgot password functionality

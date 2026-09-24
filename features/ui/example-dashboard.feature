@@ -1,6 +1,6 @@
 @example @ignore @dashboard
 Feature: Provider Portal Dashboard
-  As a Recuro Health Provider
+  As a Company Health Provider
   I want to access and use the dashboard effectively
   So that I can manage my patient visits and access important resources
 

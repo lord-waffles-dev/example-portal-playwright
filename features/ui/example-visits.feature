@@ -17,8 +17,8 @@ Feature: Provider Portal Visits Functionality
       | ID            | 271658634                       |
       | Gender        | M                               |
       | Location      | TX                              |
-      | Client        | Recuro Demo                     |
-      | Group         | Recuro Sales Group              |
+      | Client        | Company Demo                    |
+      | Group         | Company Sales Group             |
 
   @ignore
   # Ignoring, need to refactor with test data setup
